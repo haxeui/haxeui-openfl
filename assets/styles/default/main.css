@@ -1,0 +1,12 @@
+.label, .textfield {
+	font-name: "fonts/Roboto-Regular.ttf";
+	font-size: 13px;
+}
+
+.flash .label, .flash .textfield {
+	font-name: "_sans";
+}
+
+.scrollview {
+	padding: 1px;
+}

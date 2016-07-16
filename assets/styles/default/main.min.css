@@ -1,0 +1,4 @@
+.tabbar-button-selected .label{offset-top:-1px;}
+.flash .tabbar-button-selected .label{offset-top:0px;}
+.tabbar-button-selected .image{}
+.label,.textfield{font-name:"_sans";font-size:13px;}
