@@ -41,7 +41,7 @@ Once the toolkit is initialised you can add components using the methods specifi
 
 <h2>OpenFL specifics</h2>
 
- * As well as using the generic `Screen.instance.addComponent`, it is also possible to simply add components directly to any other `OpenFL` sprite (eg: `Lib.current.stage.addChild`)
+As well as using the generic `Screen.instance.addComponent`, it is also possible to simply add components directly to any other `OpenFL` sprite (eg: `Lib.current.stage.addChild`)
 
 <h2>Addtional resources</h2>
 * <a href="http://haxeui.github.io/haxeui-api/">haxeui-api</a> - The HaxeUI api docs.
