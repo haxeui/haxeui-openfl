@@ -19,7 +19,7 @@ haxelib dev haxeui-openfl path/to/expanded/source/archive
 ```
 
 <h2>Usage</h2>
-The simplest method to create a new `OpenFL` application that is HaxeUI ready is simply to use one of the <a href="https://github.com/haxeui/haxeui-templates">haxeui-templates</a>. These templates will allow you to start a new project rapidly with HaxeUI support baked in. 
+The simplest method to create a new `OpenFL` application that is HaxeUI ready is to use one of the <a href="https://github.com/haxeui/haxeui-templates">haxeui-templates</a>. These templates will allow you to start a new project rapidly with HaxeUI support baked in. 
 
 If however you already have an existing application, then incorporating HaxeUI into that application is straight forward:
 
@@ -34,7 +34,7 @@ Assuming `haxeui-core` and `haxeui-openfl` have been installed, then adding Haxe
 _Note: Currently you must also include `haxeui-core` explicitly during the alpha, eventually `haxelib.json` files will exist to take care of this dependency automatically._ 
 
 <h3>Toolkit initialisation and usage</h3>
-Initialising the toolkit is very simple, simply add this line somewhere _before_ you start to actually use HaxeUI in your application:
+Initialising the toolkit requires you to add this single line somewhere _before_ you start to actually use HaxeUI in your application:
 
 ```
 Toolkit.init();
@@ -43,7 +43,7 @@ Once the toolkit is initialised you can add components using the methods specifi
 
 <h2>OpenFL specifics</h2>
 
-As well as using the generic `Screen.instance.addComponent`, it is also possible to simply add components directly to any other `OpenFL` sprite (eg: `Lib.current.stage.addChild`)
+As well as using the generic `Screen.instance.addComponent`, it is also possible to add components directly to any other `OpenFL` sprite (eg: `Lib.current.stage.addChild`)
 
 <h2>Addtional resources</h2>
 * <a href="http://haxeui.github.io/haxeui-api/">haxeui-api</a> - The HaxeUI api docs.
