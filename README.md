@@ -6,6 +6,8 @@
 `haxeui-openfl` is the `OpenFL` backend for haxeui.
 
 <h2>Installation</h2>
+`haxeui-openfl` has a dependency to <a href="https://github.com/haxeui/haxeui-core">`haxeui-core`</a>, and so that too must be installed.
+
 Eventually all these libs will become haxelibs, however, currently in their alpha form they dont even contain a `haxelib.json` file (for dependencies, etc) and therefore can only be used by downloading the source and using the `haxelib dev` command or by directly using the git versions using the `haxelib git` command (recommended). Eg:
 
 ```
