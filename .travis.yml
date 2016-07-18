@@ -1,0 +1,21 @@
+language: haxe
+
+os:
+  - linux
+
+haxe:
+  - "3.2.1"
+  - development
+
+sudo: true
+
+before_install:
+    - git clone https://github.com/haxeui/haxeui-core.git --depth=1
+    - haxelib dev haxeui-core haxeui-core
+
+
+install:
+    - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
+
+script:
+    - haxe linux.hxml
