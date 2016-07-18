@@ -18,7 +18,7 @@ install:
     - haxelib install openfl
     - echo "y" | haxelib run openfl setup
     - haxelib install hscript
-    - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
+    # - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
 
 script:
     - haxe linux.hxml
