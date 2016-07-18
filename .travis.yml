@@ -15,6 +15,7 @@ before_install:
 
 
 install:
+    - haxelib install hscript
     - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
 
 script:
