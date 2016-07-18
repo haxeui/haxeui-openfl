@@ -1,0 +1,18 @@
+-lib hscript
+-lib lime
+-lib openfl
+-lib haxeui-core
+
+-D webgl
+-D native
+-D lime-native
+-D openfl-native
+-D linux
+-D desktop
+-D webgl
+--remap flash:openfl
+-cp bin/openfl/linux64/neko/haxe
+
+-cp .
+--no-output 
+--macro haxe.macro.Compiler.include("haxe.ui")
