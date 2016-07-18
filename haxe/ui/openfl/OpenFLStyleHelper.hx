@@ -86,6 +86,7 @@ class OpenFLStyleHelper {
 
                         rc.right -= 1;
                     }
+                    // test
             }
         }
 
