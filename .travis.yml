@@ -16,7 +16,7 @@ before_install:
 
 install:
     - haxelib install openfl
-    #- haxelib run openfl setup
+    - echo "y" | haxelib run openfl setup
     - haxelib install hscript
     - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
 
