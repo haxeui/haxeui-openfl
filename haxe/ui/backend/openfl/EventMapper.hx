@@ -1,4 +1,4 @@
-package haxe.ui.openfl;
+package haxe.ui.backend.openfl;
 
 class EventMapper {
     public static var HAXEUI_TO_OPENFL:Map<String, String> = [

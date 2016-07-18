@@ -1,4 +1,4 @@
-package haxe.ui.core;
+package haxe.ui.backend;
 
 class PlatformBase {
     public function getMetric(id:String):Float {

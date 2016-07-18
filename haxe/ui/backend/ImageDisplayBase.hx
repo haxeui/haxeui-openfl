@@ -1,4 +1,4 @@
-package haxe.ui.core;
+package haxe.ui.backend;
 
 import haxe.ui.assets.ImageInfo;
 import haxe.ui.core.Component;

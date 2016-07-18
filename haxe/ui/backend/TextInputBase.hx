@@ -1,5 +1,6 @@
-package haxe.ui.core;
+package haxe.ui.backend;
 
+import haxe.ui.backend.TextDisplayBase;
 import openfl.text.TextFieldType;
 import openfl.text.TextFieldAutoSize;
 

@@ -1,4 +1,4 @@
-package haxe.ui.core;
+package haxe.ui.backend;
 
 import haxe.ui.core.Component;
 import haxe.ui.core.IComponentBase;
@@ -7,9 +7,9 @@ import haxe.ui.core.MouseEvent;
 import haxe.ui.core.TextDisplay;
 import haxe.ui.core.TextInput;
 import haxe.ui.core.UIEvent;
-import haxe.ui.openfl.EventMapper;
-import haxe.ui.openfl.FilterConverter;
-import haxe.ui.openfl.OpenFLStyleHelper;
+import haxe.ui.backend.openfl.EventMapper;
+import haxe.ui.backend.openfl.FilterConverter;
+import haxe.ui.backend.openfl.OpenFLStyleHelper;
 import haxe.ui.styles.Style;
 import haxe.ui.util.Rectangle;
 import haxe.ui.util.filters.FilterParser;

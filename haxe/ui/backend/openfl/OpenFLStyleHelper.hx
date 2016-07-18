@@ -1,4 +1,4 @@
-package haxe.ui.openfl;
+package haxe.ui.backend.openfl;
 import haxe.ui.assets.ImageInfo;
 import haxe.ui.components.Button.ButtonDefaultIconBehaviour;
 

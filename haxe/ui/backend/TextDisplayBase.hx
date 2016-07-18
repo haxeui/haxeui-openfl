@@ -1,4 +1,4 @@
-package haxe.ui.core;
+package haxe.ui.backend;
 
 import openfl.Assets;
 import openfl.text.Font;

@@ -1,4 +1,4 @@
-package haxe.ui.assets;
+package haxe.ui.backend;
 
 class FontData {
     public function new() {

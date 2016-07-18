@@ -1,4 +1,4 @@
-package haxe.ui;
+package haxe.ui.backend;
 
 class AppBase {
     public function new() {

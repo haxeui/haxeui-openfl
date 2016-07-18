@@ -1,4 +1,4 @@
-package haxe.ui.openfl;
+package haxe.ui.backend.openfl;
 
 import openfl.display.BitmapData;
 import openfl.geom.Rectangle;

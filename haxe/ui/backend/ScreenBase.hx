@@ -1,4 +1,4 @@
-package haxe.ui.core;
+package haxe.ui.backend;
 
 import haxe.ui.containers.dialogs.Dialog;
 import haxe.ui.containers.dialogs.DialogButton;
@@ -6,7 +6,7 @@ import haxe.ui.core.Component;
 import haxe.ui.core.KeyboardEvent;
 import haxe.ui.core.MouseEvent;
 import haxe.ui.core.UIEvent;
-import haxe.ui.openfl.EventMapper;
+import haxe.ui.backend.openfl.EventMapper;
 import openfl.display.StageAlign;
 import openfl.display.StageScaleMode;
 import openfl.Lib;

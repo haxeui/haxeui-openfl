@@ -1,4 +1,4 @@
-package haxe.ui;
+package haxe.ui.backend;
 
 import haxe.ui.assets.FontInfo;
 import haxe.ui.assets.ImageInfo;

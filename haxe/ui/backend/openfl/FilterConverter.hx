@@ -1,4 +1,4 @@
-package haxe.ui.openfl;
+package haxe.ui.backend.openfl;
 
 import haxe.ui.util.filters.Filter;
 import openfl.filters.BitmapFilter;

@@ -1,3 +1,3 @@
-package haxe.ui.assets;
+package haxe.ui.backend;
 
 typedef ImageData = openfl.display.BitmapData;

@@ -1,4 +1,4 @@
-package haxe.ui.util;
+package haxe.ui.backend;
 
 import haxe.Timer;
 
