@@ -15,5 +15,5 @@
 -cpp bin/openfl/linux64/cpp/obj
 
 -cp .
---no-output 
+#--no-output 
 --macro haxe.macro.Compiler.include("haxe.ui")
