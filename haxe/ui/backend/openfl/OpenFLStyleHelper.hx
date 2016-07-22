@@ -26,12 +26,10 @@ class OpenFLStyleHelper {
             return;
         }
 
-        /*
         left = Std.int(left);
         top = Std.int(top);
         width = Std.int(width);
         height = Std.int(height);
-        */
 
         var rc:Rectangle = new Rectangle(top, left, width, height);
 
@@ -217,12 +215,10 @@ class OpenFLStyleHelper {
             }
 
             graphics.lineStyle(0, 0, 0);
-            /*
             fillRect.left = Std.int(fillRect.left);
             fillRect.top = Std.int(fillRect.top);
             fillRect.bottom = Std.int(fillRect.bottom);
             fillRect.right = Std.int(fillRect.right);
-            */
 
             if (borderRadius == 0) {
                 graphics.drawRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height);
@@ -255,7 +251,6 @@ class OpenFLStyleHelper {
     }
 
     private static function paintBitmap(graphics:Graphics, bmp:BitmapData, cacheId:String, srcRect:Rectangle, dstRect:Rectangle) {
-        /*
         srcRect.left = Std.int(srcRect.left);
         srcRect.top = Std.int(srcRect.top);
         srcRect.bottom = Std.int(srcRect.bottom);
@@ -264,7 +259,6 @@ class OpenFLStyleHelper {
         dstRect.top = Std.int(dstRect.top);
         dstRect.bottom = Std.int(dstRect.bottom);
         dstRect.right = Std.int(dstRect.right);
-        */
         
         cacheId += "__" + BitmapCache.rectId(srcRect);
         var srcBmp:BitmapData = BitmapCache.instance.get(cacheId);
