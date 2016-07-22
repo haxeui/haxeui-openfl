@@ -259,7 +259,7 @@ class OpenFLStyleHelper {
         dstRect.top = Std.int(dstRect.top);
         dstRect.bottom = Std.int(dstRect.bottom);
         dstRect.right = Std.int(dstRect.right);
-        
+
         cacheId += "__" + BitmapCache.rectId(srcRect);
         var srcBmp:BitmapData = BitmapCache.instance.get(cacheId);
         if (srcBmp == null) {
