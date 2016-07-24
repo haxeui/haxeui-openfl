@@ -8,6 +8,11 @@
 <h2>haxeui-openfl</h2>
 `haxeui-openfl` is the `OpenFL` backend for HaxeUI.
 
+<p align="center">
+	<img src="https://github.com/haxeui/haxeui-openfl/raw/master/screen.png" />
+</p>
+
+
 <h2>Installation</h2>
  * `haxeui-openfl` has a dependency to <a href="https://github.com/haxeui/haxeui-core">`haxeui-core`</a>, and so that too must be installed.
  * `haxeui-openfl` also has a dependency to <a href="http://www.openfl.org/">OpenFL</a>, please refer to the installation instructions on their <a href="http://www.openfl.org/">site</a>.
