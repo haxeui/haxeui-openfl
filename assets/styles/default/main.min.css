@@ -1,4 +1,3 @@
-.tabbar-button-selected .label{offset-top:-1px;}
-.flash .tabbar-button-selected .label{offset-top:0px;}
-.tabbar-button-selected .image{}
-.label,.textfield{font-name:"_sans";font-size:13px;}
+.label,.textfield{font-name:"fonts/Roboto-Regular.ttf";font-size:13px;}
+.flash .label,.flash .textfield{font-name:"_sans";}
+.scrollview{padding:1px;padding-bottom:2px;}
