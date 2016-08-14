@@ -15,8 +15,8 @@ before_install:
 
 install:
     - haxelib install openfl &> log.txt || cat log.txt
-    - echo "y" | haxelib run openfl setup
-    - haxelib install hscript
+    - echo "y" | haxelib run openfl setup &> log.txt || cat log.txt
+    - haxelib install hscript &> log.txt || cat log.txt
     # - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
 
 script:
