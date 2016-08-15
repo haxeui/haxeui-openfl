@@ -12,6 +12,22 @@ before_install:
     - git clone https://github.com/haxeui/haxeui-core.git --depth=1
     - haxelib dev haxeui-core haxeui-core
 
+  # We need a git version of hxcpp for now
+  - git clone https://github.com/HaxeFoundation/hxcpp.git --depth=1
+  - haxelib dev hxcpp hxcpp
+  - cd hxcpp/tools/hxcpp
+  - haxe compile.hxml
+  - cd ../build
+  - haxe compile.hxml
+  - cd ../../project
+  - neko build.n clean
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+      neko build.n linux-64;
+    elif [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+      neko build.n;
+    fi
+  - cd ../../..
+
 
 install:
     - haxelib install openfl &> log.txt || cat log.txt
