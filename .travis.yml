@@ -36,4 +36,5 @@ install:
     # - haxelib dev haxeui-openfl $TRAVIS_BUILD_DIR
 
 script:
+    - cd $TRAVIS_BUILD_DIR
     - haxe linux.hxml
