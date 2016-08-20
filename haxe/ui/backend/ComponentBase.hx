@@ -73,7 +73,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (value == null) {
             this.scrollRect = null;
         } else {
-            this.scrollRect = new openfl.geom.Rectangle(value.left, value.top, value.width, value.height);
+            this.scrollRect = new openfl.geom.Rectangle(value.left, value.top, value.width, Math.ffloor(value.height));
         }
     }
 
