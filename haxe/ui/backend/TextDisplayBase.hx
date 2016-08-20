@@ -29,14 +29,14 @@ class TextDisplayBase extends TextField {
     private override function get_textWidth():Float {
         var v = super.textWidth;
         v += PADDING_X;
-        return v;
+        return Std.int(v);
     }
 
     @:getter(textHeight)
     private override function get_textHeight():Float {
         var v = super.textHeight;
         v += PADDING_Y;
-        return v;
+        return Std.int(v);
     }
 
     #else
@@ -45,14 +45,14 @@ class TextDisplayBase extends TextField {
     private function get_textWidth():Float {
         var v = super.textWidth;
         v += PADDING_X;
-        return v;
+        return Std.int(v);
     }
 
     @:getter(textHeight)
     private function get_textHeight():Float {
         var v = super.textHeight;
         v += PADDING_Y;
-        return v;
+        return Std.int(v);
     }
 
     #end
