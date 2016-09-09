@@ -58,6 +58,10 @@ class ScreenBase {
         Lib.current.stage.removeChild(component);
     }
 
+    private function handleSetComponentIndex(child:Component, index:Int) {
+        Lib.current.stage.setChildIndex(child, index);
+    }
+    
     private function onStageResize(event:openfl.events.Event) {
         for (c in _topLevelComponents) {
             if (c.percentWidth > 0) {
