@@ -38,7 +38,7 @@ class OpenFLStyleHelper {
             borderRadius = style.borderRadius;
         }
 
-        if (style.borderLeftSize != null
+        if (style.borderLeftSize != null && style.borderLeftSize != 0
             && style.borderLeftSize == style.borderRightSize
             && style.borderLeftSize == style.borderBottomSize
             && style.borderLeftSize == style.borderTopSize
