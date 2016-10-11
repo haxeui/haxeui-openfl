@@ -121,8 +121,8 @@ class ImageDisplayBase extends Sprite {
             }
             else
             {
-                imageWidth = 0;
-                imageHeight = 0;
+                _imageWidth = 0;
+                _imageHeight = 0;
             }
         }
 
