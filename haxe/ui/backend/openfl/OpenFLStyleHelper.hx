@@ -151,20 +151,17 @@ class OpenFLStyleHelper {
         var fillBmp:BitmapData = null;
         var fillRect:Rectangle = rc;
 
-        if(Std.is(data, BitmapData))
-        {
+        if(Std.is(data, BitmapData)) {
             fillBmp = cast data;
         }
         #if svg
-        else if(Std.is(data, format.SVG))
-        {
+        else if(Std.is(data, format.SVG)) {
             var svg:format.SVG = cast data;
             var renderer = new format.svg.SVGRenderer (svg.data);
             fillBmp = renderer.renderBitmap(rc);
         }
         #end
-        else
-        {
+        else {
             return;
         }
 

@@ -40,8 +40,7 @@ class ImageDisplayBase extends Sprite {
         return _imageWidth;
     }
     private function set_imageWidth(value:Float):Float {
-        if(Math.abs(_imageWidth - value) > 0.00001) // float comparison
-        {
+        if(Math.abs(_imageWidth - value) > 0.00001) { // float comparison
             _imageWidth = value;
 
             if(containsBitmapDataInfo()) {
@@ -64,8 +63,7 @@ class ImageDisplayBase extends Sprite {
         return _imageHeight;
     }
     private function set_imageHeight(value:Float):Float {
-        if(Math.abs(_imageHeight - value) > 0.00001) // float comparison
-        {
+        if(Math.abs(_imageHeight - value) > 0.00001) { // float comparison
             _imageHeight = value;
 
             if(containsBitmapDataInfo()) {
@@ -89,34 +87,29 @@ class ImageDisplayBase extends Sprite {
     private function set_imageInfo(value:ImageInfo):ImageInfo {
         if(_imageInfo != value)
         {
-            if(_imageInfo != null)
-            {
+            if(_imageInfo != null) {
                 if (_bmp != null && contains(_bmp) == true) {
                     removeChild(_bmp);
                     //_bmp.bitmapData.dispose();
                     _bmp = null;
                 }
-                else
-                {
+                else {
                     graphics.clear();
                 }
             }
 
             _imageInfo = value;
 
-            if(value != null)
-            {
+            if(value != null) {
                 aspectRatio = value.width / value.height;
-                if(containsBitmapDataInfo())
-                {
+                if(containsBitmapDataInfo()) {
                     _bmp = new Bitmap(_imageInfo.data);
                     _imageWidth = _bmp.width;
                     _imageHeight = _bmp.height;
                     addChild(_bmp);
                 }
                 #if svg
-                else if(containsSVGInfo())
-                {
+                else if(containsSVGInfo()) {
                     var svg:format.SVG = cast _imageInfo.data;
                     _imageWidth = svg.data.width;
                     _imageHeight = svg.data.height;
@@ -124,8 +117,7 @@ class ImageDisplayBase extends Sprite {
                 }
                 #end
             }
-            else
-            {
+            else {
                 _imageWidth = 0;
                 _imageHeight = 0;
             }
@@ -162,8 +154,7 @@ class ImageDisplayBase extends Sprite {
 
     private function renderSVG():Void {
         graphics.clear();
-        if(_imageInfo != null && imageWidth > 0 && imageHeight > 0)
-        {
+        if(_imageInfo != null && imageWidth > 0 && imageHeight > 0) {
             var svg:format.SVG = cast _imageInfo.data;
             svg.render(graphics, 0, 0, Std.int(imageWidth), Std.int(imageHeight));
         }
