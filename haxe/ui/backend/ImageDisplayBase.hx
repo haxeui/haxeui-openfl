@@ -110,11 +110,16 @@ class ImageDisplayBase extends Sprite {
                 if(containsBitmapDataInfo())
                 {
                     _bmp = new Bitmap(_imageInfo.data);
+                    _imageWidth = _bmp.width;
+                    _imageHeight = _bmp.height;
                     addChild(_bmp);
                 }
                 #if svg
                 else if(containsSVGInfo())
                 {
+                    var svg:format.SVG = cast _imageInfo.data;
+                    _imageWidth = svg.data.width;
+                    _imageHeight = svg.data.height;
                     renderSVG();
                 }
                 #end
