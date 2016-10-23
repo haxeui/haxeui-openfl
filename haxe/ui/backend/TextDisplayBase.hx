@@ -1,7 +1,7 @@
 package haxe.ui.backend;
 
+import openfl.text.TextFormatAlign;
 import openfl.Assets;
-import openfl.text.Font;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
@@ -21,6 +21,7 @@ class TextDisplayBase extends TextField {
         autoSize = TextFieldAutoSize.LEFT;
         text = "";
         fontSize = 12;
+        textAlign = TextFormatAlign.LEFT;
     }
 
     #if !flash
@@ -116,6 +117,19 @@ class TextDisplayBase extends TextField {
     private function set_fontSize(value:Null<Float>):Null<Float> {
         var format:TextFormat = getTextFormat();
         format.size = cast value;
+        defaultTextFormat = format;
+        setTextFormat(format);
+        return value;
+    }
+
+    public var textAlign(get, set):Null<String>;
+    private function get_textAlign():Null<String> {
+        var format:TextFormat = getTextFormat();
+        return cast format.align;
+    }
+    private function set_textAlign(value:Null<String>):Null<String> {
+        var format:TextFormat = getTextFormat();
+        format.align = value;
         defaultTextFormat = format;
         setTextFormat(format);
         return value;
