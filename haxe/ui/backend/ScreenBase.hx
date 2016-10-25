@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import flash.display.DisplayObjectContainer;
 import haxe.ui.containers.dialogs.Dialog;
 import haxe.ui.containers.dialogs.DialogButton;
 import haxe.ui.core.Component;
@@ -15,22 +16,25 @@ class ScreenBase {
     private var _mapping:Map<String, UIEvent->Void>;
 
     public function new() {
-        Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-        Lib.current.stage.align = StageAlign.TOP_LEFT;
         _mapping = new Map<String, UIEvent->Void>();
-        Lib.current.stage.addEventListener(openfl.events.Event.RESIZE, onStageResize);
     }
 
     public var options(default, default):Dynamic;
 
     public var width(get, null):Float;
     public function get_width():Float {
-        return Lib.current.stage.stageWidth;
+        if (container == Lib.current.stage) {
+            return Lib.current.stage.stageWidth;
+        }
+        return container.width;
     }
 
     public var height(get, null):Float;
-    public function get_height() {
-        return Lib.current.stage.stageHeight;
+    public function get_height():Float {
+        if (container == Lib.current.stage) {
+            return Lib.current.stage.stageHeight;
+        }
+        return container.height;
     }
 
     public var focus(get, set):Component;
@@ -49,20 +53,20 @@ class ScreenBase {
     private var _topLevelComponents:Array<Component> = new Array<Component>();
     public function addComponent(component:Component) {
         _topLevelComponents.push(component);
-        Lib.current.stage.addChild(component);
-        onStageResize(null);
+        container.addChild(component);
+        onContainerResize(null);
     }
 
     public function removeComponent(component:Component) {
         _topLevelComponents.remove(component);
-        Lib.current.stage.removeChild(component);
+        container.removeChild(component);
     }
 
     private function handleSetComponentIndex(child:Component, index:Int) {
-        Lib.current.stage.setChildIndex(child, index);
+        container.setChildIndex(child, index);
     }
     
-    private function onStageResize(event:openfl.events.Event) {
+    private function onContainerResize(event:openfl.events.Event) {
         for (c in _topLevelComponents) {
             if (c.percentWidth > 0) {
                 c.width = (this.width * c.percentWidth) / 100;
@@ -73,6 +77,26 @@ class ScreenBase {
         }
     }
 
+    private var _containerReady:Bool = false;
+    private var container(get, null):DisplayObjectContainer;
+    private function get_container():DisplayObjectContainer {
+        var c = null;
+        if (options == null || options.container == null) {
+            c = Lib.current.stage;
+        } else {
+            c = options.container;
+        }
+        
+        if (_containerReady == false) {
+            c.scaleMode = StageScaleMode.NO_SCALE;
+            c.align = StageAlign.TOP_LEFT;
+            c.addEventListener(openfl.events.Event.RESIZE, onContainerResize);
+            _containerReady = true;
+        }
+        
+        return c;
+    }
+    
     //***********************************************************************************************************
     // Dialogs
     //***********************************************************************************************************
