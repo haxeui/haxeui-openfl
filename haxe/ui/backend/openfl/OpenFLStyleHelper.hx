@@ -152,9 +152,23 @@ class OpenFLStyleHelper {
         }
     }
 
-    private static function paintBitmapBackground(graphics:Graphics, bmpData:BitmapData, style:Style, rc:Rectangle) {
-        var fillBmp:BitmapData = bmpData;
+    private static function paintBitmapBackground(graphics:Graphics, data:ImageData, style:Style, rc:Rectangle) {
+        var fillBmp:BitmapData = null;
         var fillRect:Rectangle = rc;
+
+        if(Std.is(data, BitmapData)) {
+            fillBmp = cast data;
+        }
+        #if svg
+        else if(Std.is(data, format.SVG)) {
+            var svg:format.SVG = cast data;
+            var renderer = new format.svg.SVGRenderer (svg.data);
+            fillBmp = renderer.renderBitmap(rc);
+        }
+        #end
+        else {
+            return;
+        }
 
         var cacheId:String = style.backgroundImage;
         if (style.backgroundImageClipTop != null

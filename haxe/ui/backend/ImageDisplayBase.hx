@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import openfl.display.BitmapData;
 import haxe.ui.assets.ImageInfo;
 import haxe.ui.core.Component;
 import openfl.display.Bitmap;
@@ -33,29 +34,49 @@ class ImageDisplayBase extends Sprite {
     }
 
     public var imageWidth(get, set):Float;
-    private function set_imageWidth(value:Float):Float {
-        _bmp.width = value;
-        return value;
-    }
 
-    private function get_imageWidth():Float {
-        if (_bmp == null) {
-            return 0;
+    private var _imageWidth:Float = 0;
+    public function get_imageWidth():Float {
+        return _imageWidth;
+    }
+    private function set_imageWidth(value:Float):Float {
+        if(Math.abs(_imageWidth - value) > 0.00001) { // float comparison
+            _imageWidth = value;
+
+            if(containsBitmapDataInfo()) {
+                _bmp.width = value;
+            }
+            #if svg
+            else if(containsSVGInfo()) {
+                invalidateSVG();
+            }
+            #end
         }
-        return _bmp.width;
+
+        return value;
     }
 
     public var imageHeight(get, set):Float;
-    private function set_imageHeight(value:Float):Float {
-        _bmp.height = value;
-        return value;
-    }
 
-    private function get_imageHeight():Float {
-        if (_bmp == null) {
-            return 0;
+    private var _imageHeight:Float = 0;
+    public function get_imageHeight():Float {
+        return _imageHeight;
+    }
+    private function set_imageHeight(value:Float):Float {
+        if(Math.abs(_imageHeight - value) > 0.00001) { // float comparison
+            _imageHeight = value;
+
+            if(containsBitmapDataInfo()) {
+                _bmp.height = value;
+            }
+            #if svg
+            else if(containsSVGInfo()) {
+                invalidateSVG();
+            }
+            #end
         }
-        return _bmp.height;
+
+        return value;
     }
 
     private var _imageInfo:ImageInfo;
@@ -64,16 +85,44 @@ class ImageDisplayBase extends Sprite {
         return _imageInfo;
     }
     private function set_imageInfo(value:ImageInfo):ImageInfo {
-        _imageInfo = value;
-        aspectRatio = value.width / value.height;
+        if(_imageInfo != value)
+        {
+            if(_imageInfo != null) {
+                if (_bmp != null && contains(_bmp) == true) {
+                    removeChild(_bmp);
+                    //_bmp.bitmapData.dispose();
+                    _bmp = null;
+                }
+                else {
+                    graphics.clear();
+                }
+            }
 
-        if (_bmp != null && contains(_bmp) == true) {
-            removeChild(_bmp);
-            //_bmp.bitmapData.dispose();
+            _imageInfo = value;
+
+            if(value != null) {
+                aspectRatio = value.width / value.height;
+                if(containsBitmapDataInfo()) {
+                    _bmp = new Bitmap(_imageInfo.data);
+                    _imageWidth = _bmp.width;
+                    _imageHeight = _bmp.height;
+                    addChild(_bmp);
+                }
+                #if svg
+                else if(containsSVGInfo()) {
+                    var svg:format.SVG = cast _imageInfo.data;
+                    _imageWidth = svg.data.width;
+                    _imageHeight = svg.data.height;
+                    renderSVG();
+                }
+                #end
+            }
+            else {
+                _imageWidth = 0;
+                _imageHeight = 0;
+            }
         }
 
-        _bmp = new Bitmap(_imageInfo.data);
-        addChild(_bmp);
         return value;
     }
 
@@ -82,4 +131,36 @@ class ImageDisplayBase extends Sprite {
             //_bmp.bitmapData.dispose();
         }
     }
+
+    private inline function containsBitmapDataInfo():Bool {
+        return _imageInfo != null && Std.is(_imageInfo.data, BitmapData);
+    }
+
+    #if svg
+
+    private var _svgInvalid:Bool = false;   //avoid multiple calls at the same frame
+
+    private inline function containsSVGInfo():Bool {
+        return _imageInfo != null && Std.is(_imageInfo.data, format.SVG);
+    }
+
+    private function invalidateSVG():Void {
+        if(_svgInvalid == false) {
+            _svgInvalid = true;
+
+            haxe.Timer.delay(renderSVG, 0);
+        }
+    }
+
+    private function renderSVG():Void {
+        graphics.clear();
+        if(_imageInfo != null && imageWidth > 0 && imageHeight > 0) {
+            var svg:format.SVG = cast _imageInfo.data;
+            svg.render(graphics, 0, 0, Std.int(imageWidth), Std.int(imageHeight));
+        }
+
+        _svgInvalid = false;
+    }
+
+    #end
 }
