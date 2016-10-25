@@ -91,18 +91,23 @@ class OpenFLStyleHelper {
 
         var backgroundColor:Null<Int> = style.backgroundColor;
         var backgroundColorEnd:Null<Int> = style.backgroundColorEnd;
+        var backgroundOpacity:Null<Float> = style.backgroundOpacity;
         #if html5 // TODO: fix for html5 not working with non-gradient fills
         if (backgroundColor != null && backgroundColorEnd == null) {
             backgroundColorEnd = backgroundColor;
         }
         #end
 
+        if(backgroundOpacity == null) {
+            backgroundOpacity = 1;
+        }
+
         if (backgroundColor != null) {
             if (backgroundColorEnd != null) {
                 var w:Int = Std.int(rc.width);
                 var h:Int = Std.int(rc.height);
                 var colors:Array<UInt> = [backgroundColor, backgroundColorEnd];
-                var alphas:Array<Float> = [1, 1];
+                var alphas:Array<Float> = [backgroundOpacity, backgroundOpacity];
                 var ratios:Array<Int> = [0, 255];
                 var matrix:Matrix = new Matrix();
 
@@ -126,7 +131,7 @@ class OpenFLStyleHelper {
                                             InterpolationMethod.LINEAR_RGB,
                                             0);
             } else {
-                graphics.beginFill(backgroundColor, 1);
+                graphics.beginFill(backgroundColor, backgroundOpacity);
             }
         }
 
