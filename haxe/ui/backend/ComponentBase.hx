@@ -50,11 +50,11 @@ class ComponentBase extends Sprite implements IComponentBase {
     private function handlePosition(left:Null<Float>, top:Null<Float>, style:Style):Void {
         if (left != null) {
             //this.x = Std.int(left);
-            this.x = Math.fceil(left);
+            this.x = Math.fround(left);
         }
         if (top != null) {
             //this.y = Std.int(top);
-            this.y = Math.fceil(top);
+            this.y = Math.fround(top);
         }
     }
 
@@ -65,7 +65,7 @@ class ComponentBase extends Sprite implements IComponentBase {
 
         OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
         if (style.clip == true) {
-            this.scrollRect = new openfl.geom.Rectangle(0, 0, width, height);
+            this.scrollRect = new openfl.geom.Rectangle(0, 0, Math.fround(width), Math.fround(height));
         }
     }
 
@@ -73,7 +73,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (value == null) {
             this.scrollRect = null;
         } else {
-            this.scrollRect = new openfl.geom.Rectangle(value.left, value.top, value.width, Math.ffloor(value.height));
+            this.scrollRect = new openfl.geom.Rectangle(value.left, value.top, Math.fround(value.width), Math.fround(value.height));
         }
     }
 
