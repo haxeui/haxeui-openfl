@@ -40,7 +40,8 @@ class ImageDisplayBase extends Sprite {
         return _imageWidth;
     }
     private function set_imageWidth(value:Float):Float {
-        if(Math.abs(_imageWidth - value) > 0.00001) { // float comparison
+        //if(Math.abs(_imageWidth - value) > 0.00001) { // float comparison
+        if (value != _imageWidth) {
             _imageWidth = value;
 
             if(containsBitmapDataInfo()) {
@@ -63,7 +64,8 @@ class ImageDisplayBase extends Sprite {
         return _imageHeight;
     }
     private function set_imageHeight(value:Float):Float {
-        if(Math.abs(_imageHeight - value) > 0.00001) { // float comparison
+        //if(Math.abs(_imageHeight - value) > 0.00001) { // float comparison
+        if (value != _imageHeight) {
             _imageHeight = value;
 
             if(containsBitmapDataInfo()) {
@@ -148,7 +150,8 @@ class ImageDisplayBase extends Sprite {
         if(_svgInvalid == false) {
             _svgInvalid = true;
 
-            haxe.Timer.delay(renderSVG, 0);
+            //haxe.Timer.delay(renderSVG, 0);
+            renderSVG();
         }
     }
 

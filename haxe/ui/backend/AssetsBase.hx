@@ -53,33 +53,34 @@ class AssetsBase {
     }
 
     private function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
+        if (Path.extension(resourceId).toLowerCase() == "svg") {
+            var imageInfo = null;
+            #if svg
+            var svgContent = Resource.getString(resourceId);
+            var svg = new format.SVG(svgContent);
+            imageInfo = {
+                data: svg,
+                width: Std.int(svg.data.width),
+                height: Std.int(svg.data.height)
+            }
+            #else
+            trace("WARNING: SVG not supported");
+            #end
+            
+            callback(resourceId, imageInfo);
+            return;
+        }
+        
         var bytes = Resource.getBytes(resourceId);
         var ba:ByteArray = ByteConverter.fromHaxeBytes(bytes);
         var loader:Loader = new Loader();
         loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e) {
             if (loader.content != null) {
-                var imageInfo:ImageInfo = null;
-                if(Path.extension(resourceId).toLowerCase() == "svg") {
-                    #if svg
-                    var bytes = Resource.getBytes(resourceId);
-                    var content:String = bytes.getString(0, bytes.length);
-                    var svg = new format.SVG(content);
-                    imageInfo = {
-                        data: svg,
-                        width: Std.int(svg.data.width),
-                        height: Std.int(svg.data.height)
-                    }
-                    #else
-                    trace("WARNING: SVG not supported");
-                    #end
-                }
-                else {
-                    var bmpData = cast(loader.content, Bitmap).bitmapData;
-                    imageInfo = {
-                        data: bmpData,
-                        width: bmpData.width,
-                        height: bmpData.height
-                    }
+                var bmpData = cast(loader.content, Bitmap).bitmapData;
+                var imageInfo:ImageInfo = {
+                    data: bmpData,
+                    width: bmpData.width,
+                    height: bmpData.height
                 }
 
                 callback(resourceId, imageInfo);
