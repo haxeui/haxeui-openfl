@@ -9,6 +9,7 @@ import haxe.ui.core.MouseEvent;
 import haxe.ui.core.UIEvent;
 import haxe.ui.backend.openfl.EventMapper;
 import openfl.display.StageAlign;
+import openfl.display.StageQuality;
 import openfl.display.StageScaleMode;
 import openfl.Lib;
 
@@ -22,21 +23,26 @@ class ScreenBase {
     public var options(default, default):Dynamic;
 
     public var width(get, null):Float;
-    public function get_width():Float {
+    private function get_width():Float {
         if (container == Lib.current.stage) {
-            return Lib.current.stage.stageWidth;
+            return Lib.current.stage.stageWidth / Toolkit.scaleX;
         }
-        return container.width;
+        return container.width / Toolkit.scaleX;
     }
 
     public var height(get, null):Float;
-    public function get_height():Float {
+    private function get_height():Float {
         if (container == Lib.current.stage) {
-            return Lib.current.stage.stageHeight;
+            return Lib.current.stage.stageHeight / Toolkit.scaleY;
         }
-        return container.height;
+        return container.height / Toolkit.scaleY;
     }
 
+    public var dpi(get, null):Float;
+    private function get_dpi():Float {
+        return 72;
+    }
+    
     public var focus(get, set):Component;
     private function get_focus():Component {
         return cast Lib.current.stage.focus;
@@ -52,6 +58,8 @@ class ScreenBase {
 
     private var _topLevelComponents:Array<Component> = new Array<Component>();
     public function addComponent(component:Component) {
+        component.scaleX =  Toolkit.scaleX;
+        component.scaleY =  Toolkit.scaleY;
         _topLevelComponents.push(component);
         container.addChild(component);
         onContainerResize(null);
@@ -88,6 +96,7 @@ class ScreenBase {
         }
         
         if (_containerReady == false) {
+            c.stage.quality = StageQuality.BEST;
             c.scaleMode = StageScaleMode.NO_SCALE;
             c.align = StageAlign.TOP_LEFT;
             c.addEventListener(openfl.events.Event.RESIZE, onContainerResize);
@@ -155,8 +164,8 @@ class ScreenBase {
             var fn = _mapping.get(type);
             if (fn != null) {
                 var mouseEvent = new MouseEvent(type);
-                mouseEvent.screenX = event.stageX;
-                mouseEvent.screenY = event.stageY;
+                mouseEvent.screenX = event.stageX / Toolkit.scaleX;
+                mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
                 fn(mouseEvent);
             }

@@ -23,7 +23,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         super();
         tabChildren = false;
         #if flash
-        focusRect = new Rectangle();
+        focusRect = false;
         #end
         _eventMap = new Map<String, UIEvent->Void>();
 
@@ -272,8 +272,8 @@ class ComponentBase extends Sprite implements IComponentBase {
                 event.stopPropagation();
                 */
                 var mouseEvent = new MouseEvent(type);
-                mouseEvent.screenX = event.stageX;
-                mouseEvent.screenY = event.stageY;
+                mouseEvent.screenX = event.stageX / Toolkit.scaleX;
+                mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
                 mouseEvent.delta = event.delta;
                 fn(mouseEvent);
