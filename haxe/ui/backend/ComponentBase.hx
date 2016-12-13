@@ -180,7 +180,7 @@ class ComponentBase extends Sprite implements IComponentBase {
     private function handleSetComponentIndex(child:Component, index:Int) {
         setChildIndex(child, index);
     }
-    
+
     private function applyStyle(style:Style) {
         var useHandCursor = false;
         if (style.cursor != null && style.cursor == "pointer") {

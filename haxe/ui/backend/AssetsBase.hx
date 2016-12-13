@@ -66,11 +66,11 @@ class AssetsBase {
             #else
             trace("WARNING: SVG not supported");
             #end
-            
+
             callback(resourceId, imageInfo);
             return;
         }
-        
+
         var bytes = Resource.getBytes(resourceId);
         var ba:ByteArray = ByteConverter.fromHaxeBytes(bytes);
         var loader:Loader = new Loader();

@@ -42,7 +42,7 @@ class ScreenBase {
     private function get_dpi():Float {
         return 72;
     }
-    
+
     public var focus(get, set):Component;
     private function get_focus():Component {
         return cast Lib.current.stage.focus;
@@ -73,7 +73,7 @@ class ScreenBase {
     private function handleSetComponentIndex(child:Component, index:Int) {
         container.setChildIndex(child, index);
     }
-    
+
     private function onContainerResize(event:openfl.events.Event) {
         for (c in _topLevelComponents) {
             if (c.percentWidth > 0) {
@@ -94,7 +94,7 @@ class ScreenBase {
         } else {
             c = options.container;
         }
-        
+
         if (_containerReady == false) {
             c.stage.quality = StageQuality.BEST;
             c.scaleMode = StageScaleMode.NO_SCALE;
@@ -102,10 +102,10 @@ class ScreenBase {
             c.addEventListener(openfl.events.Event.RESIZE, onContainerResize);
             _containerReady = true;
         }
-        
+
         return c;
     }
-    
+
     //***********************************************************************************************************
     // Dialogs
     //***********************************************************************************************************
