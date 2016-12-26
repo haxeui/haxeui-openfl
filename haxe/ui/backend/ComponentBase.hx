@@ -96,6 +96,7 @@ class ComponentBase extends Sprite implements IComponentBase {
     public function createTextDisplay(text:String = null):TextDisplay {
         if (_textDisplay == null) {
             _textDisplay = new TextDisplay();
+            _textDisplay.parentComponent = cast(this, Component);
             addChild(_textDisplay);
         }
         if (text != null) {
@@ -116,6 +117,7 @@ class ComponentBase extends Sprite implements IComponentBase {
     public function createTextInput(text:String = null):TextInput {
         if (_textInput == null) {
             _textInput = new TextInput();
+            _textInput.parentComponent = cast(this, Component);
             addChild(_textInput);
         }
         if (text != null) {

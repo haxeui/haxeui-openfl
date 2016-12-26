@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import haxe.ui.core.Component;
 import openfl.text.TextFormatAlign;
 import openfl.Assets;
 import openfl.text.TextField;
@@ -8,8 +9,10 @@ import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
 class TextDisplayBase extends TextField {
+    public var parentComponent:Component;
+    
     private var PADDING_X:Int = 0;
-    private var PADDING_Y:Int = 0;// -4;
+    private var PADDING_Y:Int = 4;// -4;
 
     public function new() {
         super();
