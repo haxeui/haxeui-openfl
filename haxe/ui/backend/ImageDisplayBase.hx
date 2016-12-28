@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import haxe.ui.util.Rectangle;
 import openfl.display.BitmapData;
 import haxe.ui.assets.ImageInfo;
 import haxe.ui.core.Component;
@@ -45,7 +46,7 @@ class ImageDisplayBase extends Sprite {
             _imageWidth = value;
 
             if(containsBitmapDataInfo()) {
-                _bmp.width = value;
+                _bmp.scaleX = value / _bmp.bitmapData.width;
             }
             #if svg
             else if(containsSVGInfo()) {
@@ -69,7 +70,7 @@ class ImageDisplayBase extends Sprite {
             _imageHeight = value;
 
             if(containsBitmapDataInfo()) {
-                _bmp.height = value;
+                _bmp.scaleY = value / _bmp.bitmapData.height;
             }
             #if svg
             else if(containsSVGInfo()) {
@@ -123,6 +124,25 @@ class ImageDisplayBase extends Sprite {
                 _imageWidth = 0;
                 _imageHeight = 0;
             }
+        }
+
+        return value;
+    }
+
+    public var imageClipRect(get, set):Rectangle;
+
+    private var _imageClipRect:Rectangle;
+    public function get_imageClipRect():Rectangle {
+        return _imageClipRect;
+    }
+    private function set_imageClipRect(value:Rectangle):Rectangle {
+        _imageClipRect = value;
+        if(value == null) {
+            this.scrollRect = null;
+        } else {
+            this.scrollRect = new openfl.geom.Rectangle(-left, -top, Math.fround(value.width), Math.fround(value.height));
+            left = value.left;
+            top = value.top;
         }
 
         return value;
