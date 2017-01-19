@@ -8,8 +8,6 @@ import openfl.text.TextFieldType;
 import openfl.text.TextFieldAutoSize;
 
 class TextInputBase extends TextDisplayBase {
-    public var password:Bool;
-    
     @:access(haxe.ui.components.TextArea)
     public function new() {
         super();
@@ -28,6 +26,15 @@ class TextInputBase extends TextDisplayBase {
                 cast(parentComponent, TextArea).checkScrolls();
             }
         });
+    }
+
+    public var password(get, set):Bool;
+    private function get_password():Bool {
+        return displayAsPassword;
+    }
+    private function set_password(value:Bool):Bool {
+        displayAsPassword = value;
+        return value;
     }
 
     public var vscrollPos(get, set):Float;
