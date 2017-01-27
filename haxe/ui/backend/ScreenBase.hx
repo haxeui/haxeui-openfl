@@ -8,6 +8,7 @@ import haxe.ui.core.KeyboardEvent;
 import haxe.ui.core.MouseEvent;
 import haxe.ui.core.UIEvent;
 import haxe.ui.backend.openfl.EventMapper;
+import lime.system.System;
 import openfl.display.StageAlign;
 import openfl.display.StageQuality;
 import openfl.display.StageScaleMode;
@@ -40,7 +41,7 @@ class ScreenBase {
 
     public var dpi(get, null):Float;
     private function get_dpi():Float {
-        return 72;
+        return System.getDisplay(0).dpi;
     }
 
     public var focus(get, set):Component;
