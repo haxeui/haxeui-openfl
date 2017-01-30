@@ -37,6 +37,15 @@ class TextInputBase extends TextDisplayBase {
         return value;
     }
 
+    public var hscrollPos(get, set):Float;
+    private function get_hscrollPos():Float {
+        return this.scrollH - 1;
+    }
+    private function set_hscrollPos(value:Float):Float {
+        this.scrollH = Std.int(value + 1);
+        return value;
+    }
+
     public var vscrollPos(get, set):Float;
     private function get_vscrollPos():Float {
         return this.scrollV - 1;
