@@ -26,11 +26,18 @@ class OpenFLStyleHelper {
             return;
         }
 
+        /*
         left = Math.fround(left);
         top = Math.fround(top);
         width = Math.fround(width);
         height = Math.fround(height);
+        */
 
+        left = Std.int(left);
+        top = Std.int(top);
+        width = Std.int(width);
+        height = Std.int(height);
+        
         var rc:Rectangle = new Rectangle(top, left, width, height);
 
         var borderRadius:Float = 0;
