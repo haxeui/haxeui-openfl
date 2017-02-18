@@ -165,6 +165,7 @@ class ScreenBase {
             var fn = _mapping.get(type);
             if (fn != null) {
                 var mouseEvent = new MouseEvent(type);
+                mouseEvent._originalEvent = event;
                 mouseEvent.screenX = event.stageX / Toolkit.scaleX;
                 mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
@@ -179,6 +180,7 @@ class ScreenBase {
             var fn = _mapping.get(type);
             if (fn != null) {
                 var keyboardEvent = new KeyboardEvent(type);
+                keyboardEvent._originalEvent = event;
                 keyboardEvent.keyCode = event.keyCode;
                 keyboardEvent.shiftKey = event.shiftKey;
                 fn(keyboardEvent);

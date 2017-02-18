@@ -271,11 +271,8 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (type != null) {
             var fn = _eventMap.get(type);
             if (fn != null) {
-                /*
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                */
                 var mouseEvent = new MouseEvent(type);
+                mouseEvent._originalEvent = event;
                 mouseEvent.screenX = event.stageX / Toolkit.scaleX;
                 mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
