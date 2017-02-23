@@ -99,7 +99,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (_textDisplay == null) {
             _textDisplay = new TextDisplay();
             _textDisplay.parentComponent = cast(this, Component);
-            addChild(_textDisplay);
+            addChild(_textDisplay.textField);
         }
         if (text != null) {
             _textDisplay.text = text;
@@ -120,7 +120,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (_textInput == null) {
             _textInput = new TextInput();
             _textInput.parentComponent = cast(this, Component);
-            addChild(_textInput);
+            addChild(_textInput.textField);
         }
         if (text != null) {
             _textInput.text = text;
@@ -240,7 +240,7 @@ class ComponentBase extends Sprite implements IComponentBase {
                 if (_eventMap.exists(UIEvent.CHANGE) == false) {
                     if (hasTextInput() == true) {
                         _eventMap.set(UIEvent.CHANGE, listener);
-                        getTextInput().addEventListener(Event.CHANGE, __onTextInputChange);
+                        getTextInput().textField.addEventListener(Event.CHANGE, __onTextInputChange);
                     }
                 }
         }
@@ -257,7 +257,7 @@ class ComponentBase extends Sprite implements IComponentBase {
             case UIEvent.CHANGE:
                 _eventMap.remove(type);
                 if (hasTextInput() == true) {
-                    getTextInput().removeEventListener(Event.CHANGE, __onTextInputChange);
+                    getTextInput().textField.removeEventListener(Event.CHANGE, __onTextInputChange);
                 }
         }
 

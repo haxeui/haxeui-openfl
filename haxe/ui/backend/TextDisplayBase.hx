@@ -8,135 +8,127 @@ import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
-class TextDisplayBase extends TextField {
+class TextDisplayBase {
+
+    public var textField:TextField;
     public var parentComponent:Component;
 
     private var PADDING_X:Int = 0;
     private var PADDING_Y:Int = 4;// -4;
 
     public function new() {
-        super();
-        type = TextFieldType.DYNAMIC;
-        selectable = false;
-        mouseEnabled = false;
-        multiline = false;
-        wordWrap = false;
-        autoSize = TextFieldAutoSize.LEFT;
-        text = "";
-        fontSize = 12;
-        textAlign = TextFormatAlign.LEFT;
+        textField = createTextField();
+
+        _text = "";
+        _fontSize = 12;
+        _textAlign = TextFormatAlign.LEFT;
+        _multiline = false;
+        _wordWrap = false;
     }
 
-    #if !flash
+    private function createTextField() {
+        var tf:TextField = new TextField();
+        tf.type = TextFieldType.DYNAMIC;
+        tf.selectable = false;
+        tf.mouseEnabled = false;
+        tf.autoSize = TextFieldAutoSize.LEFT;
 
-    @:getter(textWidth)
-    private override function get_textWidth():Float {
-        var v = super.textWidth;
-        v += PADDING_X;
-        return v;
-    }
-
-    @:getter(textHeight)
-    private override function get_textHeight():Float {
-        var v = super.textHeight;
-        v += PADDING_Y;
-        return v;
+        return tf;
     }
 
-    #else
+    private var _text:String;
+    private var _left:Float = 0;
+    private var _top:Float = 0;
+    private var _width:Float = 0;
+    private var _height:Float = 0;
+    private var _textWidth:Float = 0;
+    private var _textHeight:Float = 0;
+    private var _color:Int;
+    private var _fontName:String;
+    private var _fontSize:Float;
+    private var _textAlign:String;
+    private var _multiline:Bool = true;
+    private var _wordWrap:Bool = false;
 
-    @:getter(textWidth)
-    private function get_textWidth():Float {
-        var v = super.textWidth;
-        v += PADDING_X;
-        return v;
-    }
+    //***********************************************************************************************************
+    // Validation functions
+    //***********************************************************************************************************
 
-    @:getter(textHeight)
-    private function get_textHeight():Float {
-        var v = super.textHeight;
-        v += PADDING_Y;
-        return v;
-    }
-
-    #end
-
-    public var left(get, set):Float;
-    private function get_left():Float {
-        return this.x + 2 - (PADDING_X / 2);
-    }
-    private function set_left(value:Float):Float {
-        value = Std.int(value);
-        this.x = value - 2 + (PADDING_X / 2);
-        return value;
+    private function validateData() {
+        textField.text = _text;
     }
 
-    public var top(get, set):Float;
-    private function get_top():Float {
-        return this.y + 2 - (PADDING_Y / 2);
-    }
-    private function set_top(value:Float):Float {
-        value = Std.int(value);
-        this.y = value - 2 + (PADDING_Y / 2);
-        return value;
-    }
+    private function validateStyle():Bool {
+        var measureTextRequired:Bool = false;
 
-    public var color(get, set):Int;
-    private function get_color():Int {
-        var format:TextFormat = getTextFormat();
-        return format.color;
-    }
-    private function set_color(value:Int):Int {
-        var format:TextFormat = getTextFormat();
-        format.color = value;
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
-    }
+        var format:TextFormat = textField.getTextFormat();
 
-    public var fontName(get, set):String;
-    private function get_fontName():String {
-        var format:TextFormat = getTextFormat();
-        return format.font;
-    }
-    private function set_fontName(value:String):String {
-        embedFonts = isEmbeddedFont(value);
-        var format:TextFormat = getTextFormat();
-        if (isEmbeddedFont(value) == true) {
-            format.font = Assets.getFont(value).fontName;
-        } else {
-            format.font = value;
+        if (format.align != _textAlign) {
+            format.align = _textAlign;
         }
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
+
+        var fontSizeValue = Std.int(_fontSize);
+        if (format.size != fontSizeValue) {
+            format.size = fontSizeValue;
+
+            measureTextRequired = true;
+        }
+
+        if (format.font != _fontName) {
+            if (isEmbeddedFont(_fontName) == true) {
+                format.font = Assets.getFont(_fontName).fontName;
+            } else {
+                format.font = _fontName;
+            }
+
+            measureTextRequired = true;
+        }
+
+        if (format.color != _color) {
+            format.color = _color;
+        }
+
+        textField.defaultTextFormat = format;
+        textField.setTextFormat(format);
+
+        if (textField.wordWrap != _wordWrap) {
+            textField.wordWrap = _wordWrap;
+
+            measureTextRequired = true;
+        }
+
+        if (textField.multiline != _multiline) {
+            textField.multiline = _multiline;
+
+            measureTextRequired = true;
+        }
+
+        return measureTextRequired;
     }
 
-    public var fontSize(get, set):Null<Float>;
-    private function get_fontSize():Null<Float> {
-        var format:TextFormat = getTextFormat();
-        return cast format.size;
-    }
-    private function set_fontSize(value:Null<Float>):Null<Float> {
-        var format:TextFormat = getTextFormat();
-        format.size = cast value;
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
+    private function validatePosition() {
+        textField.x = _left - 2 + (PADDING_X / 2);
+        textField.y = _top - 2 + (PADDING_Y / 2);
     }
 
-    public var textAlign(get, set):Null<String>;
-    private function get_textAlign():Null<String> {
-        var format:TextFormat = getTextFormat();
-        return cast format.align;
+    private function validateDisplay() {
+        if (textField.width != _width) {
+            textField.width = _width;
+        }
+
+        if (textField.height != _height) {
+            textField.height = _height;
+        }
     }
-    private function set_textAlign(value:Null<String>):Null<String> {
-        var format:TextFormat = getTextFormat();
-        format.align = value;
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
+
+    private function measureText() {
+        _textWidth = textField.textWidth + PADDING_X;
+        _textHeight = textField.textHeight + PADDING_Y;
     }
+
+    //***********************************************************************************************************
+    // Util functions
+    //***********************************************************************************************************
 
     private static inline function isEmbeddedFont(name:String) {
         return (name != "_sans" && name != "_serif" && name != "_typewriter");
