@@ -143,7 +143,7 @@ class ComponentBase extends Sprite implements IComponentBase {
     public function createImageDisplay():ImageDisplay {
         if (_imageDisplay == null) {
             _imageDisplay = new ImageDisplay();
-            addChild(_imageDisplay);
+            addChild(_imageDisplay.sprite);
         }
         return _imageDisplay;
     }
@@ -158,8 +158,8 @@ class ComponentBase extends Sprite implements IComponentBase {
 
     public function removeImageDisplay():Void {
         if (_imageDisplay != null) {
-            if (contains(_imageDisplay) == true) {
-                removeChild(_imageDisplay);
+            if (contains(_imageDisplay.sprite) == true) {
+                removeChild(_imageDisplay.sprite);
             }
             _imageDisplay.dispose();
             _imageDisplay = null;
