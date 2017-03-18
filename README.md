@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://dl.dropboxusercontent.com/u/26678671/haxeui2-warning.png"/>
+  <img src="http://haxeui.org/db/haxeui2-warning.png"/>
 </p>
 
 [![Build Status](https://travis-ci.org/haxeui/haxeui-openfl.svg?branch=master)](https://travis-ci.org/haxeui/haxeui-openfl)
-[![Support this project on Patreon](https://dl.dropboxusercontent.com/u/26678671/patreon_button.png)](https://www.patreon.com/haxeui)
+[![Support this project on Patreon](http://haxeui.org/db/patreon_button.png)](https://www.patreon.com/haxeui)
 
 <h2>haxeui-openfl</h2>
 `haxeui-openfl` is the `OpenFL` backend for HaxeUI.
