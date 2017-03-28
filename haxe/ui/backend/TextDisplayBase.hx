@@ -39,6 +39,12 @@ class TextDisplayBase extends TextField {
     @:getter(textHeight)
     private override function get_textHeight():Float {
         var v = super.textHeight;
+        if (v == 0) {
+            var tmpText:String = text;
+            text = "|";
+            v = super.textHeight;
+            text = tmpText;
+        }
         v += PADDING_Y;
         return v;
     }
