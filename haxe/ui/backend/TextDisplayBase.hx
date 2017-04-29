@@ -1,6 +1,7 @@
 package haxe.ui.backend;
 
 import haxe.ui.core.Component;
+import haxe.ui.styles.Style;
 import openfl.text.TextFormatAlign;
 import openfl.Assets;
 import openfl.text.TextField;
@@ -23,8 +24,6 @@ class TextDisplayBase extends TextField {
         wordWrap = false;
         autoSize = TextFieldAutoSize.LEFT;
         text = "";
-        fontSize = 12;
-        textAlign = TextFormatAlign.LEFT;
     }
 
     #if !flash
@@ -87,63 +86,29 @@ class TextDisplayBase extends TextField {
         return value;
     }
 
-    public var color(get, set):Int;
-    private function get_color():Int {
+    public function applyStyle(style:Style) {
         var format:TextFormat = getTextFormat();
-        return format.color;
-    }
-    private function set_color(value:Int):Int {
-        var format:TextFormat = getTextFormat();
-        format.color = value;
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
-    }
-
-    public var fontName(get, set):String;
-    private function get_fontName():String {
-        var format:TextFormat = getTextFormat();
-        return format.font;
-    }
-    private function set_fontName(value:String):String {
-        embedFonts = isEmbeddedFont(value);
-        var format:TextFormat = getTextFormat();
-        if (isEmbeddedFont(value) == true) {
-            format.font = Assets.getFont(value).fontName;
-        } else {
-            format.font = value;
+        if (style.color != null) {
+            format.color = style.color;
+        }
+        if (style.fontName != null) {
+            embedFonts = isEmbeddedFont(style.fontName);
+            if (isEmbeddedFont(style.fontName) == true) {
+                format.font = Assets.getFont(style.fontName).fontName;
+            } else {
+                format.font = style.fontName;
+            }
+        }
+        if (style.fontSize != null) {
+            format.size = style.fontSize;
+        }
+        if (style.textAlign != null) {
+            format.align = cast style.textAlign;
         }
         defaultTextFormat = format;
         setTextFormat(format);
-        return value;
     }
-
-    public var fontSize(get, set):Null<Float>;
-    private function get_fontSize():Null<Float> {
-        var format:TextFormat = getTextFormat();
-        return cast format.size;
-    }
-    private function set_fontSize(value:Null<Float>):Null<Float> {
-        var format:TextFormat = getTextFormat();
-        format.size = cast value;
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
-    }
-
-    public var textAlign(get, set):Null<String>;
-    private function get_textAlign():Null<String> {
-        var format:TextFormat = getTextFormat();
-        return cast format.align;
-    }
-    private function set_textAlign(value:Null<String>):Null<String> {
-        var format:TextFormat = getTextFormat();
-        format.align = value;
-        defaultTextFormat = format;
-        setTextFormat(format);
-        return value;
-    }
-
+    
     private static inline function isEmbeddedFont(name:String) {
         return (name != "_sans" && name != "_serif" && name != "_typewriter");
     }
