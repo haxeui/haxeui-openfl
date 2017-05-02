@@ -60,12 +60,16 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
     }
 
+    public var styleable:Bool = true;
     private function handleSize(width:Null<Float>, height:Null<Float>, style:Style) {
         if (width == null || height == null || width <= 0 || height <= 0) {
             return;
         }
 
-        OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
+        if (styleable == true) {
+            OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
+        }
+        
         if (style.clip == true) {
             this.scrollRect = new openfl.geom.Rectangle(0, 0, Math.fround(width), Math.fround(height));
         }
