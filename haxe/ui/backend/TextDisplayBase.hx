@@ -103,7 +103,7 @@ class TextDisplayBase extends TextField {
             format.size = style.fontSize;
         }
         if (style.textAlign != null) {
-            format.align = cast style.textAlign;
+            format.align = style.textAlign;
         }
         defaultTextFormat = format;
         setTextFormat(format);
