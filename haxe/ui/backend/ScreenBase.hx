@@ -57,6 +57,14 @@ class ScreenBase {
         return value;
     }
 
+    private inline function set_title(s:String) : String {
+        Lib.current.stage.window.title = s;
+        return s;
+    }
+    private inline function get_title() : String {
+        return Lib.current.stage.window.title;
+    }
+
     private var _topLevelComponents:Array<Component> = new Array<Component>();
     public function addComponent(component:Component) {
         component.scaleX =  Toolkit.scaleX;
