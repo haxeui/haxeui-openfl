@@ -57,11 +57,12 @@ class ScreenBase {
         return value;
     }
 
-    private inline function set_title(s:String) : String {
+    public var title(get,set):String;
+    private inline function set_title(s:String):String {
         Lib.current.stage.window.title = s;
         return s;
     }
-    private inline function get_title() : String {
+    private inline function get_title():String {
         return Lib.current.stage.window.title;
     }
 
