@@ -13,7 +13,7 @@ class TextDisplayBase extends TextField {
     public var parentComponent:Component;
 
     private var PADDING_X:Int = 0;
-    private var PADDING_Y:Int = 4;// -4;
+    private var PADDING_Y:Int = 0;
 
     public function new() {
         super();
