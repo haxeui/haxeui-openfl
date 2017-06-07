@@ -57,6 +57,21 @@ class ScreenBase {
         return value;
     }
 
+    public var title(get,set):String;
+    private inline function set_title(s:String):String {
+        #if (flash || android || ios )
+        trace("WARNING: this platform doesnt support dynamic titles");
+        #end
+        Lib.current.stage.window.title = s;
+        return s;
+    }
+    private inline function get_title():String {
+        #if (flash || android || ios )
+        trace("WARNING: this platform doesnt support dynamic titles");
+        #end
+        return Lib.current.stage.window.title;
+    }
+
     private var _topLevelComponents:Array<Component> = new Array<Component>();
     public function addComponent(component:Component) {
         component.scaleX =  Toolkit.scaleX;
