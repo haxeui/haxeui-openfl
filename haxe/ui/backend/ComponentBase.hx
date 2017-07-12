@@ -60,12 +60,16 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
     }
 
+    public var styleable:Bool = true;
     private function handleSize(width:Null<Float>, height:Null<Float>, style:Style) {
         if (width == null || height == null || width <= 0 || height <= 0) {
             return;
         }
 
-        OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
+        if (styleable == true) {
+            OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
+        }
+        
         if (style.clip == true) {
             this.scrollRect = new openfl.geom.Rectangle(0, 0, Math.fround(width), Math.fround(height));
         }
@@ -271,11 +275,8 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (type != null) {
             var fn = _eventMap.get(type);
             if (fn != null) {
-                /*
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                */
                 var mouseEvent = new MouseEvent(type);
+                mouseEvent._originalEvent = event;
                 mouseEvent.screenX = event.stageX / Toolkit.scaleX;
                 mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;

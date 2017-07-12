@@ -39,7 +39,6 @@ class OpenFLStyleHelper {
         height = Std.int(height);
         
         var rc:Rectangle = new Rectangle(top, left, width, height);
-
         var borderRadius:Float = 0;
         if (style.borderRadius != null) {
             borderRadius = style.borderRadius;
@@ -55,43 +54,49 @@ class OpenFLStyleHelper {
             && style.borderLeftColor == style.borderBottomColor
             && style.borderLeftColor == style.borderTopColor) {
             graphics.lineStyle(style.borderLeftSize, style.borderLeftColor);
-            rc.inflate( -(style.borderLeftSize / 2), -(style.borderLeftSize / 2));
+            rc.left += style.borderLeftSize / 2;
+            rc.top += style.borderLeftSize / 2;
+            rc.bottom -= style.borderLeftSize / 2;
+            rc.right -= style.borderLeftSize / 2;
+            //rc.inflate( -(style.borderLeftSize / 2), -(style.borderLeftSize / 2));
         } else {
             if ((style.borderTopSize != null && style.borderTopSize > 0)
                 || (style.borderBottomSize != null && style.borderBottomSize > 0)
                 || (style.borderLeftSize != null && style.borderLeftSize > 0)
                 || (style.borderRightSize != null && style.borderRightSize > 0)) {
 
+                    var org = rc.clone();
+                    
                     if (style.borderTopSize != null && style.borderTopSize > 0) {
                         graphics.beginFill(style.borderTopColor);
-                        graphics.drawRect(0, 0, rc.width, 1);
+                        graphics.drawRect(0, 0, org.width, style.borderTopSize);
                         graphics.endFill();
 
-                        rc.top += 1;
+                        rc.top += style.borderTopSize;
                     }
 
                     if (style.borderBottomSize != null && style.borderBottomSize > 0) {
                         graphics.beginFill(style.borderBottomColor);
-                        graphics.drawRect(0, height - 1, rc.width, 1);
+                        graphics.drawRect(0, org.height - style.borderBottomSize, org.width, style.borderBottomSize);
                         graphics.endFill();
 
-                        rc.bottom -= 1;
+                        rc.bottom -= style.borderBottomSize;
                     }
 
                     if (style.borderLeftSize != null && style.borderLeftSize > 0) {
                         graphics.beginFill(style.borderLeftColor);
-                        graphics.drawRect(0, 1, 1, rc.height + 1);
+                        graphics.drawRect(0, rc.top, style.borderLeftSize, org.height - rc.top);
                         graphics.endFill();
 
-                        rc.left += 1;
+                        rc.left += style.borderLeftSize;
                     }
 
                     if (style.borderRightSize != null && style.borderRightSize > 0) {
                         graphics.beginFill(style.borderRightColor);
-                        graphics.drawRect(rc.width, 1, 1, rc.height + 1);
+                        graphics.drawRect(org.width - style.borderRightSize, rc.top, style.borderRightSize, org.height - rc.top);
                         graphics.endFill();
 
-                        rc.right -= 1;
+                        rc.right -= style.borderRightSize;
                     }
             }
         }

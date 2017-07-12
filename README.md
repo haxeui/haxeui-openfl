@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://dl.dropboxusercontent.com/u/26678671/haxeui2-warning.png"/>
+  <img src="http://haxeui.org/db/haxeui2-warning.png"/>
 </p>
 
 [![Build Status](https://travis-ci.org/haxeui/haxeui-openfl.svg?branch=master)](https://travis-ci.org/haxeui/haxeui-openfl)
-[![Support this project on Patreon](https://dl.dropboxusercontent.com/u/26678671/patreon_button.png)](https://www.patreon.com/haxeui)
+[![Support this project on Patreon](http://haxeui.org/db/patreon_button.png)](https://www.patreon.com/haxeui)
 
-<h2>haxeui-openfl</h2>
+# haxeui-openfl
 `haxeui-openfl` is the `OpenFL` backend for HaxeUI.
 
 <p align="center">
@@ -13,7 +13,7 @@
 </p>
 
 
-<h2>Installation</h2>
+## Installation
  * `haxeui-openfl` has a dependency to <a href="https://github.com/haxeui/haxeui-core">`haxeui-core`</a>, and so that too must be installed.
  * `haxeui-openfl` also has a dependency to <a href="http://www.openfl.org/">OpenFL</a>, please refer to the installation instructions on their <a href="http://www.openfl.org/">site</a>.
  
@@ -24,12 +24,12 @@ haxelib git haxeui-core https://github.com/haxeui/haxeui-core
 haxelib dev haxeui-openfl path/to/expanded/source/archive
 ```
 
-<h2>Usage</h2>
+## Usage
 The simplest method to create a new `OpenFL` application that is HaxeUI ready is to use one of the <a href="https://github.com/haxeui/haxeui-templates">haxeui-templates</a>. These templates will allow you to start a new project rapidly with HaxeUI support baked in. 
 
 If however you already have an existing application, then incorporating HaxeUI into that application is straight forward:
 
-<h3>project/application.xml</h3>
+### project/application.xml
 Assuming `haxeui-core` and `haxeui-openfl` have been installed, then adding HaxeUI to your existing application is as simple as adding these two lines to your `project.xml` or your `application.xml`:
 
 ```xml
@@ -39,7 +39,7 @@ Assuming `haxeui-core` and `haxeui-openfl` have been installed, then adding Haxe
 
 _Note: Currently you must also include `haxeui-core` explicitly during the alpha, eventually `haxelib.json` files will exist to take care of this dependency automatically._ 
 
-<h3>Toolkit initialisation and usage</h3>
+### Toolkit initialisation and usage
 Initialising the toolkit requires you to add this single line somewhere _before_ you start to actually use HaxeUI in your application:
 
 ```
@@ -47,11 +47,11 @@ Toolkit.init();
 ```
 Once the toolkit is initialised you can add components using the methods specified <a href="https://github.com/haxeui/haxeui-core#adding-components-using-haxe-code">here</a>.
 
-<h2>OpenFL specifics</h2>
+## OpenFL specifics
 
 As well as using the generic `Screen.instance.addComponent`, it is also possible to add components directly to any other `OpenFL` sprite (eg: `Lib.current.stage.addChild`)
 
-<h2>Addtional resources</h2>
+## Addtional resources
 * <a href="http://haxeui.github.io/haxeui-api/">haxeui-api</a> - The HaxeUI api docs.
 * <a href="https://github.com/haxeui/haxeui-guides">haxeui-guides</a> - Set of guides to working with HaxeUI and backends.
 * <a href="https://github.com/haxeui/haxeui-demo">haxeui-demo</a> - Demo application written using HaxeUI.

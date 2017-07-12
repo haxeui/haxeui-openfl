@@ -57,6 +57,21 @@ class ScreenBase {
         return value;
     }
 
+    public var title(get,set):String;
+    private inline function set_title(s:String):String {
+        #if (flash || android || ios )
+        trace("WARNING: this platform doesnt support dynamic titles");
+        #end
+        Lib.current.stage.window.title = s;
+        return s;
+    }
+    private inline function get_title():String {
+        #if (flash || android || ios )
+        trace("WARNING: this platform doesnt support dynamic titles");
+        #end
+        return Lib.current.stage.window.title;
+    }
+
     private var _topLevelComponents:Array<Component> = new Array<Component>();
     public function addComponent(component:Component) {
         component.scaleX =  Toolkit.scaleX;
@@ -165,6 +180,7 @@ class ScreenBase {
             var fn = _mapping.get(type);
             if (fn != null) {
                 var mouseEvent = new MouseEvent(type);
+                mouseEvent._originalEvent = event;
                 mouseEvent.screenX = event.stageX / Toolkit.scaleX;
                 mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
@@ -179,6 +195,7 @@ class ScreenBase {
             var fn = _mapping.get(type);
             if (fn != null) {
                 var keyboardEvent = new KeyboardEvent(type);
+                keyboardEvent._originalEvent = event;
                 keyboardEvent.keyCode = event.keyCode;
                 keyboardEvent.shiftKey = event.shiftKey;
                 fn(keyboardEvent);

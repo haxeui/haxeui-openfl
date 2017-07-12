@@ -1,6 +1,7 @@
 package haxe.ui.backend;
 
 import haxe.ui.core.Component;
+import haxe.ui.styles.Style;
 import openfl.text.TextFormatAlign;
 import openfl.Assets;
 import openfl.text.TextField;
@@ -14,14 +15,12 @@ class TextDisplayBase {
     public var parentComponent:Component;
 
     private var PADDING_X:Int = 0;
-    private var PADDING_Y:Int = 4;// -4;
+    private var PADDING_Y:Int = 0;
 
     public function new() {
         textField = createTextField();
 
         _text = "";
-        _fontSize = 12;
-        _textAlign = TextFormatAlign.LEFT;
         _multiline = false;
         _wordWrap = false;
     }
@@ -43,10 +42,7 @@ class TextDisplayBase {
     private var _height:Float = 0;
     private var _textWidth:Float = 0;
     private var _textHeight:Float = 0;
-    private var _color:Int;
-    private var _fontName:String;
-    private var _fontSize:Float;
-    private var _textAlign:String;
+    private var _style:Style;
     private var _multiline:Bool = true;
     private var _wordWrap:Bool = false;
 
@@ -63,29 +59,29 @@ class TextDisplayBase {
 
         var format:TextFormat = textField.getTextFormat();
 
-        if (format.align != _textAlign) {
-            format.align = _textAlign;
+        if (format.align != _style.textAlign) {
+            format.align = _style.textAlign;
         }
 
-        var fontSizeValue = Std.int(_fontSize);
+        var fontSizeValue = Std.int(_style.fontSize);
         if (format.size != fontSizeValue) {
             format.size = fontSizeValue;
 
             measureTextRequired = true;
         }
 
-        if (format.font != _fontName) {
-            if (isEmbeddedFont(_fontName) == true) {
-                format.font = Assets.getFont(_fontName).fontName;
+        if (format.font != _style.fontName) {
+            if (isEmbeddedFont(_style.fontName) == true) {
+                format.font = Assets.getFont(_style.fontName).fontName;
             } else {
-                format.font = _fontName;
+                format.font = _style.fontName;
             }
 
             measureTextRequired = true;
         }
 
-        if (format.color != _color) {
-            format.color = _color;
+        if (format.color != _style.color) {
+            format.color = _style.color;
         }
 
         textField.defaultTextFormat = format;
@@ -123,7 +119,14 @@ class TextDisplayBase {
 
     private function measureText() {
         _textWidth = textField.textWidth + PADDING_X;
-        _textHeight = textField.textHeight + PADDING_Y;
+        _textHeight = textField.textHeight;
+        if (_textHeight == 0) {
+            var tmpText:String = textField.text;
+            textField.text = "|";
+            _textHeight = textField.textHeight;
+            textField.text = tmpText;
+        }
+        _textHeight += PADDING_Y;
     }
 
     //***********************************************************************************************************
