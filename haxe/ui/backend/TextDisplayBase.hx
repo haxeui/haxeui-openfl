@@ -42,7 +42,7 @@ class TextDisplayBase {
     private var _height:Float = 0;
     private var _textWidth:Float = 0;
     private var _textHeight:Float = 0;
-    private var _style:Style;
+    private var _textStyle:Style;
     private var _multiline:Bool = true;
     private var _wordWrap:Bool = false;
 
@@ -59,29 +59,29 @@ class TextDisplayBase {
 
         var format:TextFormat = textField.getTextFormat();
 
-        if (format.align != _style.textAlign) {
-            format.align = _style.textAlign;
+        if (format.align != _textStyle.textAlign) {
+            format.align = _textStyle.textAlign;
         }
 
-        var fontSizeValue = Std.int(_style.fontSize);
+        var fontSizeValue = Std.int(_textStyle.fontSize);
         if (format.size != fontSizeValue) {
             format.size = fontSizeValue;
 
             measureTextRequired = true;
         }
 
-        if (format.font != _style.fontName) {
-            if (isEmbeddedFont(_style.fontName) == true) {
-                format.font = Assets.getFont(_style.fontName).fontName;
+        if (format.font != _textStyle.fontName) {
+            if (isEmbeddedFont(_textStyle.fontName) == true) {
+                format.font = Assets.getFont(_textStyle.fontName).fontName;
             } else {
-                format.font = _style.fontName;
+                format.font = _textStyle.fontName;
             }
 
             measureTextRequired = true;
         }
 
-        if (format.color != _style.color) {
-            format.color = _style.color;
+        if (format.color != _textStyle.color) {
+            format.color = _textStyle.color;
         }
 
         textField.defaultTextFormat = format;
