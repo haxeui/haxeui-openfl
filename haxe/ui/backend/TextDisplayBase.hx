@@ -59,29 +59,31 @@ class TextDisplayBase {
 
         var format:TextFormat = textField.getTextFormat();
 
-        if (format.align != _textStyle.textAlign) {
-            format.align = _textStyle.textAlign;
-        }
-
-        var fontSizeValue = Std.int(_textStyle.fontSize);
-        if (format.size != fontSizeValue) {
-            format.size = fontSizeValue;
-
-            measureTextRequired = true;
-        }
-
-        if (format.font != _textStyle.fontName) {
-            if (isEmbeddedFont(_textStyle.fontName) == true) {
-                format.font = Assets.getFont(_textStyle.fontName).fontName;
-            } else {
-                format.font = _textStyle.fontName;
+        if (_textStyle != null) {
+            if (format.align != _textStyle.textAlign) {
+                format.align = _textStyle.textAlign;
             }
 
-            measureTextRequired = true;
-        }
+            var fontSizeValue = Std.int(_textStyle.fontSize);
+            if (format.size != fontSizeValue) {
+                format.size = fontSizeValue;
 
-        if (format.color != _textStyle.color) {
-            format.color = _textStyle.color;
+                measureTextRequired = true;
+            }
+
+            if (format.font != _textStyle.fontName) {
+                if (isEmbeddedFont(_textStyle.fontName) == true) {
+                    format.font = Assets.getFont(_textStyle.fontName).fontName;
+                } else {
+                    format.font = _textStyle.fontName;
+                }
+
+                measureTextRequired = true;
+            }
+
+            if (format.color != _textStyle.color) {
+                format.color = _textStyle.color;
+            }
         }
 
         textField.defaultTextFormat = format;
