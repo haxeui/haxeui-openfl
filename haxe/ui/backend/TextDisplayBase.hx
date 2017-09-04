@@ -122,12 +122,14 @@ class TextDisplayBase {
     private function measureText() {
         _textWidth = textField.textWidth + PADDING_X;
         _textHeight = textField.textHeight;
+        /*
         if (_textHeight == 0) {
             var tmpText:String = textField.text;
             textField.text = "|";
             _textHeight = textField.textHeight;
             textField.text = tmpText;
         }
+        */
         _textHeight += PADDING_Y;
     }
 
