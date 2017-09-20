@@ -1,3 +1,3 @@
 package haxe.ui.backend;
 
-typedef ImageData = Dynamic;
+typedef ImageData = Any;
