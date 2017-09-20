@@ -17,7 +17,7 @@ haxe:
   - development
 
 before_install:
-    - git clone https://github.com/haxeui/haxeui-core.git --depth=1
+    - git clone --branch $TRAVIS_BRANCH https://github.com/haxeui/haxeui-core.git --depth=1
     - haxelib dev haxeui-core haxeui-core
 
     # We need a git version of hxcpp for now
