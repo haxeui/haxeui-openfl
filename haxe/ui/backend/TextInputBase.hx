@@ -13,16 +13,6 @@ class TextInputBase extends TextDisplayBase {
         super();
 
         //PADDING_Y = 2;
-        textField.addEventListener(KeyboardEvent.KEY_UP, function(e) {
-            if (textField.multiline == true && Std.is(parentComponent, TextArea)) {
-                cast(parentComponent, TextArea).checkScrolls();
-            }
-        });
-        textField.addEventListener(KeyboardEvent.KEY_DOWN, function(e) {
-            if (textField.multiline == true && Std.is(parentComponent, TextArea)) {
-                cast(parentComponent, TextArea).checkScrolls();
-            }
-        });
     }
 
     private override function createTextField() {
