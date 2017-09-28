@@ -54,22 +54,6 @@ class TextInputBase extends TextDisplayBase {
         return super.validateStyle() || measureTextRequired;
     }
 
-    private override function measureText() {
-        super.measureText();
-
-        if (_multiline == true) {
-            _textHeight = textField.maxScrollV + textField.height - 1;
-
-            if (Std.is(parentComponent, TextArea)) {
-                _height = (textField.bottomScrollV - textField.scrollV);
-
-                #if flash
-                _height += 1;
-                #end
-            }
-        }
-    }
-
     private function onChange(e) {
         _text = textField.text;
     }
