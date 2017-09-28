@@ -2,7 +2,7 @@ package haxe.ui.backend;
 
 import haxe.ui.backend.TextDisplayBase;
 import haxe.ui.components.TextArea;
-import openfl.events.KeyboardEvent;
+import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
@@ -13,6 +13,7 @@ class TextInputBase extends TextDisplayBase {
         super();
 
         //PADDING_Y = 2;
+        textField.addEventListener(Event.CHANGE, onChange);
     }
 
     private override function createTextField() {
@@ -67,5 +68,9 @@ class TextInputBase extends TextDisplayBase {
                 #end
             }
         }
+    }
+
+    private function onChange(e) {
+        _text = textField.text;
     }
 }
