@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import haxe.ui.assets.FontInfo;
 import haxe.ui.core.Component;
 import haxe.ui.styles.Style;
 import openfl.text.TextFormatAlign;
@@ -9,107 +10,121 @@ import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
-class TextDisplayBase extends TextField {
+class TextDisplayBase {
+
+    public var textField:TextField;
     public var parentComponent:Component;
 
     private var PADDING_X:Int = 0;
     private var PADDING_Y:Int = 0;
 
     public function new() {
-        super();
-        type = TextFieldType.DYNAMIC;
-        selectable = false;
-        mouseEnabled = false;
-        multiline = false;
-        wordWrap = false;
-        autoSize = TextFieldAutoSize.LEFT;
-        text = "";
+        textField = createTextField();
+
+        _text = "";
+        _multiline = false;
+        _wordWrap = false;
     }
 
-    #if !flash
-
-    @:getter(textWidth)
-    private override function get_textWidth():Float {
-        var v = super.textWidth;
-        v += PADDING_X;
-        return v;
+    private function createTextField() {
+        var tf:TextField = new TextField();
+        tf.type = TextFieldType.DYNAMIC;
+        tf.selectable = false;
+        tf.mouseEnabled = false;
+        tf.autoSize = TextFieldAutoSize.LEFT;
+        
+        return tf;
     }
 
-    @:getter(textHeight)
-    private override function get_textHeight():Float {
-        var v = super.textHeight;
-        if (v == 0) {
-            var tmpText:String = text;
-            text = "|";
-            v = super.textHeight;
-            text = tmpText;
-        }
-        v += PADDING_Y;
-        return v;
+    private var _text:String;
+    private var _left:Float = 0;
+    private var _top:Float = 0;
+    private var _width:Float = 0;
+    private var _height:Float = 0;
+    private var _textWidth:Float = 0;
+    private var _textHeight:Float = 0;
+    private var _textStyle:Style;
+    private var _multiline:Bool = true;
+    private var _wordWrap:Bool = false;
+    private var _fontInfo:FontInfo = null;
+    
+    //***********************************************************************************************************
+    // Validation functions
+    //***********************************************************************************************************
+
+    private function validateData() {
+        textField.text = _text;
     }
 
-    #else
+    private function validateStyle():Bool {
+        var measureTextRequired:Bool = false;
 
-    @:getter(textWidth)
-    private function get_textWidth():Float {
-        var v = super.textWidth;
-        v += PADDING_X;
-        return v;
-    }
+        var format:TextFormat = textField.getTextFormat();
 
-    @:getter(textHeight)
-    private function get_textHeight():Float {
-        var v = super.textHeight;
-        v += PADDING_Y;
-        return v;
-    }
+        if (_textStyle != null) {
+            if (format.align != _textStyle.textAlign) {
+                format.align = _textStyle.textAlign;
+            }
 
-    #end
+            var fontSizeValue = Std.int(_textStyle.fontSize);
+            if (format.size != fontSizeValue) {
+                format.size = fontSizeValue;
 
-    public var left(get, set):Float;
-    private function get_left():Float {
-        return this.x + 2 - (PADDING_X / 2);
-    }
-    private function set_left(value:Float):Float {
-        value = Std.int(value);
-        this.x = value - 2 + (PADDING_X / 2);
-        return value;
-    }
+                measureTextRequired = true;
+            }
 
-    public var top(get, set):Float;
-    private function get_top():Float {
-        return this.y + 2 - (PADDING_Y / 2);
-    }
-    private function set_top(value:Float):Float {
-        value = Std.int(value);
-        this.y = value - 2 + (PADDING_Y / 2);
-        return value;
-    }
+            if (_fontInfo != null && format.font != _fontInfo.data) {
+                format.font = _fontInfo.data;
+                measureTextRequired = true;
+            }
 
-    public function applyStyle(style:Style) {
-        var format:TextFormat = getTextFormat();
-        if (style.color != null) {
-            format.color = style.color;
-        }
-        if (style.fontName != null) {
-            embedFonts = isEmbeddedFont(style.fontName);
-            if (isEmbeddedFont(style.fontName) == true) {
-                format.font = Assets.getFont(style.fontName).fontName;
-            } else {
-                format.font = style.fontName;
+            if (format.color != _textStyle.color) {
+                format.color = _textStyle.color;
             }
         }
-        if (style.fontSize != null) {
-            format.size = style.fontSize;
+
+        textField.defaultTextFormat = format;
+        textField.setTextFormat(format);
+
+        if (textField.wordWrap != _wordWrap) {
+            textField.wordWrap = _wordWrap;
+
+            measureTextRequired = true;
         }
-        if (style.textAlign != null) {
-            format.align = style.textAlign;
+
+        if (textField.multiline != _multiline) {
+            textField.multiline = _multiline;
+
+            measureTextRequired = true;
         }
-        defaultTextFormat = format;
-        setTextFormat(format);
+
+        return measureTextRequired;
     }
-    
-    private static inline function isEmbeddedFont(name:String) {
-        return (name != "_sans" && name != "_serif" && name != "_typewriter");
+
+    private function validatePosition() {
+        textField.x = _left - 2 + (PADDING_X / 2);
+        textField.y = _top - 2 + (PADDING_Y / 2);
+    }
+
+    private function validateDisplay() {
+        if (textField.width != _width) {
+            textField.width = _width;
+        }
+
+        if (textField.height != _height) {
+            textField.height = _height;
+        }
+    }
+
+    private function measureText() {
+        _textWidth = textField.textWidth + PADDING_X;
+        _textHeight = textField.textHeight;
+        if (_textHeight == 0) {
+            var tmpText:String = textField.text;
+            textField.text = "|";
+            _textHeight = textField.textHeight;
+            textField.text = tmpText;
+        }
+        _textHeight += PADDING_Y;
     }
 }
