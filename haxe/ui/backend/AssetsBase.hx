@@ -90,10 +90,28 @@ class AssetsBase {
     }
 
     private function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
-        callback(null);
+        var fontInfo = null;
+        if (isEmbeddedFont(resourceId) == true) {
+            fontInfo = {
+                data: Assets.getFont(resourceId).fontName
+            }
+        } else {
+            fontInfo = {
+                data: resourceId
+            }
+        }
+        callback(fontInfo);
     }
 
     private function getFontFromHaxeResource(resourceId:String, callback:String->FontInfo->Void) {
         callback(resourceId, null);
+    }
+    
+    //***********************************************************************************************************
+    // Util functions
+    //***********************************************************************************************************
+
+    private static inline function isEmbeddedFont(name:String) {
+        return (name != "_sans" && name != "_serif" && name != "_typewriter");
     }
 }

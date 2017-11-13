@@ -3,89 +3,58 @@ package haxe.ui.backend;
 import haxe.ui.backend.TextDisplayBase;
 import haxe.ui.components.TextArea;
 import openfl.events.Event;
-import openfl.events.KeyboardEvent;
-import openfl.text.TextFieldType;
+import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
+import openfl.text.TextFieldType;
 
 class TextInputBase extends TextDisplayBase {
     @:access(haxe.ui.components.TextArea)
     public function new() {
         super();
-        type = TextFieldType.INPUT;
-        selectable = true;
-        mouseEnabled = true;
-        autoSize = TextFieldAutoSize.NONE;
+
         //PADDING_Y = 2;
-        addEventListener(KeyboardEvent.KEY_UP, function(e) {
-            if (type == TextFieldType.INPUT && multiline == true && Std.is(parentComponent, TextArea)) {
-                cast(parentComponent, TextArea).checkScrolls();
-            }
-        });
-        addEventListener(KeyboardEvent.KEY_DOWN, function(e) {
-            if (type == TextFieldType.INPUT && multiline == true && Std.is(parentComponent, TextArea)) {
-                cast(parentComponent, TextArea).checkScrolls();
-            }
-        });
+        textField.addEventListener(Event.CHANGE, onChange);
     }
 
-    public var password(get, set):Bool;
-    private function get_password():Bool {
-        return displayAsPassword;
-    }
-    private function set_password(value:Bool):Bool {
-        displayAsPassword = value;
-        return value;
+    private override function createTextField() {
+        var tf:TextField = new TextField();
+        tf.type = TextFieldType.INPUT;
+        tf.selectable = true;
+        tf.mouseEnabled = true;
+        tf.autoSize = TextFieldAutoSize.NONE;
+
+        return tf;
     }
 
-    public var hscrollPos(get, set):Float;
-    private function get_hscrollPos():Float {
-        return this.scrollH - 1;
-    }
-    private function set_hscrollPos(value:Float):Float {
-        this.scrollH = Std.int(value + 1);
-        return value;
-    }
+    private var _password:Bool = false;
+    private var _hscrollPos:Float = 0;
+    private var _vscrollPos:Float = 0;
 
-    public var vscrollPos(get, set):Float;
-    private function get_vscrollPos():Float {
-        return this.scrollV - 1;
-    }
-    private function set_vscrollPos(value:Float):Float {
-        this.scrollV = Std.int(value + 1);
-        return value;
-    }
+    //***********************************************************************************************************
+    // Validation functions
+    //***********************************************************************************************************
 
-    @:getter(textHeight)
-    private override function get_textHeight():Float {
-        if (multiline == false) {
-            var v = super.textHeight;
-            return v;
+    private override function validateStyle():Bool {
+        var measureTextRequired:Bool = false;
+
+        if (textField.displayAsPassword != _password) {
+            textField.displayAsPassword = _password;
         }
 
-        return this.maxScrollV + height - 1;
-    }
-
-    #if !flash
-
-    @:getter(height)
-    private override function get_height():Float {
-        if (type == TextFieldType.INPUT && multiline == true && Std.is(parentComponent, TextArea)) {
-            var visibleLines:Int = (bottomScrollV - scrollV);
-            return visibleLines;
+        var hscrollValue:Int = Std.int(_hscrollPos + 1);
+        if (textField.scrollH != hscrollValue) {
+            textField.scrollH = hscrollValue;
         }
-        return super.height;
-    }
 
-    #else
-
-    @:getter(height)
-    private function get_height():Float {
-        if (type == TextFieldType.INPUT && multiline == true && Std.is(parentComponent, TextArea)) {
-            var visibleLines:Int = (bottomScrollV - scrollV) + 1;
-            return visibleLines;
+        var vscrollValue:Int = Std.int(_vscrollPos + 1);
+        if (textField.scrollV != vscrollValue) {
+            textField.scrollV = vscrollValue;
         }
-        return super.height;
+
+        return super.validateStyle() || measureTextRequired;
     }
 
-    #end
+    private function onChange(e) {
+        _text = textField.text;
+    }
 }
