@@ -10,3 +10,7 @@
 .scrollview, .listview {
     padding: 1px;
 }
+
+.progress {
+    filter: none;
+}
