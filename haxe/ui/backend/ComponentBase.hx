@@ -208,7 +208,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (style.filter != null) {
             var f = FilterConverter.convertFilter(FilterParser.parseFilter(style.filter));
             if (f != null) {
-                this.filters = [f];
+                //this.filters = [f];
             }
         } else {
             this.filters = null;
