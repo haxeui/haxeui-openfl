@@ -92,8 +92,14 @@ class AssetsBase {
     private function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
         var fontInfo = null;
         if (isEmbeddedFont(resourceId) == true) {
-            fontInfo = {
-                data: Assets.getFont(resourceId).fontName
+            if (Assets.exists(resourceId)) {
+                fontInfo = {
+                    data: Assets.getFont(resourceId).fontName
+                }
+            } else {
+                fontInfo = {
+                    data: resourceId
+                }
             }
         } else {
             fontInfo = {
