@@ -178,11 +178,23 @@ class ComponentBase extends Sprite implements IComponentBase {
         return child;
     }
 
+    private function handleAddComponentAt(child:Component, index:Int):Component {
+        addChildAt(child, index);
+        return child;
+    }
+
     private function handleRemoveComponent(child:Component, dispose:Bool = true):Component {
         if (contains(child)) {
             removeChild(child);
         }
         return child;
+    }
+
+    private function handleRemoveComponentAt(index:Int, dispose:Bool = true):Component {
+        if (getChildAt(index) != null) {
+            removeChildAt(index);
+        }
+        return null;
     }
 
     private function handleSetComponentIndex(child:Component, index:Int) {
