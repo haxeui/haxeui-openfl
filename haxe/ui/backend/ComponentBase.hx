@@ -191,9 +191,7 @@ class ComponentBase extends Sprite implements IComponentBase {
     }
 
     private function handleRemoveComponentAt(index:Int, dispose:Bool = true):Component {
-        if (getChildAt(index) != null) {
-            removeChildAt(index);
-        }
+        removeChildAt(index);
         return null;
     }
 
