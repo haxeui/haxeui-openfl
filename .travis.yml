@@ -16,6 +16,10 @@ haxe:
   - "3.4.2"
   - development
 
+matrix:
+  allow_failures:
+  - haxe: development
+
 before_install:
     - git clone --branch $TRAVIS_BRANCH https://github.com/haxeui/haxeui-core.git --depth=1
     - haxelib dev haxeui-core haxeui-core

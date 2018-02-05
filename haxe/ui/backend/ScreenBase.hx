@@ -21,7 +21,7 @@ class ScreenBase {
         _mapping = new Map<String, UIEvent->Void>();
     }
 
-    public var options(default, default):Dynamic;
+    public var options(default, default):ToolkitOptions;
 
     public var width(get, null):Float;
     private function get_width():Float {
