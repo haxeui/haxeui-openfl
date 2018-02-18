@@ -53,8 +53,8 @@ class AssetsBase {
     }
 
     private function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
+        var imageInfo:ImageInfo = null;
         if (Path.extension(resourceId).toLowerCase() == "svg") {
-            var imageInfo = null;
             #if svg
             var svgContent = Resource.getString(resourceId);
             var svg = new format.SVG(svgContent);
@@ -77,7 +77,7 @@ class AssetsBase {
         loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e) {
             if (loader.content != null) {
                 var bmpData = cast(loader.content, Bitmap).bitmapData;
-                var imageInfo:ImageInfo = {
+                imageInfo = {
                     data: bmpData,
                     width: bmpData.width,
                     height: bmpData.height
@@ -92,8 +92,14 @@ class AssetsBase {
     private function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
         var fontInfo = null;
         if (isEmbeddedFont(resourceId) == true) {
-            fontInfo = {
-                data: Assets.getFont(resourceId).fontName
+            if (Assets.exists(resourceId)) {
+                fontInfo = {
+                    data: Assets.getFont(resourceId).fontName
+                }
+            } else {
+                fontInfo = {
+                    data: resourceId
+                }
             }
         } else {
             fontInfo = {

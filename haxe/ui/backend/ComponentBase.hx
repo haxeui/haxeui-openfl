@@ -178,11 +178,21 @@ class ComponentBase extends Sprite implements IComponentBase {
         return child;
     }
 
+    private function handleAddComponentAt(child:Component, index:Int):Component {
+        addChildAt(child, index);
+        return child;
+    }
+
     private function handleRemoveComponent(child:Component, dispose:Bool = true):Component {
         if (contains(child)) {
             removeChild(child);
         }
         return child;
+    }
+
+    private function handleRemoveComponentAt(index:Int, dispose:Bool = true):Component {
+        removeChildAt(index);
+        return null;
     }
 
     private function handleSetComponentIndex(child:Component, index:Int) {
@@ -208,7 +218,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (style.filter != null) {
             var f = FilterConverter.convertFilter(FilterParser.parseFilter(style.filter));
             if (f != null) {
-                this.filters = [f];
+                //this.filters = [f];
             }
         } else {
             this.filters = null;

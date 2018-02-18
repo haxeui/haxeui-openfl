@@ -2,28 +2,26 @@ package haxe.ui.backend;
 
 import haxe.ui.assets.FontInfo;
 import haxe.ui.core.Component;
+import haxe.ui.core.TextDisplay.TextDisplayData;
 import haxe.ui.styles.Style;
-import openfl.text.TextFormatAlign;
-import openfl.Assets;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
 class TextDisplayBase {
+    private var _displayData:TextDisplayData = new TextDisplayData();
 
     public var textField:TextField;
     public var parentComponent:Component;
 
     private var PADDING_X:Int = 0;
-    private var PADDING_Y:Int = 0;
+    private var PADDING_Y:Int = 2;
 
     public function new() {
         textField = createTextField();
 
         _text = "";
-        _multiline = false;
-        _wordWrap = false;
     }
 
     private function createTextField() {
@@ -44,8 +42,6 @@ class TextDisplayBase {
     private var _textWidth:Float = 0;
     private var _textHeight:Float = 0;
     private var _textStyle:Style;
-    private var _multiline:Bool = true;
-    private var _wordWrap:Bool = false;
     private var _fontInfo:FontInfo = null;
     
     //***********************************************************************************************************
@@ -53,7 +49,7 @@ class TextDisplayBase {
     //***********************************************************************************************************
 
     private function validateData() {
-        textField.text = _text;
+        textField.text = normalizeText(_text);
     }
 
     private function validateStyle():Bool {
@@ -86,15 +82,13 @@ class TextDisplayBase {
         textField.defaultTextFormat = format;
         textField.setTextFormat(format);
 
-        if (textField.wordWrap != _wordWrap) {
-            textField.wordWrap = _wordWrap;
-
+        if (textField.wordWrap != _displayData.wordWrap) {
+            textField.wordWrap = _displayData.wordWrap;
             measureTextRequired = true;
         }
 
-        if (textField.multiline != _multiline) {
-            textField.multiline = _multiline;
-
+        if (textField.multiline != _displayData.multiline) {
+            textField.multiline = _displayData.multiline;
             measureTextRequired = true;
         }
 
@@ -117,6 +111,8 @@ class TextDisplayBase {
     }
 
     private function measureText() {
+        textField.width = _width;
+        
         _textWidth = textField.textWidth + PADDING_X;
         _textHeight = textField.textHeight;
         if (_textHeight == 0) {
@@ -126,5 +122,10 @@ class TextDisplayBase {
             textField.text = tmpText;
         }
         _textHeight += PADDING_Y;
+    }
+    
+    private function normalizeText(text:String):String {
+        text = StringTools.replace(text, "\\n", "\n");
+        return text;
     }
 }
