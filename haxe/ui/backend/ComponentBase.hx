@@ -153,7 +153,10 @@ class ComponentBase extends Sprite implements IComponentBase {
     }
 
     public function getImageDisplay():ImageDisplay {
-        return createImageDisplay();
+        if (!hasImageDisplay()) {
+            createImageDisplay();
+        }
+        return _imageDisplay;
     }
 
     public function hasImageDisplay():Bool {
