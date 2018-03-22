@@ -1,4 +1,4 @@
-.label,.textfield,.textarea{font-name:"fonts/Roboto-Regular.ttf";font-size:13px;}
+.label,.textfield,.textarea{__font-name:"fonts/Roboto-Regular.ttf";font-name:"_sans";__font-size:13px;}
 .flash .label,.flash .textfield,.flash .textarea{font-name:"_sans";}
 .scrollview,.listview{padding:1px;}
 
