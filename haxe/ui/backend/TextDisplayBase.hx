@@ -16,7 +16,7 @@ class TextDisplayBase {
     public var parentComponent:Component;
 
     private var PADDING_X:Int = 0;
-    private var PADDING_Y:Int = 2;
+    private var PADDING_Y:Int = 4;
 
     public function new() {
         textField = createTextField();
@@ -76,6 +76,21 @@ class TextDisplayBase {
 
             if (format.color != _textStyle.color) {
                 format.color = _textStyle.color;
+            }
+            
+            if (format.bold != _textStyle.fontBold) {
+                format.bold = _textStyle.fontBold;
+                measureTextRequired = true;
+            }
+            
+            if (format.italic != _textStyle.fontItalic) {
+                format.italic = _textStyle.fontItalic;
+                measureTextRequired = true;
+            }
+            
+            if (format.underline != _textStyle.fontUnderline) {
+                format.underline = _textStyle.fontUnderline;
+                measureTextRequired = true;
             }
         }
 
