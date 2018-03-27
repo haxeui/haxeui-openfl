@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import haxe.io.Bytes;
 import haxe.io.Path;
 import haxe.ui.assets.FontInfo;
 import haxe.ui.assets.ImageInfo;
@@ -72,23 +73,29 @@ class AssetsBase {
         }
 
         var bytes = Resource.getBytes(resourceId);
+        imageFromBytes(bytes, function(imageInfo) {
+            callback(resourceId, imageInfo);
+        });
+    }
+
+    public function imageFromBytes(bytes:Bytes, callback:ImageInfo->Void):Void {
         var ba:ByteArray = ByteConverter.fromHaxeBytes(bytes);
         var loader:Loader = new Loader();
         loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e) {
             if (loader.content != null) {
                 var bmpData = cast(loader.content, Bitmap).bitmapData;
-                imageInfo = {
+                var imageInfo:ImageInfo = {
                     data: bmpData,
                     width: bmpData.width,
                     height: bmpData.height
                 }
 
-                callback(resourceId, imageInfo);
+                callback(imageInfo);
             }
         });
         loader.loadBytes(ba);
     }
-
+    
     private function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
         var fontInfo = null;
         if (isEmbeddedFont(resourceId) == true) {
