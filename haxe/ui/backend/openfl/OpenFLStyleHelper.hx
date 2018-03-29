@@ -1,7 +1,6 @@
 package haxe.ui.backend.openfl;
-import haxe.ui.assets.ImageInfo;
-import haxe.ui.components.Button.ButtonDefaultIconBehaviour;
 
+import haxe.ui.assets.ImageInfo;
 import haxe.ui.styles.Style;
 import haxe.ui.util.Slice9;
 import openfl.display.BitmapData;
@@ -12,6 +11,7 @@ import openfl.display.SpreadMethod;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
+
 
 class OpenFLStyleHelper {
     public function new() {
