@@ -15,8 +15,8 @@ class TextDisplayBase {
     public var textField:TextField;
     public var parentComponent:Component;
 
-    private var PADDING_X:Int = 0;
-    private var PADDING_Y:Int = 4;
+    private var PADDING_X:Int = 2;
+    private var PADDING_Y:Int = 2;
 
     public function new() {
         textField = createTextField();
@@ -111,8 +111,8 @@ class TextDisplayBase {
     }
 
     private function validatePosition() {
-        textField.x = _left - 2 + (PADDING_X / 2);
-        textField.y = _top - 2 + (PADDING_Y / 2);
+        textField.x = _left - 2;// - 2 + (PADDING_X / 2);
+        textField.y = _top - 1;// - 2 + (PADDING_Y / 2);
     }
 
     private function validateDisplay() {
