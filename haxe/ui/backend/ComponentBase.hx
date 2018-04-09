@@ -69,10 +69,6 @@ class ComponentBase extends Sprite implements IComponentBase {
         if (styleable == true) {
             OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
         }
-        
-        if (style.clip == true) {
-            this.scrollRect = new openfl.geom.Rectangle(0, 0, Math.fround(width), Math.fround(height));
-        }
     }
 
     private function handleClipRect(value:Rectangle):Void {
