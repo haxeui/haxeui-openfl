@@ -8,7 +8,7 @@ class CallLaterBase {
     
     public function new(fn:Void->Void) {
         _fn = fn;
-        Lib.current.stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+        Lib.current.stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 10000);
     }
     
     private function onEnterFrame(e) {
