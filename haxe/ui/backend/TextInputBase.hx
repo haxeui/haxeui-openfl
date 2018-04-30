@@ -55,6 +55,11 @@ class TextInputBase extends TextDisplayBase {
         return measureTextRequired;
     }
 
+    private override function validatePosition() {
+        textField.x = _left - 2;// - 2 + (PADDING_X / 2);
+        textField.y = _top - 2;// - 2 + (PADDING_Y / 2);
+    }
+    
     private override function measureText() {
         super.measureText();
         
@@ -67,5 +72,8 @@ class TextInputBase extends TextDisplayBase {
     
     private function onChange(e) {
         _text = textField.text;
+        if (_inputData.onChangedCallback != null) {
+            _inputData.onChangedCallback();
+        }
     }
 }
