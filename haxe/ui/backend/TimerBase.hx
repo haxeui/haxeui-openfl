@@ -35,7 +35,7 @@ class TimerBase {
 
     public function new(delay:Int, callback:Void->Void) {
         this._callback = callback;
-        _start = Timer.stamp() + delay;
+        _start = Timer.stamp() + (delay / 1000);
         __timers.push(this);
         if (__timers.length == 1) {
             Lib.current.stage.addEventListener(Event.ENTER_FRAME, update, false, 10000);
