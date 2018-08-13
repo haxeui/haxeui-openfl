@@ -30,7 +30,7 @@ class TextDisplayBase {
         tf.selectable = false;
         tf.mouseEnabled = false;
         tf.autoSize = TextFieldAutoSize.LEFT;
-        tf.cacheAsBitmap = true;
+//        tf.cacheAsBitmap = true;
 
         return tf;
     }
