@@ -20,7 +20,6 @@ class TextDisplayBase {
 
     public function new() {
         textField = createTextField();
-        textField.cacheAsBitmap = true;
 
         _text = "";
     }
@@ -31,7 +30,8 @@ class TextDisplayBase {
         tf.selectable = false;
         tf.mouseEnabled = false;
         tf.autoSize = TextFieldAutoSize.LEFT;
-        
+        tf.cacheAsBitmap = true;
+
         return tf;
     }
 
