@@ -20,6 +20,7 @@ class TextDisplayBase {
 
     public function new() {
         textField = createTextField();
+        textField.cacheAsBitmap = true;
 
         _text = "";
     }
