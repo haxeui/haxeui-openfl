@@ -1,11 +1,11 @@
 .label, .textfield, .textarea {
-    __font-name: "fonts/Roboto-Regular.ttf";
+    font-name: "fonts/Roboto-Regular.ttf";
     __font-name: "_sans";
-    __font-size: 13px;
+    font-size: 13px;
 }
 
 .flash .label, .flash .textfield, .flash .textarea {
-    __font-name: "_sans";
+    font-name: "_sans";
 }
 
 .scrollview, .listview {

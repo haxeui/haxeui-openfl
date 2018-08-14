@@ -14,6 +14,7 @@ class TextInputBase extends TextDisplayBase {
         super();
 
         textField.addEventListener(Event.CHANGE, onChange);
+        textField.addEventListener(Event.SCROLL, onScroll);
     }
 
     private override function createTextField() {
@@ -55,6 +56,11 @@ class TextInputBase extends TextDisplayBase {
         return measureTextRequired;
     }
 
+    private override function validatePosition() {
+        textField.x = _left - 2;// - 2 + (PADDING_X / 2);
+        textField.y = _top - 2;// - 2 + (PADDING_Y / 2);
+    }
+    
     private override function measureText() {
         super.measureText();
         
@@ -67,5 +73,20 @@ class TextInputBase extends TextDisplayBase {
     
     private function onChange(e) {
         _text = textField.text;
+        
+        measureText();
+        
+        if (_inputData.onChangedCallback != null) {
+            _inputData.onChangedCallback();
+        }
+    }
+    
+    private function onScroll(e) {
+        _inputData.hscrollPos = textField.scrollH;
+        _inputData.vscrollPos = textField.scrollV;
+        
+        if (_inputData.onScrollCallback != null) {
+            _inputData.onScrollCallback();
+        }
     }
 }

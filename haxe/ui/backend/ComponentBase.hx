@@ -49,14 +49,10 @@ class ComponentBase extends Sprite implements IComponentBase {
 
     private function handlePosition(left:Null<Float>, top:Null<Float>, style:Style):Void {
         if (left != null) {
-            //this.x = Std.int(left);
-            //this.x = Math.fround(left);
-            this.x = Std.int(left);
+            this.x = left;
         }
         if (top != null) {
-            //this.y = Std.int(top);
-            //this.y = Math.fround(top);
-            this.y = Std.int(top);
+            this.y = top;
         }
     }
 
