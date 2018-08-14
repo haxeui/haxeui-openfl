@@ -184,6 +184,8 @@ class ScreenBase {
                 mouseEvent.screenX = event.stageX / Toolkit.scaleX;
                 mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
+                mouseEvent.ctrlKey = event.ctrlKey;
+                mouseEvent.shiftKey = event.shiftKey;
                 fn(mouseEvent);
             }
         }
@@ -197,6 +199,7 @@ class ScreenBase {
                 var keyboardEvent = new KeyboardEvent(type);
                 keyboardEvent._originalEvent = event;
                 keyboardEvent.keyCode = event.keyCode;
+                keyboardEvent.ctrlKey = event.ctrlKey;
                 keyboardEvent.shiftKey = event.shiftKey;
                 fn(keyboardEvent);
             }

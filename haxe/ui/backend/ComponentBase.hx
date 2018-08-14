@@ -287,6 +287,8 @@ class ComponentBase extends Sprite implements IComponentBase {
                 mouseEvent.screenY = event.stageY / Toolkit.scaleY;
                 mouseEvent.buttonDown = event.buttonDown;
                 mouseEvent.delta = event.delta;
+                mouseEvent.ctrlKey = event.ctrlKey;
+                mouseEvent.shiftKey = event.shiftKey;
                 fn(mouseEvent);
             }
         }
