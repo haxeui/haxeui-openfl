@@ -49,10 +49,10 @@ class ComponentBase extends Sprite implements IComponentBase {
 
     private function handlePosition(left:Null<Float>, top:Null<Float>, style:Style):Void {
         if (left != null) {
-            this.x = left;
+            this.x = Math.fround(left);
         }
         if (top != null) {
-            this.y = top;
+            this.y = Math.fround(top);
         }
     }
 
@@ -63,7 +63,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
 
         if (styleable == true) {
-            OpenFLStyleHelper.paintStyleSection(graphics, style, width, height);
+            OpenFLStyleHelper.paintStyleSection(graphics, style, Math.fround(width), Math.fround(height));
         }
     }
 
