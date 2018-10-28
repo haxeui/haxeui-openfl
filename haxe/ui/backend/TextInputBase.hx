@@ -29,6 +29,14 @@ class TextInputBase extends TextDisplayBase {
         return tf;
     }
 
+    public function focus() {
+        textField.stage.focus = textField;
+    }
+    
+    public function blur() {
+        textField.stage.focus = null;
+    }
+    
     //***********************************************************************************************************
     // Validation functions
     //***********************************************************************************************************
