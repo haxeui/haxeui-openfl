@@ -1,7 +1,6 @@
 package haxe.ui.backend;
 
 import flash.display.DisplayObjectContainer;
-import haxe.ui.containers.dialogs.Dialog;
 import haxe.ui.containers.dialogs.DialogButton;
 import haxe.ui.core.Component;
 import haxe.ui.core.KeyboardEvent;
@@ -125,6 +124,7 @@ class ScreenBase {
     //***********************************************************************************************************
     // Dialogs
     //***********************************************************************************************************
+    /*
     public function messageDialog(message:String, title:String = null, options:Dynamic = null, callback:DialogButton->Void = null):Dialog {
         return null;
     }
@@ -136,6 +136,7 @@ class ScreenBase {
     public function hideDialog(dialog:Dialog):Bool {
         return false;
     }
+    */
 
     //***********************************************************************************************************
     // Events
