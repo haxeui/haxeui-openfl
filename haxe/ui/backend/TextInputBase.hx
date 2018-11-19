@@ -61,6 +61,12 @@ class TextInputBase extends TextDisplayBase {
             textField.displayAsPassword = _inputData.password;
         }
 
+        if (parentComponent.disabled) {
+            textField.selectable = false;
+        } else {
+            textField.selectable = true;
+        }
+        
         return measureTextRequired;
     }
 
