@@ -111,8 +111,13 @@ class TextDisplayBase {
     }
 
     private function validatePosition() {
-        textField.x = _left - 2;// - 2 + (PADDING_X / 2);
-        textField.y = _top - 1;// - 2 + (PADDING_Y / 2);
+        #if html5
+        textField.x = _left - 1;// + (PADDING_X / 2);
+        textField.y = _top + 1;// + (PADDING_Y / 2);
+        #else
+        textField.x = _left - PADDING_X + 1;// + (PADDING_X / 2);
+        textField.y = _top - PADDING_Y;// + (PADDING_Y / 2);
+        #end
     }
 
     private function validateDisplay() {
