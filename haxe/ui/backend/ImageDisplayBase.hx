@@ -1,6 +1,6 @@
 package haxe.ui.backend;
 
-import haxe.ui.util.Rectangle;
+import haxe.ui.geom.Rectangle;
 import openfl.display.BitmapData;
 import haxe.ui.assets.ImageInfo;
 import haxe.ui.core.Component;

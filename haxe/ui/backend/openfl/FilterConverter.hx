@@ -1,6 +1,6 @@
 package haxe.ui.backend.openfl;
 
-import haxe.ui.util.filters.Filter;
+import haxe.ui.filters.Filter;
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
 import openfl.filters.DropShadowFilter;
@@ -11,8 +11,8 @@ class FilterConverter {
             return null;
         }
         var output:BitmapFilter = null;
-        if (Std.is(input, haxe.ui.util.filters.DropShadow)) {
-            var inputDropShadow:haxe.ui.util.filters.DropShadow = cast(input, haxe.ui.util.filters.DropShadow);
+        if (Std.is(input, haxe.ui.filters.DropShadow)) {
+            var inputDropShadow:haxe.ui.filters.DropShadow = cast(input, haxe.ui.filters.DropShadow);
             output = new DropShadowFilter(inputDropShadow.distance,
                                           inputDropShadow.angle,
                                           inputDropShadow.color,
@@ -22,8 +22,8 @@ class FilterConverter {
                                           inputDropShadow.strength,
                                           inputDropShadow.quality,
                                           inputDropShadow.inner);
-        } else if (Std.is(input, haxe.ui.util.filters.Blur)) {
-            var inputBlur:haxe.ui.util.filters.Blur = cast(input, haxe.ui.util.filters.Blur);
+        } else if (Std.is(input, haxe.ui.filters.Blur)) {
+            var inputBlur:haxe.ui.filters.Blur = cast(input, haxe.ui.filters.Blur);
             output = new BlurFilter(inputBlur.amount, inputBlur.amount);
         }
         return output;

@@ -1,17 +1,16 @@
 package haxe.ui.backend;
 
 import flash.display.DisplayObjectContainer;
-import haxe.ui.containers.dialogs.DialogButton;
-import haxe.ui.core.Component;
-import haxe.ui.core.KeyboardEvent;
-import haxe.ui.core.MouseEvent;
-import haxe.ui.core.UIEvent;
 import haxe.ui.backend.openfl.EventMapper;
+import haxe.ui.core.Component;
+import haxe.ui.events.KeyboardEvent;
+import haxe.ui.events.MouseEvent;
+import haxe.ui.events.UIEvent;
 import lime.system.System;
+import openfl.Lib;
 import openfl.display.StageAlign;
 import openfl.display.StageQuality;
 import openfl.display.StageScaleMode;
-import openfl.Lib;
 
 class ScreenBase {
     private var _mapping:Map<String, UIEvent->Void>;
