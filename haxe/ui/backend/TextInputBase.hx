@@ -30,11 +30,15 @@ class TextInputBase extends TextDisplayBase {
     }
 
     public function focus() {
-        textField.stage.focus = textField;
+        if (textField.stage != null) {
+			textField.stage.focus = textField;
+		}
     }
     
     public function blur() {
-        textField.stage.focus = null;
+        if (textField.stage != null) {
+			textField.stage.focus = null;
+		}
     }
     
     //***********************************************************************************************************
