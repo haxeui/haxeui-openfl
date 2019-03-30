@@ -12,19 +12,15 @@ import openfl.display.Loader;
 import openfl.events.Event;
 import openfl.utils.ByteArray;
 
-class AssetsBase {
-    public function new() {
-
-    }
-
-    private function getTextDelegate(resourceId:String):String {
+class AssetsImpl extends AssetsBase {
+    private override function getTextDelegate(resourceId:String):String {
         if (Assets.exists(resourceId) == true) {
             return Assets.getText(resourceId);
         }
         return null;
     }
 
-    private function getImageInternal(resourceId:String, callback:ImageInfo->Void):Void {
+    private override function getImageInternal(resourceId:String, callback:ImageInfo->Void):Void {
         var imageInfo:ImageInfo = null;
         if (Assets.exists(resourceId) == true) {
             if(Path.extension(resourceId).toLowerCase() == "svg") {
@@ -53,7 +49,7 @@ class AssetsBase {
         callback(imageInfo);
     }
 
-    private function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
+    private override function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
         var imageInfo:ImageInfo = null;
         if (Path.extension(resourceId).toLowerCase() == "svg") {
             #if svg
@@ -78,7 +74,7 @@ class AssetsBase {
         });
     }
 
-    public function imageFromBytes(bytes:Bytes, callback:ImageInfo->Void):Void {
+    public override function imageFromBytes(bytes:Bytes, callback:ImageInfo->Void):Void {
         var ba:ByteArray = ByteConverter.fromHaxeBytes(bytes);
         var loader:Loader = new Loader();
         loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e) {
@@ -96,7 +92,7 @@ class AssetsBase {
         loader.loadBytes(ba);
     }
     
-    private function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
+    private override function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
         var fontInfo = null;
         if (isEmbeddedFont(resourceId) == true) {
             if (Assets.exists(resourceId)) {
@@ -116,7 +112,7 @@ class AssetsBase {
         callback(fontInfo);
     }
 
-    private function getFontFromHaxeResource(resourceId:String, callback:String->FontInfo->Void) {
+    private override function getFontFromHaxeResource(resourceId:String, callback:String->FontInfo->Void) {
         callback(resourceId, null);
     }
     

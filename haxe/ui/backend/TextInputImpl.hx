@@ -1,15 +1,11 @@
 package haxe.ui.backend;
 
-import haxe.ui.backend.TextDisplayBase;
-import haxe.ui.core.TextInput.TextInputData;
 import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 
-class TextInputBase extends TextDisplayBase {
-    private var _inputData:TextInputData = new TextInputData();
-    
+class TextInputImpl extends TextDisplayImpl {
     public function new() {
         super();
 
@@ -29,13 +25,13 @@ class TextInputBase extends TextDisplayBase {
         return tf;
     }
 
-    public function focus() {
+    public override function focus() {
         if (textField.stage != null) {
 			textField.stage.focus = textField;
 		}
     }
     
-    public function blur() {
+    public override function blur() {
         if (textField.stage != null) {
 			textField.stage.focus = null;
 		}

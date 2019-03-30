@@ -12,41 +12,35 @@ import openfl.display.StageAlign;
 import openfl.display.StageQuality;
 import openfl.display.StageScaleMode;
 
-class ScreenBase {
+class ScreenImpl extends ScreenBase {
     private var _mapping:Map<String, UIEvent->Void>;
 
     public function new() {
         _mapping = new Map<String, UIEvent->Void>();
     }
 
-    public var options(default, default):ToolkitOptions;
-
-    public var width(get, null):Float;
-    private function get_width():Float {
+    private override function get_width():Float {
         if (container == Lib.current.stage) {
             return Lib.current.stage.stageWidth / Toolkit.scaleX;
         }
         return container.width / Toolkit.scaleX;
     }
 
-    public var height(get, null):Float;
-    private function get_height():Float {
+    private override function get_height():Float {
         if (container == Lib.current.stage) {
             return Lib.current.stage.stageHeight / Toolkit.scaleY;
         }
         return container.height / Toolkit.scaleY;
     }
 
-    public var dpi(get, null):Float;
-    private function get_dpi():Float {
+    private override function get_dpi():Float {
         return System.getDisplay(0).dpi;
     }
 
-    public var focus(get, set):Component;
-    private function get_focus():Component {
+    private override function get_focus():Component {
         return cast Lib.current.stage.focus;
     }
-    private function set_focus(value:Component):Component {
+    private override function set_focus(value:Component):Component {
         if (value != null && value.hasTextInput()) {
             Lib.current.stage.focus = value.getTextInput().textField;
         } else {
@@ -55,23 +49,21 @@ class ScreenBase {
         return value;
     }
 
-    public var title(get,set):String;
-    private inline function set_title(s:String):String {
+    private override function set_title(s:String):String {
         #if (flash || android || ios )
         trace("WARNING: this platform doesnt support dynamic titles");
         #end
         Lib.current.stage.window.title = s;
         return s;
     }
-    private inline function get_title():String {
+    private override function get_title():String {
         #if (flash || android || ios )
         trace("WARNING: this platform doesnt support dynamic titles");
         #end
         return Lib.current.stage.window.title;
     }
 
-    private var _topLevelComponents:Array<Component> = new Array<Component>();
-    public function addComponent(component:Component) {
+    public override function addComponent(component:Component) {
         component.scaleX =  Toolkit.scaleX;
         component.scaleY =  Toolkit.scaleY;
         _topLevelComponents.push(component);
@@ -79,12 +71,12 @@ class ScreenBase {
         onContainerResize(null);
     }
 
-    public function removeComponent(component:Component) {
+    public override function removeComponent(component:Component) {
         _topLevelComponents.remove(component);
         container.removeChild(component);
     }
 
-    private function handleSetComponentIndex(child:Component, index:Int) {
+    private override function handleSetComponentIndex(child:Component, index:Int) {
         container.setChildIndex(child, index);
     }
 
@@ -121,30 +113,13 @@ class ScreenBase {
     }
 
     //***********************************************************************************************************
-    // Dialogs
-    //***********************************************************************************************************
-    /*
-    public function messageDialog(message:String, title:String = null, options:Dynamic = null, callback:DialogButton->Void = null):Dialog {
-        return null;
-    }
-
-    public function showDialog(content:Component, options:Dynamic = null, callback:DialogButton->Void = null):Dialog {
-        return null;
-    }
-
-    public function hideDialog(dialog:Dialog):Bool {
-        return false;
-    }
-    */
-
-    //***********************************************************************************************************
     // Events
     //***********************************************************************************************************
-    private function supportsEvent(type:String):Bool {
+    private override function supportsEvent(type:String):Bool {
         return EventMapper.HAXEUI_TO_OPENFL.get(type) != null;
     }
 
-    private function mapEvent(type:String, listener:UIEvent->Void) {
+    private override function mapEvent(type:String, listener:UIEvent->Void) {
         switch (type) {
             case MouseEvent.MOUSE_MOVE | MouseEvent.MOUSE_OVER | MouseEvent.MOUSE_OUT
                 | MouseEvent.MOUSE_DOWN | MouseEvent.MOUSE_UP | MouseEvent.CLICK:
@@ -161,7 +136,7 @@ class ScreenBase {
         }
     }
 
-    private function unmapEvent(type:String, listener:UIEvent->Void) {
+    private override function unmapEvent(type:String, listener:UIEvent->Void) {
         switch (type) {
             case MouseEvent.MOUSE_MOVE | MouseEvent.MOUSE_OVER | MouseEvent.MOUSE_OUT
                 | MouseEvent.MOUSE_DOWN | MouseEvent.MOUSE_UP | MouseEvent.CLICK:

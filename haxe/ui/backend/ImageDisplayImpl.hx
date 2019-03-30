@@ -7,25 +7,17 @@ import haxe.ui.core.Component;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
 
-class ImageDisplayBase {
-    public var parentComponent:Component;
-    public var aspectRatio:Float = 1; // width x height
+class ImageDisplayImpl extends ImageBase {
     public var sprite:Sprite;
 
     private var _bmp:Bitmap;
 
     public function new() {
+        super();
         sprite = new Sprite();
     }
 
-    private var _left:Float = 0;
-    private var _top:Float = 0;
-    private var _imageWidth:Float = 0;
-    private var _imageHeight:Float = 0;
-    private var _imageInfo:ImageInfo;
-    private var _imageClipRect:Rectangle;
-
-    public function dispose():Void {
+    public override function dispose():Void {
         if (_bmp != null) {
             //_bmp.bitmapData.dispose();
             sprite.removeChild(_bmp);
@@ -57,7 +49,7 @@ class ImageDisplayBase {
     // Validation functions
     //***********************************************************************************************************
 
-    private function validateData() {
+    private override function validateData() {
         if (_imageInfo != null) {
             if(containsBitmapDataInfo()) {
                 if (_bmp == null) {
@@ -92,7 +84,7 @@ class ImageDisplayBase {
         }
     }
 
-    private function validatePosition() {
+    private override function validatePosition() {
         if (sprite.x != _left) {
             sprite.x = _left;
         }
@@ -102,7 +94,7 @@ class ImageDisplayBase {
         }
     }
 
-    private function validateDisplay() {
+    private override function validateDisplay() {
         if(containsBitmapDataInfo()) {
             var scaleX:Float = _imageWidth / _bmp.bitmapData.width;
             if (_bmp.scaleX != scaleX) {

@@ -4,19 +4,18 @@ import haxe.ui.backend.openfl.EventMapper;
 import haxe.ui.backend.openfl.FilterConverter;
 import haxe.ui.backend.openfl.OpenFLStyleHelper;
 import haxe.ui.core.Component;
-import haxe.ui.core.IComponentBase;
 import haxe.ui.core.ImageDisplay;
 import haxe.ui.core.TextDisplay;
 import haxe.ui.core.TextInput;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
-import haxe.ui.styles.Style;
 import haxe.ui.geom.Rectangle;
+import haxe.ui.styles.Style;
 import openfl.display.Sprite;
 import openfl.events.Event;
 
-class ComponentBase extends Sprite implements IComponentBase {
+class ComponentImpl extends ComponentBase {
     private var _eventMap:Map<String, UIEvent->Void>;
 
     public function new() {
@@ -43,11 +42,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
     }
 
-    private function handleCreate(native:Bool):Void {
-
-    }
-
-    private function handlePosition(left:Null<Float>, top:Null<Float>, style:Style):Void {
+    private override function handlePosition(left:Null<Float>, top:Null<Float>, style:Style):Void {
         if (left != null) {
             this.x = Math.fround(left);
         }
@@ -57,7 +52,7 @@ class ComponentBase extends Sprite implements IComponentBase {
     }
 
     public var styleable:Bool = true;
-    private function handleSize(width:Null<Float>, height:Null<Float>, style:Style) {
+    private override function handleSize(width:Null<Float>, height:Null<Float>, style:Style) {
         if (width == null || height == null || width <= 0 || height <= 0) {
             return;
         }
@@ -67,92 +62,49 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
     }
 
-    private function handleClipRect(value:Rectangle):Void {
+    private override function handleClipRect(value:Rectangle):Void {
         if (value == null) {
             this.scrollRect = null;
         } else {
-            this.scrollRect = new openfl.geom.Rectangle(value.left, value.top, Math.fround(value.width), Math.fround(value.height));
+            this.scrollRect = new openfl.geom.Rectangle(Math.fround(value.left),
+                                                        Math.fround(value.top),
+                                                        Math.fround(value.width),
+                                                        Math.fround(value.height));
         }
-    }
-
-    private function handleReady() {
-
-    }
-
-    private function handlePreReposition() {
-
-    }
-
-    private function handlePostReposition() {
-
     }
 
     //***********************************************************************************************************
     // Text related
     //***********************************************************************************************************
-    private var _textDisplay:TextDisplay;
-    public function createTextDisplay(text:String = null):TextDisplay {
+    public override function createTextDisplay(text:String = null):TextDisplay {
         if (_textDisplay == null) {
-            _textDisplay = new TextDisplay();
-            _textDisplay.parentComponent = cast(this, Component);
+            super.createTextDisplay(text);
             addChild(_textDisplay.textField);
         }
-        if (text != null) {
-            _textDisplay.text = text;
-        }
+        
         return _textDisplay;
     }
 
-    public function getTextDisplay():TextDisplay {
-        return createTextDisplay();
-    }
-
-    public function hasTextDisplay():Bool {
-        return (_textDisplay != null);
-    }
-
-    private var _textInput:TextInput;
-    public function createTextInput(text:String = null):TextInput {
+    public override function createTextInput(text:String = null):TextInput {
         if (_textInput == null) {
-            _textInput = new TextInput();
-            _textInput.parentComponent = cast(this, Component);
+            super.createTextInput(text);
             addChild(_textInput.textField);
         }
-        if (text != null) {
-            _textInput.text = text;
-        }
         return _textInput;
-    }
-
-    public function getTextInput():TextInput {
-        return createTextInput();
-    }
-
-    public function hasTextInput():Bool {
-        return (_textInput != null);
     }
 
     //***********************************************************************************************************
     // Image related
     //***********************************************************************************************************
-    private var _imageDisplay:ImageDisplay;
-    public function createImageDisplay():ImageDisplay {
+    public override function createImageDisplay():ImageDisplay {
         if (_imageDisplay == null) {
-            _imageDisplay = new ImageDisplay();
+            super.createImageDisplay();
             addChild(_imageDisplay.sprite);
         }
         return _imageDisplay;
     }
 
-    public function getImageDisplay():ImageDisplay {
-        return createImageDisplay();
-    }
-
-    public function hasImageDisplay():Bool {
-        return (_imageDisplay != null);
-    }
-
-    public function removeImageDisplay():Void {
+    public override function removeImageDisplay():Void {
         if (_imageDisplay != null) {
             if (contains(_imageDisplay.sprite) == true) {
                 removeChild(_imageDisplay.sprite);
@@ -165,33 +117,33 @@ class ComponentBase extends Sprite implements IComponentBase {
     //***********************************************************************************************************
     // Display tree
     //***********************************************************************************************************
-    private function handleAddComponent(child:Component):Component {
+    private override function handleAddComponent(child:Component):Component {
         addChild(child);
         return child;
     }
 
-    private function handleAddComponentAt(child:Component, index:Int):Component {
+    private override function handleAddComponentAt(child:Component, index:Int):Component {
         addChildAt(child, index);
         return child;
     }
 
-    private function handleRemoveComponent(child:Component, dispose:Bool = true):Component {
+    private override function handleRemoveComponent(child:Component, dispose:Bool = true):Component {
         if (contains(child)) {
             removeChild(child);
         }
         return child;
     }
 
-    private function handleRemoveComponentAt(index:Int, dispose:Bool = true):Component {
+    private override function handleRemoveComponentAt(index:Int, dispose:Bool = true):Component {
         removeChildAt(index);
         return null;
     }
 
-    private function handleSetComponentIndex(child:Component, index:Int) {
+    private override function handleSetComponentIndex(child:Component, index:Int) {
         setChildIndex(child, index);
     }
 
-    private function applyStyle(style:Style) {
+    private override function applyStyle(style:Style) {
         var useHandCursor = false;
         if (style.cursor != null && style.cursor == "pointer") {
             useHandCursor = true;
@@ -229,14 +181,14 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
     }
 
-    private function handleVisibility(show:Bool):Void {
+    private override function handleVisibility(show:Bool):Void {
         this.visible = show;
     }
 
     //***********************************************************************************************************
     // Events
     //***********************************************************************************************************
-    private function mapEvent(type:String, listener:UIEvent->Void) {
+    private override function mapEvent(type:String, listener:UIEvent->Void) {
         switch (type) {
             case MouseEvent.MOUSE_MOVE | MouseEvent.MOUSE_OVER | MouseEvent.MOUSE_OUT
                 | MouseEvent.MOUSE_DOWN | MouseEvent.MOUSE_UP | MouseEvent.MOUSE_WHEEL
@@ -262,7 +214,7 @@ class ComponentBase extends Sprite implements IComponentBase {
         }
     }
 
-    private function unmapEvent(type:String, listener:UIEvent->Void) {
+    private override function unmapEvent(type:String, listener:UIEvent->Void) {
         switch (type) {
             case MouseEvent.MOUSE_MOVE | MouseEvent.MOUSE_OVER | MouseEvent.MOUSE_OUT
                 | MouseEvent.MOUSE_DOWN | MouseEvent.MOUSE_UP | MouseEvent.MOUSE_WHEEL

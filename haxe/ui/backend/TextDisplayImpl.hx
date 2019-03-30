@@ -1,24 +1,19 @@
 package haxe.ui.backend;
 
-import haxe.ui.assets.FontInfo;
-import haxe.ui.core.Component;
-import haxe.ui.core.TextDisplay.TextDisplayData;
-import haxe.ui.styles.Style;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
-class TextDisplayBase {
-    private var _displayData:TextDisplayData = new TextDisplayData();
-
-    public var textField:TextField;
-    public var parentComponent:Component;
-
+class TextDisplayImpl extends TextBase {
     private var PADDING_X:Int = 2;
     private var PADDING_Y:Int = 2;
 
+    public var textField:TextField;
+
     public function new() {
+        super();
+
         textField = createTextField();
 
         _text = "";
@@ -34,25 +29,15 @@ class TextDisplayBase {
         return tf;
     }
 
-    private var _text:String;
-    private var _left:Float = 0;
-    private var _top:Float = 0;
-    private var _width:Float = 0;
-    private var _height:Float = 0;
-    private var _textWidth:Float = 0;
-    private var _textHeight:Float = 0;
-    private var _textStyle:Style;
-    private var _fontInfo:FontInfo = null;
-    
     //***********************************************************************************************************
     // Validation functions
     //***********************************************************************************************************
 
-    private function validateData() {
+    private override function validateData() {
         textField.text = normalizeText(_text);
     }
 
-    private function validateStyle():Bool {
+    private override function validateStyle():Bool {
         var measureTextRequired:Bool = false;
 
         var format:TextFormat = textField.getTextFormat();
@@ -110,7 +95,7 @@ class TextDisplayBase {
         return measureTextRequired;
     }
 
-    private function validatePosition() {
+    private override function validatePosition() {
         #if html5
         textField.x = _left - 1;// + (PADDING_X / 2);
         textField.y = _top + 1;// + (PADDING_Y / 2);
@@ -120,7 +105,7 @@ class TextDisplayBase {
         #end
     }
 
-    private function validateDisplay() {
+    private override function validateDisplay() {
         if (textField.width != _width) {
             textField.width = _width;
         }
@@ -130,7 +115,7 @@ class TextDisplayBase {
         }
     }
 
-    private function measureText() {
+    private override function measureText() {
         textField.width = _width;
         
         _textWidth = textField.textWidth + PADDING_X;
