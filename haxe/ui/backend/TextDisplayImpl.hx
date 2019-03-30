@@ -97,11 +97,11 @@ class TextDisplayImpl extends TextBase {
 
     private override function validatePosition() {
         #if html5
-        textField.x = _left - 1;// + (PADDING_X / 2);
-        textField.y = _top + 1;// + (PADDING_Y / 2);
+        textField.x = _left - PADDING_X + 1;
+        textField.y = _top - PADDING_Y + 1;
         #else
-        textField.x = _left - PADDING_X + 1;// + (PADDING_X / 2);
-        textField.y = _top - PADDING_Y;// + (PADDING_Y / 2);
+        textField.x = _left - PADDING_X + 1;
+        textField.y = _top - PADDING_Y + 0;
         #end
     }
 
