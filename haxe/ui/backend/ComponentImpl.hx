@@ -36,7 +36,11 @@ class ComponentImpl extends ComponentBase {
     private function recursiveReady() {
         removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         var component:Component = cast(this, Component);
+        var isReady = component.isReady;
         component.ready();
+        if (isReady == false) {
+            component.syncComponentValidation();
+        }
         for (child in component.childComponents) {
             child.recursiveReady();
         }
