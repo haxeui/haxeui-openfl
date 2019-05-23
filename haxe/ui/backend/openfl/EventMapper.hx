@@ -9,6 +9,7 @@ class EventMapper {
         haxe.ui.events.MouseEvent.MOUSE_UP => openfl.events.MouseEvent.MOUSE_UP,
         haxe.ui.events.MouseEvent.MOUSE_WHEEL => openfl.events.MouseEvent.MOUSE_WHEEL,
         haxe.ui.events.MouseEvent.CLICK => openfl.events.MouseEvent.CLICK,
+        haxe.ui.events.MouseEvent.RIGHT_CLICK => openfl.events.MouseEvent.RIGHT_CLICK,
 
         haxe.ui.events.KeyboardEvent.KEY_DOWN => openfl.events.KeyboardEvent.KEY_DOWN,
         haxe.ui.events.KeyboardEvent.KEY_UP => openfl.events.KeyboardEvent.KEY_UP
@@ -22,6 +23,7 @@ class EventMapper {
         openfl.events.MouseEvent.MOUSE_UP => haxe.ui.events.MouseEvent.MOUSE_UP,
         openfl.events.MouseEvent.MOUSE_WHEEL => haxe.ui.events.MouseEvent.MOUSE_WHEEL,
         openfl.events.MouseEvent.CLICK => haxe.ui.events.MouseEvent.CLICK,
+        openfl.events.MouseEvent.RIGHT_CLICK => haxe.ui.events.MouseEvent.RIGHT_CLICK,
 
         openfl.events.KeyboardEvent.KEY_DOWN => haxe.ui.events.KeyboardEvent.KEY_DOWN,
         openfl.events.KeyboardEvent.KEY_UP => haxe.ui.events.KeyboardEvent.KEY_UP
