@@ -3,6 +3,7 @@ package haxe.ui.backend;
 import flash.display.DisplayObjectContainer;
 import haxe.ui.backend.openfl.EventMapper;
 import haxe.ui.core.Component;
+import haxe.ui.core.Screen;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
@@ -89,6 +90,7 @@ class ScreenImpl extends ScreenBase {
                 c.height = (this.height * c.percentHeight) / 100;
             }
         }
+        __onStageResize();
     }
 
     private var _containerReady:Bool = false;
@@ -116,6 +118,9 @@ class ScreenImpl extends ScreenBase {
     // Events
     //***********************************************************************************************************
     private override function supportsEvent(type:String):Bool {
+        if (type == UIEvent.RESIZE) {
+            return true;
+        }
         return EventMapper.HAXEUI_TO_OPENFL.get(type) != null;
     }
 
@@ -133,6 +138,11 @@ class ScreenImpl extends ScreenBase {
                     _mapping.set(type, listener);
                     Lib.current.stage.addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyEvent);
                 }
+                
+            case UIEvent.RESIZE:
+                if (_mapping.exists(type) == false) {
+                    _mapping.set(type, listener);
+                }
         }
     }
 
@@ -146,6 +156,9 @@ class ScreenImpl extends ScreenBase {
             case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
                 _mapping.remove(type);
                 Lib.current.stage.removeEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyEvent);
+                
+            case UIEvent.RESIZE:
+                _mapping.remove(type);
         }
     }
 
@@ -177,6 +190,17 @@ class ScreenImpl extends ScreenBase {
                 keyboardEvent.ctrlKey = event.ctrlKey;
                 keyboardEvent.shiftKey = event.shiftKey;
                 fn(keyboardEvent);
+            }
+        }
+    }
+    
+    private function __onStageResize() {
+        var type:String = UIEvent.RESIZE;
+        if (type != null) {
+            var fn = _mapping.get(type);
+            if (fn != null) {
+                var uiEvent = new UIEvent(type);
+                fn(uiEvent);
             }
         }
     }
