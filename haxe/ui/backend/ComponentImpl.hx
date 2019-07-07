@@ -185,8 +185,16 @@ class ComponentImpl extends ComponentBase {
         }
     }
 
+    private override function set_visible(value:Bool):Bool {
+        var v = super.set_visible(value);
+        cast(this, Component).hidden = !value;
+        return v;
+    }
+    
     private override function handleVisibility(show:Bool):Void {
-        this.visible = show;
+        if (show != this.visible) {
+            this.visible = show;
+        }
     }
 
     //***********************************************************************************************************
