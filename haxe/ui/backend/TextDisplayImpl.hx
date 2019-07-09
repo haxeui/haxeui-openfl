@@ -99,6 +99,9 @@ class TextDisplayImpl extends TextBase {
         #if html5
         textField.x = _left - PADDING_X + 1;
         textField.y = _top - PADDING_Y + 1;
+        #elseif flash
+        textField.x = _left - PADDING_X + 0;
+        textField.y = _top - PADDING_Y + 0;
         #else
         textField.x = _left - PADDING_X + 1;
         textField.y = _top - PADDING_Y + 0;
@@ -118,7 +121,11 @@ class TextDisplayImpl extends TextBase {
     private override function measureText() {
         textField.width = _width;
         
+        #if !flash
         _textWidth = textField.textWidth + PADDING_X;
+        #else
+        _textWidth = textField.textWidth;
+        #end
         _textHeight = textField.textHeight;
         if (_textHeight == 0) {
             var tmpText:String = textField.text;
@@ -126,7 +133,9 @@ class TextDisplayImpl extends TextBase {
             _textHeight = textField.textHeight;
             textField.text = tmpText;
         }
+        #if !flash
         _textHeight += PADDING_Y;
+        #end
     }
     
     private function normalizeText(text:String):String {

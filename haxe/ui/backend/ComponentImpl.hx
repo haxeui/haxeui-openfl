@@ -185,10 +185,15 @@ class ComponentImpl extends ComponentBase {
         }
     }
 
-    private override function set_visible(value:Bool):Bool {
+    #if flash @:setter(visible) #else override #end
+    private function set_visible(value:Bool): #if flash Void #else Bool #end {
+        #if flash
+        super.visible = value;
+        #else
         var v = super.set_visible(value);
+        #end
         cast(this, Component).hidden = !value;
-        return v;
+        #if !flash return v; #end
     }
     
     private override function handleVisibility(show:Bool):Void {
