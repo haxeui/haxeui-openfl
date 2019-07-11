@@ -11,3 +11,15 @@
 .scrollview, .listview {
     padding: 1px;
 }
+
+.textfield, .textarea {
+    filter: drop-shadow(1, 45, #CCCCCC, 0.2, 1, 1, 1, 3, true);
+}
+
+.popup {
+    filter: drop-shadow(1, 45, #CCCCCC, 0.15, 1, 1, 1, 3, false);
+}
+
+.dialog {
+    filter: drop-shadow(0, 45, #CCCCCC, 0.2, 30, 30, 1, 15, false);
+}
