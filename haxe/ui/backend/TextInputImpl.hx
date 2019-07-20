@@ -11,6 +11,8 @@ class TextInputImpl extends TextDisplayImpl {
 
         textField.addEventListener(Event.CHANGE, onChange);
         textField.addEventListener(Event.SCROLL, onScroll);
+        _inputData.vscrollPageStep = 1;
+        _inputData.vscrollNativeWheel = true;
     }
 
     private override function createTextField() {
@@ -78,11 +80,14 @@ class TextInputImpl extends TextDisplayImpl {
     private override function measureText() {
         super.measureText();
         
-        _inputData.hscrollMax = _textWidth - _width;
-        _inputData.hscrollPageSize = (_width * _inputData.hscrollMax) / _textWidth;
-        
-        _inputData.vscrollMax = _textHeight - _height;
-        _inputData.vscrollPageSize = (_height * _inputData.vscrollMax) / _textHeight;
+        _inputData.hscrollMax = textField.maxScrollH;
+        // see below
+        //_inputData.hscrollPageSize = (_width * _inputData.hscrollMax) / _textWidth;
+
+        _inputData.vscrollMax = textField.maxScrollV;
+        // cant have page size yet as there seems to be an openfl issue with bottomScrollV
+        // https://github.com/openfl/openfl/issues/2220
+        //_inputData.vscrollPageSize = (_height * _inputData.vscrollMax) / _textHeight;
     }
     
     private function onChange(e) {
@@ -96,8 +101,8 @@ class TextInputImpl extends TextDisplayImpl {
     }
     
     private function onScroll(e) {
-        _inputData.hscrollPos = textField.scrollH;
-        _inputData.vscrollPos = textField.scrollV;
+        _inputData.hscrollPos = textField.scrollH - 1;
+        _inputData.vscrollPos = textField.scrollV - 1;
         
         if (_inputData.onScrollCallback != null) {
             _inputData.onScrollCallback();
