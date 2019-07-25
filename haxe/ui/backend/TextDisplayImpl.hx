@@ -34,7 +34,11 @@ class TextDisplayImpl extends TextBase {
     //***********************************************************************************************************
 
     private override function validateData() {
-        textField.text = normalizeText(_text);
+        if (_text != null) {
+            textField.text = normalizeText(_text);
+        } else if (_htmlText != null) {
+            textField.htmlText = _htmlText;
+        }
     }
 
     private override function validateStyle():Bool {
@@ -81,6 +85,9 @@ class TextDisplayImpl extends TextBase {
 
         textField.defaultTextFormat = format;
         textField.setTextFormat(format);
+        if (_htmlText != null) {
+            textField.htmlText = normalizeText(_htmlText);
+        }
 
         if (textField.wordWrap != _displayData.wordWrap) {
             textField.wordWrap = _displayData.wordWrap;
