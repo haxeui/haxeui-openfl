@@ -1,19 +1,18 @@
 package haxe.ui.backend;
 
-import haxe.ui.backend.TextDisplayBase;
-import haxe.ui.core.TextInput.TextInputData;
 import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 
-class TextInputBase extends TextDisplayBase {
-    private var _inputData:TextInputData = new TextInputData();
-    
+class TextInputImpl extends TextDisplayImpl {
     public function new() {
         super();
 
         textField.addEventListener(Event.CHANGE, onChange);
+        textField.addEventListener(Event.SCROLL, onScroll);
+        _inputData.vscrollPageStep = 1;
+        _inputData.vscrollNativeWheel = true;
     }
 
     private override function createTextField() {
@@ -28,6 +27,18 @@ class TextInputBase extends TextDisplayBase {
         return tf;
     }
 
+    public override function focus() {
+        if (textField.stage != null) {
+			textField.stage.focus = textField;
+		}
+    }
+    
+    public override function blur() {
+        if (textField.stage != null) {
+			textField.stage.focus = null;
+		}
+    }
+    
     //***********************************************************************************************************
     // Validation functions
     //***********************************************************************************************************
@@ -52,20 +63,49 @@ class TextInputBase extends TextDisplayBase {
             textField.displayAsPassword = _inputData.password;
         }
 
+        if (parentComponent.disabled) {
+            textField.selectable = false;
+        } else {
+            textField.selectable = true;
+        }
+        
         return measureTextRequired;
     }
 
+    private override function validatePosition() {
+        textField.x = _left - 2;// - 2 + (PADDING_X / 2);
+        textField.y = _top - 2;// - 2 + (PADDING_Y / 2);
+    }
+    
     private override function measureText() {
         super.measureText();
         
-        _inputData.hscrollMax = _textWidth - _width;
-        _inputData.hscrollPageSize = (_width * _inputData.hscrollMax) / _textWidth;
-        
-        _inputData.vscrollMax = _textHeight - _height;
-        _inputData.vscrollPageSize = (_height * _inputData.vscrollMax) / _textHeight;
+        _inputData.hscrollMax = textField.maxScrollH;
+        // see below
+        //_inputData.hscrollPageSize = (_width * _inputData.hscrollMax) / _textWidth;
+
+        _inputData.vscrollMax = textField.maxScrollV;
+        // cant have page size yet as there seems to be an openfl issue with bottomScrollV
+        // https://github.com/openfl/openfl/issues/2220
+        //_inputData.vscrollPageSize = (_height * _inputData.vscrollMax) / _textHeight;
     }
     
     private function onChange(e) {
         _text = textField.text;
+        
+        measureText();
+        
+        if (_inputData.onChangedCallback != null) {
+            _inputData.onChangedCallback();
+        }
+    }
+    
+    private function onScroll(e) {
+        _inputData.hscrollPos = textField.scrollH - 1;
+        _inputData.vscrollPos = textField.scrollV - 1;
+        
+        if (_inputData.onScrollCallback != null) {
+            _inputData.onScrollCallback();
+        }
     }
 }

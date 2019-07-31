@@ -1,24 +1,19 @@
 package haxe.ui.backend;
 
-import haxe.ui.assets.FontInfo;
-import haxe.ui.core.Component;
-import haxe.ui.core.TextDisplay.TextDisplayData;
-import haxe.ui.styles.Style;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
-class TextDisplayBase {
-    private var _displayData:TextDisplayData = new TextDisplayData();
-
-    public var textField:TextField;
-    public var parentComponent:Component;
-
-    private var PADDING_X:Int = 0;
+class TextDisplayImpl extends TextBase {
+    private var PADDING_X:Int = 2;
     private var PADDING_Y:Int = 2;
 
+    public var textField:TextField;
+
     public function new() {
+        super();
+
         textField = createTextField();
 
         _text = "";
@@ -30,30 +25,23 @@ class TextDisplayBase {
         tf.selectable = false;
         tf.mouseEnabled = false;
         tf.autoSize = TextFieldAutoSize.LEFT;
-//        tf.cacheAsBitmap = true;
-
+        
         return tf;
     }
 
-    private var _text:String;
-    private var _left:Float = 0;
-    private var _top:Float = 0;
-    private var _width:Float = 0;
-    private var _height:Float = 0;
-    private var _textWidth:Float = 0;
-    private var _textHeight:Float = 0;
-    private var _textStyle:Style;
-    private var _fontInfo:FontInfo = null;
-    
     //***********************************************************************************************************
     // Validation functions
     //***********************************************************************************************************
 
-    private function validateData() {
-        textField.text = normalizeText(_text);
+    private override function validateData() {
+        if (_text != null) {
+            textField.text = normalizeText(_text);
+        } else if (_htmlText != null) {
+            textField.htmlText = _htmlText;
+        }
     }
 
-    private function validateStyle():Bool {
+    private override function validateStyle():Bool {
         var measureTextRequired:Bool = false;
 
         var format:TextFormat = textField.getTextFormat();
@@ -78,10 +66,28 @@ class TextDisplayBase {
             if (format.color != _textStyle.color) {
                 format.color = _textStyle.color;
             }
+            
+            if (format.bold != _textStyle.fontBold) {
+                format.bold = _textStyle.fontBold;
+                measureTextRequired = true;
+            }
+            
+            if (format.italic != _textStyle.fontItalic) {
+                format.italic = _textStyle.fontItalic;
+                measureTextRequired = true;
+            }
+            
+            if (format.underline != _textStyle.fontUnderline) {
+                format.underline = _textStyle.fontUnderline;
+                measureTextRequired = true;
+            }
         }
 
         textField.defaultTextFormat = format;
         textField.setTextFormat(format);
+        if (_htmlText != null) {
+            textField.htmlText = normalizeText(_htmlText);
+        }
 
         if (textField.wordWrap != _displayData.wordWrap) {
             textField.wordWrap = _displayData.wordWrap;
@@ -96,12 +102,20 @@ class TextDisplayBase {
         return measureTextRequired;
     }
 
-    private function validatePosition() {
-        textField.x = _left - 2 + (PADDING_X / 2);
-        textField.y = _top - 2 + (PADDING_Y / 2);
+    private override function validatePosition() {
+        #if html5
+        textField.x = _left - PADDING_X + 1;
+        textField.y = _top - PADDING_Y + 1;
+        #elseif flash
+        textField.x = _left - PADDING_X + 0;
+        textField.y = _top - PADDING_Y + 0;
+        #else
+        textField.x = _left - PADDING_X + 1;
+        textField.y = _top - PADDING_Y + 0;
+        #end
     }
 
-    private function validateDisplay() {
+    private override function validateDisplay() {
         if (textField.width != _width) {
             textField.width = _width;
         }
@@ -111,10 +125,14 @@ class TextDisplayBase {
         }
     }
 
-    private function measureText() {
+    private override function measureText() {
         textField.width = _width;
         
+        #if !flash
         _textWidth = textField.textWidth + PADDING_X;
+        #else
+        _textWidth = textField.textWidth;
+        #end
         _textHeight = textField.textHeight;
         if (_textHeight == 0) {
             var tmpText:String = textField.text;
@@ -122,7 +140,9 @@ class TextDisplayBase {
             _textHeight = textField.textHeight;
             textField.text = tmpText;
         }
+        #if !flash
         _textHeight += PADDING_Y;
+        #end
     }
     
     private function normalizeText(text:String):String {

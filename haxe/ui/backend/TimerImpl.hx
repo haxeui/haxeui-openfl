@@ -4,21 +4,21 @@ import openfl.events.Event;
 import openfl.Lib;
 import haxe.Timer;
 
-class TimerBase {
-    static private var __timers:Array<TimerBase> = [];
+class TimerImpl {
+    static private var __timers:Array<TimerImpl> = [];
 
     static public function update(e:Event) {
         var currentTime:Float = Timer.stamp();
         var count:Int = __timers.length;
         for (i in 0...count) {
-            var timer:TimerBase = __timers[i];
+            var timer:TimerImpl = __timers[i];
             if (timer._start <= currentTime && !timer._stopped) {
                 timer._callback();
             }
         }
 
         while (--count >= 0) {
-            var timer:TimerBase = __timers[count];
+            var timer:TimerImpl = __timers[count];
             if (timer._stopped) {
                 __timers.remove(timer);
             }

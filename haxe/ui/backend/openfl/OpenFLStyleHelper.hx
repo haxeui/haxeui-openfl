@@ -1,9 +1,8 @@
 package haxe.ui.backend.openfl;
-import haxe.ui.assets.ImageInfo;
-import haxe.ui.components.Button.ButtonDefaultIconBehaviour;
 
+import haxe.ui.assets.ImageInfo;
 import haxe.ui.styles.Style;
-import haxe.ui.util.Slice9;
+import haxe.ui.geom.Slice9;
 import openfl.display.BitmapData;
 import openfl.display.GradientType;
 import openfl.display.Graphics;
@@ -12,6 +11,7 @@ import openfl.display.SpreadMethod;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
+
 
 class OpenFLStyleHelper {
     public function new() {
@@ -312,7 +312,7 @@ class OpenFLStyleHelper {
 
     }
 
-    private static function convertToOpenFLRectArr(arr:Array<haxe.ui.util.Rectangle>):Array<Rectangle> {
+    private static function convertToOpenFLRectArr(arr:Array<haxe.ui.geom.Rectangle>):Array<Rectangle> {
         var r:Array<Rectangle> = new Array<Rectangle>();
         for (a in arr) {
             r.push(convertToOpenFLRect(a));
@@ -320,12 +320,12 @@ class OpenFLStyleHelper {
         return r;
     }
 
-    private static function convertToOpenFLRect(rc:haxe.ui.util.Rectangle):Rectangle {
+    private static function convertToOpenFLRect(rc:haxe.ui.geom.Rectangle):Rectangle {
         return new Rectangle(rc.left, rc.top, rc.width, rc.height);
     }
 
-    private static function convertToHaxeUIRect(rc:Rectangle):haxe.ui.util.Rectangle {
-        return new haxe.ui.util.Rectangle(rc.x, rc.y, rc.width, rc.height);
+    private static function convertToHaxeUIRect(rc:Rectangle):haxe.ui.geom.Rectangle {
+        return new haxe.ui.geom.Rectangle(rc.x, rc.y, rc.width, rc.height);
     }
 
 }

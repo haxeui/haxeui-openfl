@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import haxe.io.Bytes;
 import haxe.io.Path;
 import haxe.ui.assets.FontInfo;
 import haxe.ui.assets.ImageInfo;
@@ -11,19 +12,15 @@ import openfl.display.Loader;
 import openfl.events.Event;
 import openfl.utils.ByteArray;
 
-class AssetsBase {
-    public function new() {
-
-    }
-
-    private function getTextDelegate(resourceId:String):String {
+class AssetsImpl extends AssetsBase {
+    private override function getTextDelegate(resourceId:String):String {
         if (Assets.exists(resourceId) == true) {
             return Assets.getText(resourceId);
         }
         return null;
     }
 
-    private function getImageInternal(resourceId:String, callback:ImageInfo->Void):Void {
+    private override function getImageInternal(resourceId:String, callback:ImageInfo->Void):Void {
         var imageInfo:ImageInfo = null;
         if (Assets.exists(resourceId) == true) {
             if(Path.extension(resourceId).toLowerCase() == "svg") {
@@ -52,7 +49,7 @@ class AssetsBase {
         callback(imageInfo);
     }
 
-    private function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
+    private override function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
         var imageInfo:ImageInfo = null;
         if (Path.extension(resourceId).toLowerCase() == "svg") {
             #if svg
@@ -72,24 +69,30 @@ class AssetsBase {
         }
 
         var bytes = Resource.getBytes(resourceId);
+        imageFromBytes(bytes, function(imageInfo) {
+            callback(resourceId, imageInfo);
+        });
+    }
+
+    public override function imageFromBytes(bytes:Bytes, callback:ImageInfo->Void):Void {
         var ba:ByteArray = ByteConverter.fromHaxeBytes(bytes);
         var loader:Loader = new Loader();
         loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e) {
             if (loader.content != null) {
                 var bmpData = cast(loader.content, Bitmap).bitmapData;
-                imageInfo = {
+                var imageInfo:ImageInfo = {
                     data: bmpData,
                     width: bmpData.width,
                     height: bmpData.height
                 }
 
-                callback(resourceId, imageInfo);
+                callback(imageInfo);
             }
         });
         loader.loadBytes(ba);
     }
-
-    private function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
+    
+    private override function getFontInternal(resourceId:String, callback:FontInfo->Void):Void {
         var fontInfo = null;
         if (isEmbeddedFont(resourceId) == true) {
             if (Assets.exists(resourceId)) {
@@ -109,7 +112,7 @@ class AssetsBase {
         callback(fontInfo);
     }
 
-    private function getFontFromHaxeResource(resourceId:String, callback:String->FontInfo->Void) {
+    private override function getFontFromHaxeResource(resourceId:String, callback:String->FontInfo->Void) {
         callback(resourceId, null);
     }
     
