@@ -195,7 +195,7 @@ class OpenFLStyleHelper {
             cacheId += "_" + BitmapCache.rectId(clip);
             var clipBmp:BitmapData = BitmapCache.instance.get(cacheId);
             if (clipBmp == null) {
-                clipBmp = new BitmapData(cast clip.width, cast clip.height, true, 0x00000000);
+                clipBmp = new BitmapData(Std.int(clip.width), Std.int(clip.height), true, 0x00000000);
                 clipBmp.copyPixels(fillBmp, clip, new Point(0, 0));
                 BitmapCache.instance.set(cacheId, clipBmp);
             }
