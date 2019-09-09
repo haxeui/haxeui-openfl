@@ -10,6 +10,7 @@ import haxe.ui.core.TextInput;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
+import haxe.ui.geom.Point;
 import haxe.ui.geom.Rectangle;
 import haxe.ui.styles.Style;
 import openfl.display.Sprite;
@@ -202,6 +203,11 @@ class ComponentImpl extends ComponentBase {
         }
     }
 
+    private override function getComponentOffset():Point {
+        var globalPoint = localToGlobal(new openfl.geom.Point(0, 0));
+        return new Point(globalPoint.x, globalPoint.y);
+    }
+    
     //***********************************************************************************************************
     // Events
     //***********************************************************************************************************
