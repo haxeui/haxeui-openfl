@@ -13,6 +13,7 @@ import haxe.ui.events.UIEvent;
 import haxe.ui.geom.Point;
 import haxe.ui.geom.Rectangle;
 import haxe.ui.styles.Style;
+import openfl.display.DisplayObjectContainer;
 import openfl.display.Sprite;
 import openfl.events.Event;
 
@@ -204,7 +205,19 @@ class ComponentImpl extends ComponentBase {
     }
 
     private override function getComponentOffset():Point {
-        var globalPoint = localToGlobal(new openfl.geom.Point(0, 0));
+        var p:DisplayObjectContainer = this;
+        var s:DisplayObjectContainer = null;
+        while (p != null) {
+            if (Std.is(p, ComponentImpl) == false) {
+                s = p;
+                break;
+            }
+            p = p.parent;
+        }
+        if (s == null)  {
+            return new Point(0, 0);
+        }
+        var globalPoint = s.localToGlobal(new openfl.geom.Point(0, 0));
         return new Point(globalPoint.x, globalPoint.y);
     }
     
