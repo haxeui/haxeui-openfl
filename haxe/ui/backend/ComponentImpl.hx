@@ -28,6 +28,10 @@ class ComponentImpl extends ComponentBase {
         #end
         _eventMap = new Map<String, UIEvent->Void>();
 
+        #if mobile
+        cast(this, Component).addClass("mobile");
+        #end
+        
         addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     }
 
