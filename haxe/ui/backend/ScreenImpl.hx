@@ -65,8 +65,8 @@ class ScreenImpl extends ScreenBase {
     }
 
     public override function addComponent(component:Component) {
-        component.scaleX =  Toolkit.scaleX;
-        component.scaleY =  Toolkit.scaleY;
+        component.scaleX = Toolkit.scaleX;
+        component.scaleY = Toolkit.scaleY;
         _topLevelComponents.push(component);
         container.addChild(component);
         onContainerResize(null);
@@ -84,10 +84,10 @@ class ScreenImpl extends ScreenBase {
     private function onContainerResize(event:openfl.events.Event) {
         for (c in _topLevelComponents) {
             if (c.percentWidth > 0) {
-                c.width = (this.width * c.percentWidth) / 100;
+                c.width = ((this.width / Toolkit.scaleX) * c.percentWidth) / 100;
             }
             if (c.percentHeight > 0) {
-                c.height = (this.height * c.percentHeight) / 100;
+                c.height = ((this.height / Toolkit.scaleY) * c.percentHeight) / 100;
             }
         }
         __onStageResize();
