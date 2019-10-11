@@ -41,6 +41,7 @@ class ScreenImpl extends ScreenBase {
     private override function get_focus():Component {
         return cast Lib.current.stage.focus;
     }
+    
     private override function set_focus(value:Component):Component {
         if (value != null && value.hasTextInput()) {
             Lib.current.stage.focus = value.getTextInput().textField;
