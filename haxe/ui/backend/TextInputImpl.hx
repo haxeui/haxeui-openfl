@@ -73,8 +73,19 @@ class TextInputImpl extends TextDisplayImpl {
     }
 
     private override function validatePosition() {
-        textField.x = _left - 2;// - 2 + (PADDING_X / 2);
-        textField.y = _top - 2;// - 2 + (PADDING_Y / 2);
+        _left = Math.round(_left);
+        _top = Math.round(_top);
+        
+        #if html5
+        textField.x = _left - 3;
+        textField.y = _top - 2;
+        #elseif flash
+        textField.x = _left;
+        textField.y = _top;
+        #else
+        textField.x = _left - 3;
+        textField.y = _top - 3;
+        #end
     }
     
     private override function measureText() {

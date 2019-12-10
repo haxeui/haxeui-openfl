@@ -6,8 +6,8 @@ import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
 class TextDisplayImpl extends TextBase {
-    private var PADDING_X:Int = 2;
-    private var PADDING_Y:Int = 2;
+    private var PADDING_X:Int = 0;
+    private var PADDING_Y:Int = 0;
 
     public var textField:TextField;
 
@@ -103,15 +103,18 @@ class TextDisplayImpl extends TextBase {
     }
 
     private override function validatePosition() {
+        _left = Math.round(_left);
+        _top = Math.round(_top);
+        
         #if html5
-        textField.x = _left - PADDING_X + 1;
-        textField.y = _top - PADDING_Y + 1;
+        textField.x = _left - 2;
+        textField.y = _top - 2;
         #elseif flash
-        textField.x = _left - PADDING_X + 0;
-        textField.y = _top - PADDING_Y + 0;
+        textField.x = _left;
+        textField.y = _top;
         #else
-        textField.x = _left - PADDING_X + 1;
-        textField.y = _top - PADDING_Y + 0;
+        textField.x = _left - 3;
+        textField.y = _top - 3;
         #end
     }
 
@@ -143,6 +146,9 @@ class TextDisplayImpl extends TextBase {
         #if !flash
         _textHeight += PADDING_Y;
         #end
+        
+        _textWidth = Math.round(_textWidth);
+        _textHeight = Math.round(_textHeight);
     }
     
     private function normalizeText(text:String):String {
