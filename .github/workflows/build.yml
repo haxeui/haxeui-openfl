@@ -24,7 +24,10 @@ jobs:
       run: |
         git clone --branch master https://github.com/haxeui/haxeui-core.git --depth=1
         haxelib dev haxeui-core haxeui-core
-        haxelib install hxcpp --always --quiet
+        haxelib dev haxeui-openfl .
+        # haxelib install hxcpp --always --quiet
+        haxelib install actuate --always --quiet
         haxelib install openfl --always --quiet
         echo "y" | haxelib run openfl setup
-        openfl
+        cd .github/workflows/project
+        openfl build html5
