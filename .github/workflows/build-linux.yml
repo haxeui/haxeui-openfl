@@ -1,0 +1,35 @@
+name: Build (linux, all haxe versions)
+
+on: [push, repository_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        haxe-version: [3.4.4, 4.0.3]
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: haxeui/haxeui-core/.github/actions/haxe@master
+      with:
+        haxe-version: ${{ matrix.haxe-version }}
+
+    - name: Setup app (haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
+      run: |
+        git clone --branch master https://github.com/haxeui/haxeui-core.git --depth=1
+        haxelib dev haxeui-core haxeui-core
+        haxelib dev haxeui-openfl .
+        haxelib install hxcpp --always --quiet
+        haxelib install hscript --always --quiet
+        haxelib install actuate --always --quiet
+        haxelib install openfl --always --quiet
+        echo "y" | haxelib run openfl setup
+
+    - name: Build app (haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
+      run: |
+        cd .github/workflows/project
+        openfl build linux
