@@ -20,7 +20,7 @@ jobs:
       with:
         haxe-version: ${{ matrix.haxe-version }}
 
-    - name: Build app (haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
+    - name: Setup app (haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
       run: |
         git clone --branch master https://github.com/haxeui/haxeui-core.git --depth=1
         haxelib dev haxeui-core haxeui-core
@@ -29,5 +29,8 @@ jobs:
         haxelib install actuate --always --quiet
         haxelib install openfl --always --quiet
         echo "y" | haxelib run openfl setup
+
+    - name: Build app (haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
+      run: |
         cd .github/workflows/project
         openfl build html5
