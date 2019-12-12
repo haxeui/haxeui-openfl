@@ -24,5 +24,6 @@ jobs:
       run: |
         git clone --branch master https://github.com/haxeui/haxeui-core.git --depth=1
         haxelib dev haxeui-core haxeui-core
-        haxelib install build.hxml --always
-        haxe build.hxml
+        haxelib install hxcpp --always
+        haxelib install openfl
+        echo "y" | haxelib run openfl setup
