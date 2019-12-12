@@ -1,4 +1,4 @@
-name: Build (all platforms, all targets, all haxe versions)
+name: Build (html5, all platforms, all haxe versions)
 
 on: [push, repository_dispatch]
 
@@ -11,8 +11,8 @@ jobs:
       matrix:
         #os: [ubuntu-latest, macos-latest, windows-latest]
         #haxe-version: [3.4.4, 4.0.3]
-        os: [ubuntu-latest]
-        haxe-version: [3.4.4]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        haxe-version: [3.4.4, 4.0.3]
 
     steps:
     - uses: actions/checkout@v1
