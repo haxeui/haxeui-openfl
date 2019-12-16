@@ -48,6 +48,13 @@
     margin-top: -1px;
 }
 
+.property-group-item-editor-container .numberstepper {
+    padding-top: 1px;
+}
+
+.property-grid {
+    padding-bottom: 0px;
+}
 /************************************************************************
 ** MOBILE VARIANTS
 *************************************************************************/
