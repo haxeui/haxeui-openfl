@@ -5,6 +5,7 @@ import haxe.ui.backend.openfl.FilterConverter;
 import haxe.ui.backend.openfl.OpenFLStyleHelper;
 import haxe.ui.core.Component;
 import haxe.ui.core.ImageDisplay;
+import haxe.ui.core.Screen;
 import haxe.ui.core.TextDisplay;
 import haxe.ui.core.TextInput;
 import haxe.ui.events.KeyboardEvent;
@@ -33,14 +34,32 @@ class ComponentImpl extends ComponentBase {
         #end
         
         addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+        addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     }
 
+    @:access(haxe.ui.backend.ScreenImpl)
     private function onAddedToStage(event:Event) {
+        removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+        var component:Component = cast(this, Component);
+        if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) == -1) {
+            Screen.instance.rootComponents.push(component);
+            Screen.instance._topLevelComponents.push(component); // TODO: look into removing and using rootComponents only, order / ready() is important
+            Screen.instance.onContainerResize(null);
+        }
         recursiveReady();
     }
 
+    @:access(haxe.ui.backend.ScreenImpl)
+    private function onRemovedFromStage(event:Event) {
+        removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+        var component:Component = cast(this, Component);
+        if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) != -1) {
+            Screen.instance.rootComponents.remove(component);
+            Screen.instance._topLevelComponents.remove(component); // TODO: look into removing and using rootComponents only, order / ready() is important
+        }
+    }
+    
     private function recursiveReady() {
-        removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         var component:Component = cast(this, Component);
         var isReady = component.isReady;
         component.ready();

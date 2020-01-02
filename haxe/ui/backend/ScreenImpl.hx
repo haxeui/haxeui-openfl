@@ -68,9 +68,11 @@ class ScreenImpl extends ScreenBase {
     public override function addComponent(component:Component) {
         component.scaleX = Toolkit.scaleX;
         component.scaleY = Toolkit.scaleY;
-        _topLevelComponents.push(component);
-        container.addChild(component);
-        onContainerResize(null);
+        if (_topLevelComponents.indexOf(component) == -1) {
+            _topLevelComponents.push(component);
+            container.addChild(component);
+            onContainerResize(null);
+        }
     }
 
     public override function removeComponent(component:Component) {
