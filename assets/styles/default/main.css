@@ -36,8 +36,11 @@
 /************************************************************************
 ** FIX SOME OPENFL ODDITIES
 *************************************************************************/
+.numberstepper {
+    padding-bottom: 2px;
+}
+
 .numberstepper .stepper {
-    margin-top: -1px;
 }
 
 .stepper-textfield, .stepper-textfield:active {
