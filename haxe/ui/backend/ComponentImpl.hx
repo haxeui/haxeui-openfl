@@ -251,7 +251,7 @@ class ComponentImpl extends ComponentBase {
         switch (type) {
             case MouseEvent.MOUSE_MOVE | MouseEvent.MOUSE_OVER | MouseEvent.MOUSE_OUT
                 | MouseEvent.MOUSE_DOWN | MouseEvent.MOUSE_UP | MouseEvent.MOUSE_WHEEL
-                | MouseEvent.CLICK | MouseEvent.RIGHT_CLICK
+                | MouseEvent.CLICK | MouseEvent.DOUBLE_CLICK | MouseEvent.RIGHT_CLICK
                 | MouseEvent.RIGHT_MOUSE_DOWN | MouseEvent.RIGHT_MOUSE_UP:
                 if (_eventMap.exists(type) == false) {
                     _eventMap.set(type, listener);
@@ -278,7 +278,7 @@ class ComponentImpl extends ComponentBase {
         switch (type) {
             case MouseEvent.MOUSE_MOVE | MouseEvent.MOUSE_OVER | MouseEvent.MOUSE_OUT
                 | MouseEvent.MOUSE_DOWN | MouseEvent.MOUSE_UP | MouseEvent.MOUSE_WHEEL
-                | MouseEvent.CLICK | MouseEvent.RIGHT_CLICK
+                | MouseEvent.CLICK | MouseEvent.DOUBLE_CLICK | MouseEvent.RIGHT_CLICK
                 | MouseEvent.RIGHT_MOUSE_DOWN | MouseEvent.RIGHT_MOUSE_UP:
                 _eventMap.remove(type);
                 removeEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent);
