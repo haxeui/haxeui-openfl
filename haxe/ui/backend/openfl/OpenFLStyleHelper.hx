@@ -101,16 +101,8 @@ class OpenFLStyleHelper {
             }
         }
 
-        var backgroundColor:Null<Int> = style.backgroundColor;
-        var backgroundColorEnd:Null<Int> = style.backgroundColorEnd;
         var backgroundOpacity:Null<Float> = style.backgroundOpacity;
-        #if html5 // TODO: fix for html5 not working with non-gradient fills
-        if (backgroundColor != null && backgroundColorEnd == null) {
-            backgroundColorEnd = backgroundColor;
-        }
-        #end
-
-        if(backgroundOpacity == null) {
+        if (backgroundOpacity == null) {
             backgroundOpacity = 1;
         }
 
