@@ -1,8 +1,8 @@
 package haxe.ui.backend.openfl;
 
 import haxe.ui.assets.ImageInfo;
-import haxe.ui.styles.Style;
 import haxe.ui.geom.Slice9;
+import haxe.ui.styles.Style;
 import openfl.display.BitmapData;
 import openfl.display.GradientType;
 import openfl.display.Graphics;
@@ -114,13 +114,15 @@ class OpenFLStyleHelper {
             backgroundOpacity = 1;
         }
 
-        if (backgroundColor != null) {
-            if (backgroundColorEnd != null) {
+        if (style.backgroundColors != null && style.backgroundColors.length > 0) {
+            if (style.backgroundColors.length == 1) { // solid
+                graphics.beginFill(style.backgroundColors[0].color, backgroundOpacity);
+            } else { // gradient
                 var w:Int = Std.int(rc.width);
                 var h:Int = Std.int(rc.height);
-                var colors:Array<UInt> = [backgroundColor, backgroundColorEnd];
-                var alphas:Array<Float> = [backgroundOpacity, backgroundOpacity];
-                var ratios:Array<Int> = [0, 255];
+                var colors:Array<UInt> = [];
+                var alphas:Array<Float> = [];
+                var ratios:Array<Int> = [];
                 var matrix:Matrix = new Matrix();
 
                 var gradientType:String = "vertical";
@@ -134,6 +136,12 @@ class OpenFLStyleHelper {
                     matrix.createGradientBox(w - 2, h - 2, 0, 0, 0);
                 }
 
+                for (backgroundPair in style.backgroundColors) {
+                    colors.push(backgroundPair.color);
+                    ratios.push(Math.round(backgroundPair.location * 255 / 100));
+                    alphas.push(backgroundOpacity);
+                }
+                
                 graphics.beginGradientFill(GradientType.LINEAR,
                                             colors,
                                             alphas,
@@ -142,8 +150,6 @@ class OpenFLStyleHelper {
                                             SpreadMethod.PAD,
                                             InterpolationMethod.LINEAR_RGB,
                                             0);
-            } else {
-                graphics.beginFill(backgroundColor, backgroundOpacity);
             }
         }
 
