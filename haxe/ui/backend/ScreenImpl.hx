@@ -65,7 +65,7 @@ class ScreenImpl extends ScreenBase {
         return Lib.current.stage.window.title;
     }
 
-    public override function addComponent(component:Component) {
+    public override function addComponent(component:Component):Component {
         component.scaleX = Toolkit.scaleX;
         component.scaleY = Toolkit.scaleY;
         if (_topLevelComponents.indexOf(component) == -1) {
@@ -73,11 +73,13 @@ class ScreenImpl extends ScreenBase {
             container.addChild(component);
             onContainerResize(null);
         }
+		return component;
     }
 
-    public override function removeComponent(component:Component) {
+    public override function removeComponent(component:Component):Component {
         _topLevelComponents.remove(component);
         container.removeChild(component);
+		return component;
     }
 
     private override function handleSetComponentIndex(child:Component, index:Int) {
