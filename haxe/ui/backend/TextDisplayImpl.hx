@@ -35,7 +35,9 @@ class TextDisplayImpl extends TextBase {
 
     private override function validateData() {
         if (_text != null) {
-            textField.text = normalizeText(_text);
+            if (_dataSource == null) {
+                textField.text = normalizeText(_text);
+            }
         } else if (_htmlText != null) {
             textField.htmlText = _htmlText;
         }
