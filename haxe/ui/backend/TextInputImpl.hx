@@ -57,11 +57,15 @@ class TextInputImpl extends TextDisplayImpl {
     private function onDataSourceAdd(s:String) {
         textField.appendText(s);
         parentComponent.text = textField.text;
+        measureText();
+        parentComponent.syncComponentValidation();
     }
     
     private function onDataSourceClear() {
         textField.text = "";
         parentComponent.text = "";
+        measureText();
+        parentComponent.syncComponentValidation();
     }
     
     //***********************************************************************************************************
@@ -73,13 +77,13 @@ class TextInputImpl extends TextDisplayImpl {
         super.validateData();
         
         var changed = false;
-        var hscrollValue:Int = Std.int(_inputData.hscrollPos + 1);
+        var hscrollValue:Int = Std.int(_inputData.hscrollPos);
         if (textField.scrollH != hscrollValue) {
             textField.scrollH = hscrollValue;
             changed = true;
         }
 
-        var vscrollValue:Int = Std.int(_inputData.vscrollPos + 1);
+        var vscrollValue:Int = Std.int(_inputData.vscrollPos);
         if (textField.scrollV != vscrollValue) {
             textField.scrollV = vscrollValue;
             changed = true;
@@ -149,7 +153,7 @@ class TextInputImpl extends TextDisplayImpl {
     
     private function onScroll(e) {
         _inputData.hscrollPos = textField.scrollH;
-        _inputData.vscrollPos = textField.scrollV;
+        _inputData.vscrollPos = textField.scrollV - 1;
         
         if (_inputData.onScrollCallback != null) {
             _inputData.onScrollCallback();
