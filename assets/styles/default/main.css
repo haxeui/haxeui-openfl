@@ -41,6 +41,7 @@
 }
 
 .numberstepper .stepper {
+    margin-top: -1px;
 }
 
 .stepper-textfield, .stepper-textfield:active {
@@ -48,7 +49,6 @@
 }
 
 .stepper-textfield {
-    margin-top: -1px;
 }
 
 .property-group-item-editor-container .numberstepper {
