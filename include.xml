@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project>
-    <assets path="./assets/styles" rename="styles" embed="true"/>
     <assets path="./assets/fonts" rename="fonts" embed="true"/>
 </project>

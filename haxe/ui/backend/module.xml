@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <module id="haxeui-openfl">
+    <resources>
+        <resource path="/haxe/ui/backend/openfl/_module/styles" prefix="styles" />
+    </resources>
     <themes>
         <global>
             <style resource="styles/main.css" />

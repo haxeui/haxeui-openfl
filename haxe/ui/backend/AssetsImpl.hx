@@ -16,6 +16,8 @@ class AssetsImpl extends AssetsBase {
     private override function getTextDelegate(resourceId:String):String {
         if (Assets.exists(resourceId) == true) {
             return Assets.getText(resourceId);
+        } else if (Resource.listNames().indexOf(resourceId) != -1) {
+            return Resource.getString(resourceId);
         }
         return null;
     }
