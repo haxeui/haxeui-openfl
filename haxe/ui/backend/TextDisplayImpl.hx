@@ -6,7 +6,7 @@ import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
 class TextDisplayImpl extends TextBase {
-    private var PADDING_X:Int = 0;
+    private var PADDING_X:Int = 4;
     private var PADDING_Y:Int = 0;
 
     public var textField:TextField;
@@ -109,13 +109,13 @@ class TextDisplayImpl extends TextBase {
         _top = Math.round(_top);
         
         #if html5
-        textField.x = _left - 2;
+        //textField.x = _left - 2;
         textField.y = _top - 2;
         #elseif flash
         textField.x = _left;
         textField.y = _top;
         #else
-        textField.x = _left - 3;
+        //textField.x = _left - 3;
         textField.y = _top - 3;
         #end
     }
