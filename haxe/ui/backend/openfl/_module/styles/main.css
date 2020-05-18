@@ -1,4 +1,4 @@
-.label {
+.label, .textfield, .textarea {
     font-size: 13px;
     __font-name: "_sans";
 }

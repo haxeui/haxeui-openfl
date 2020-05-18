@@ -54,6 +54,9 @@ class TextDisplayImpl extends TextBase {
             }
 
             var fontSizeValue = Std.int(_textStyle.fontSize);
+            if (_textStyle.fontSize == null) {
+                fontSizeValue = 13;
+            }
             if (format.size != fontSizeValue) {
                 format.size = fontSizeValue;
 
