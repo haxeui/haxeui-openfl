@@ -291,10 +291,18 @@ class OpenFLStyleHelper {
         dstRect.bottom = Std.int(dstRect.bottom);
         dstRect.right = Std.int(dstRect.right);
 
+        if (srcRect.width <= 0 || srcRect.height <= 0) {
+            return;
+        }
+        
+        if (dstRect.width <= 0 || dstRect.height <= 0) {
+            return;
+        }
+        
         cacheId += "__" + BitmapCache.rectId(srcRect);
         var srcBmp:BitmapData = BitmapCache.instance.get(cacheId);
         if (srcBmp == null) {
-            srcBmp = new BitmapData(cast srcRect.width, cast srcRect.height, true, 0x00000000);
+            srcBmp = new BitmapData(Std.int(srcRect.width), Std.int(srcRect.height), true, 0x00000000);
             srcBmp.copyPixels(bmp, srcRect, new Point(0, 0));
             BitmapCache.instance.set(cacheId, srcBmp);
         } else {

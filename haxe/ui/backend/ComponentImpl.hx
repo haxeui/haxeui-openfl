@@ -222,8 +222,8 @@ class ComponentImpl extends ComponentBase {
     }
     
     private override function handleVisibility(show:Bool):Void {
-        if (show != this.visible) {
-            this.visible = show;
+        if (show != super.visible) {
+            super.visible = show;
         }
     }
 
