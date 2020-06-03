@@ -115,8 +115,8 @@ class TextDisplayImpl extends TextBase {
         //textField.x = _left - 2;
         textField.y = _top - 2;
         #elseif flash
-        textField.x = _left;
-        textField.y = _top;
+        textField.x = _left - 3;
+        textField.y = _top - 3;
         #else
         //textField.x = _left - 3;
         textField.y = _top - 3;
@@ -129,7 +129,11 @@ class TextDisplayImpl extends TextBase {
         }
 
         if (textField.height != _height) {
+            #if flash
+            textField.height = _height + 4;
+            #else
             textField.height = _height;
+            #end
         }
     }
 
@@ -139,7 +143,7 @@ class TextDisplayImpl extends TextBase {
         #if !flash
         _textWidth = textField.textWidth + PADDING_X;
         #else
-        _textWidth = textField.textWidth;
+        _textWidth = textField.textWidth - 2;
         #end
         _textHeight = textField.textHeight;
         if (_textHeight == 0) {
@@ -150,6 +154,8 @@ class TextDisplayImpl extends TextBase {
         }
         #if !flash
         _textHeight += PADDING_Y;
+        #else
+        _textHeight -= 2;
         #end
         
         _textWidth = Math.round(_textWidth);
