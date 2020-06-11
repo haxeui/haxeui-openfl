@@ -22,16 +22,16 @@ class ScreenImpl extends ScreenBase {
 
     private override function get_width():Float {
         if (container == Lib.current.stage) {
-            return Lib.current.stage.stageWidth / Toolkit.scaleX;
+            return Lib.current.stage.stageWidth;
         }
-        return container.width / Toolkit.scaleX;
+        return container.width;
     }
 
     private override function get_height():Float {
         if (container == Lib.current.stage) {
-            return Lib.current.stage.stageHeight / Toolkit.scaleY;
+            return Lib.current.stage.stageHeight;
         }
-        return container.height / Toolkit.scaleY;
+        return container.height;
     }
 
     private override function get_dpi():Float {
