@@ -118,7 +118,7 @@ class TextDisplayImpl extends TextBase {
         textField.x = _left - 3;
         textField.y = _top - 3;
         #else
-        //textField.x = _left - 3;
+        textField.x = _left - 1;
         textField.y = _top - 3;
         #end
     }
