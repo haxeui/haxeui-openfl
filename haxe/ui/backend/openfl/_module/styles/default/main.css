@@ -41,7 +41,7 @@
 }
 
 .numberstepper .stepper {
-    margin-top: -1px;
+    __margin-top: -1px;
 }
 
 .stepper-textfield, .stepper-textfield:active {
