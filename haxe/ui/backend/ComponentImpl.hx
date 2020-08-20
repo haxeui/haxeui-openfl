@@ -11,6 +11,7 @@ import haxe.ui.core.TextInput;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
+import haxe.ui.focus.FocusManager;
 import haxe.ui.geom.Point;
 import haxe.ui.geom.Rectangle;
 import haxe.ui.styles.Style;
@@ -44,6 +45,7 @@ class ComponentImpl extends ComponentBase {
         if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) == -1) {
             Screen.instance.rootComponents.push(component);
             Screen.instance._topLevelComponents.push(component); // TODO: look into removing and using rootComponents only, order / ready() is important
+            FocusManager.instance.pushView(component);
             Screen.instance.onContainerResize(null);
         }
         recursiveReady();
