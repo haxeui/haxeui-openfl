@@ -24,32 +24,33 @@ class AssetsImpl extends AssetsBase {
     }
 
     private override function getImageInternal(resourceId:String, callback:ImageInfo->Void):Void {
-        var imageInfo:ImageInfo = null;
         if (Assets.exists(resourceId) == true) {
             if(Path.extension(resourceId).toLowerCase() == "svg") {
                 #if svg
                 var content:String = Assets.getText(resourceId);
                 var svg = new format.SVG(content);
-                imageInfo = {
+                var imageInfo:ImageInfo = {
                     data: svg,
                     width: Std.int(svg.data.width),
                     height: Std.int(svg.data.height)
                 };
+                callback(imageInfo);
                 #else
                 trace("WARNING: SVG not supported");
                 #end
+            } else {
+                Assets.loadBitmapData(resourceId).onComplete(function(bmpData:BitmapData) {
+                    var imageInfo:ImageInfo = {
+                        data: bmpData,
+                        width: bmpData.width,
+                        height: bmpData.height
+                    }
+                    callback(imageInfo);
+                });
             }
-            else {
-                var bmpData:BitmapData = Assets.getBitmapData(resourceId);
-                imageInfo = {
-                    data: bmpData,
-                    width: bmpData.width,
-                    height: bmpData.height
-                }
-            }
+        } else {
+            callback(null);
         }
-
-        callback(imageInfo);
     }
 
     private override function getImageFromHaxeResource(resourceId:String, callback:String->ImageInfo->Void) {
