@@ -1,10 +1,8 @@
 package haxe.ui.backend;
 
 import haxe.ui.geom.Rectangle;
-import openfl.display.BitmapData;
-import haxe.ui.assets.ImageInfo;
-import haxe.ui.core.Component;
 import openfl.display.Bitmap;
+import openfl.display.BitmapData;
 import openfl.display.Sprite;
 
 class ImageDisplayImpl extends ImageBase {
@@ -26,19 +24,19 @@ class ImageDisplayImpl extends ImageBase {
     }
 
     private inline function containsBitmapDataInfo():Bool {
-        return _imageInfo != null && Std.is(_imageInfo.data, BitmapData);
+        return _imageInfo != null && _imageInfo.data != null && Std.is(_imageInfo.data, BitmapData);
     }
 
     #if svg
 
     private inline function containsSVGInfo():Bool {
-        return _imageInfo != null && Std.is(_imageInfo.data, format.SVG);
+        return _imageInfo != null && _imageInfo.svg != null && Std.is(_imageInfo.svg, format.SVG);
     }
 
     private function renderSVG():Void {
         sprite.graphics.clear();
         if(_imageInfo != null && _imageWidth > 0 && _imageHeight > 0) {
-            var svg:format.SVG = cast _imageInfo.data;
+            var svg:format.SVG = cast _imageInfo.svg;
             svg.render(sprite.graphics, 0, 0, Std.int(_imageWidth), Std.int(_imageHeight));
         }
     }
@@ -64,7 +62,7 @@ class ImageDisplayImpl extends ImageBase {
             }
             #if svg
             else if(containsSVGInfo()) {
-                var svg:format.SVG = cast _imageInfo.data;
+                var svg:format.SVG = cast _imageInfo.svg;
                 _imageWidth = svg.data.width;
                 _imageHeight = svg.data.height;
                 renderSVG();

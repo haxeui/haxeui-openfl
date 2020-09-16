@@ -30,7 +30,7 @@ class AssetsImpl extends AssetsBase {
                 var content:String = Assets.getText(resourceId);
                 var svg = new format.SVG(content);
                 var imageInfo:ImageInfo = {
-                    data: svg,
+                    svg: svg,
                     width: Std.int(svg.data.width),
                     height: Std.int(svg.data.height)
                 };
@@ -60,7 +60,7 @@ class AssetsImpl extends AssetsBase {
             var svgContent = Resource.getString(resourceId);
             var svg = new format.SVG(svgContent);
             imageInfo = {
-                data: svg,
+                svg: svg,
                 width: Std.int(svg.data.width),
                 height: Std.int(svg.data.height)
             }
