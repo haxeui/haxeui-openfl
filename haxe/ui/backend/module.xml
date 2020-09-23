@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <module id="haxeui-openfl">
     <resources>
-        <resource path="/haxe/ui/backend/openfl/_module/styles" prefix="styles" />
+        <resource path="/haxe/ui/backend/openfl/_module/styles" prefix="haxeui-openfl/styles" />
     </resources>
     <themes>
         <global>
-            <style resource="styles/main.css" />
+            <style resource="haxeui-openfl/styles/main.css" />
         </global>
         <default>
-            <style resource="styles/default/main.css" />
+            <style resource="haxeui-openfl/styles/default/main.css" />
         </default>
     </themes>
 </module>
