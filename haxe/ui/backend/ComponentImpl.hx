@@ -58,6 +58,7 @@ class ComponentImpl extends ComponentBase {
         if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) != -1) {
             Screen.instance.rootComponents.remove(component);
             Screen.instance._topLevelComponents.remove(component); // TODO: look into removing and using rootComponents only, order / ready() is important
+            FocusManager.instance.removeView(component);
         }
     }
     
