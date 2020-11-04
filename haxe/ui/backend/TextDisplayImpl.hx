@@ -90,10 +90,6 @@ class TextDisplayImpl extends TextBase {
 
         textField.defaultTextFormat = format;
         textField.setTextFormat(format);
-        if (_htmlText != null) {
-            textField.htmlText = normalizeText(_htmlText);
-        }
-
         if (textField.wordWrap != _displayData.wordWrap) {
             textField.wordWrap = _displayData.wordWrap;
             measureTextRequired = true;
