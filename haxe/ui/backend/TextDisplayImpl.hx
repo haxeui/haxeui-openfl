@@ -160,6 +160,10 @@ class TextDisplayImpl extends TextBase {
         _textHeight = Math.round(_textHeight);
     }
     
+    private override function get_supportsHtml():Bool {
+        return true;
+    }
+    
     private function normalizeText(text:String):String {
         text = StringTools.replace(text, "\\n", "\n");
         return text;
