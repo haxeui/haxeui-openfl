@@ -1,5 +1,6 @@
 package haxe.ui.backend.openfl;
 
+import haxe.ui.backend.openfl.filters.GrayscaleFilter;
 import haxe.ui.filters.Filter;
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
@@ -30,6 +31,9 @@ class FilterConverter {
         } else if (Std.is(input, haxe.ui.filters.Blur)) {
             var inputBlur:haxe.ui.filters.Blur = cast(input, haxe.ui.filters.Blur);
             output = new BlurFilter(inputBlur.amount, inputBlur.amount);
+        } else if (Std.is(input, haxe.ui.filters.Grayscale)) {
+            var inputGrayscale:haxe.ui.filters.Grayscale = cast(input, haxe.ui.filters.Grayscale);
+            output = new GrayscaleFilter(inputGrayscale.amount / 100).filter;
         }
         
         #end
