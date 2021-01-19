@@ -157,6 +157,9 @@ class TextDisplayImpl extends TextBase {
         #end
         
         _textWidth = Math.round(_textWidth);
+        if (_textWidth % 2 != 0) {
+            _textWidth += 1;
+        }
         _textHeight = Math.round(_textHeight);
     }
     
