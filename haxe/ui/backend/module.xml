@@ -10,5 +10,8 @@
         <default>
             <style resource="haxeui-openfl/styles/default/main.css" />
         </default>
+        <dark parent="default">
+            <style resource="haxeui-openfl/styles/dark/main.css" />
+        </dark>
     </themes>
 </module>
