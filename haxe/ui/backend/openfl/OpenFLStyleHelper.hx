@@ -165,6 +165,8 @@ class OpenFLStyleHelper {
                     graphics.drawDottedRect(rc.left, rc.top, rc.width, rc.height);
                 } else if (borderStyle == "dashed") {
                     graphics.drawDashedRect(rc.left, rc.top, rc.width, rc.height);
+                } else if (borderStyle == "double") {
+                    graphics.drawDoubleRect(rc.left, rc.top, rc.width, rc.height);
                 } else {
                     graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
                 }
