@@ -12,6 +12,7 @@ import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
 
+using haxe.ui.backend.openfl.util.GraphicsExt;
 
 class OpenFLStyleHelper {
     public function new() {
@@ -37,6 +38,12 @@ class OpenFLStyleHelper {
         top = Std.int(top);
         width = Std.int(width);
         height = Std.int(height);
+
+        var hasFullStyledBorder:Bool = false;
+        var borderStyle = style.borderStyle;
+        if (borderStyle == null) {
+            borderStyle = "solid";
+        }
         
         var rc:Rectangle = new Rectangle(top, left, width, height);
         var borderRadius:Float = 0;
@@ -52,14 +59,19 @@ class OpenFLStyleHelper {
             && style.borderLeftColor != null
             && style.borderLeftColor == style.borderRightColor
             && style.borderLeftColor == style.borderBottomColor
-            && style.borderLeftColor == style.borderTopColor) {
+            && style.borderLeftColor == style.borderTopColor) { // full border
+            
+            // if the borderStyle is not solid and is among the supported StyledLineTypes...
+            if (borderStyle != "solid" && Type.getEnumConstructs(StyledLineType).indexOf(borderStyle.toUpperCase()) > -1) {
+                hasFullStyledBorder = true;
+            }
             graphics.lineStyle(style.borderLeftSize, style.borderLeftColor);
             rc.left += style.borderLeftSize / 2;
             rc.top += style.borderLeftSize / 2;
             rc.bottom -= style.borderLeftSize / 2;
             rc.right -= style.borderLeftSize / 2;
             //rc.inflate( -(style.borderLeftSize / 2), -(style.borderLeftSize / 2));
-        } else {
+        } else { // compound border
             if ((style.borderTopSize != null && style.borderTopSize > 0)
                 || (style.borderBottomSize != null && style.borderBottomSize > 0)
                 || (style.borderLeftSize != null && style.borderLeftSize > 0)
@@ -148,7 +160,17 @@ class OpenFLStyleHelper {
         }
 
         if (borderRadius == 0) {
-            graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
+            if (hasFullStyledBorder) {
+                if (borderStyle == "dotted") {
+                    graphics.drawDottedRect(rc.left, rc.top, rc.width, rc.height);
+                } else if (borderStyle == "dashed") {
+                    graphics.drawDashedRect(rc.left, rc.top, rc.width, rc.height);
+                } else {
+                    graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
+                }
+            } else {
+                graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
+            }
         } else {
             graphics.drawRoundRect(rc.left, rc.top, rc.width, rc.height, borderRadius + 1, borderRadius + 1);
         }
