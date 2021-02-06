@@ -1,17 +1,10 @@
 package haxe.ui.backend.openfl.util;
 
+#if !flash
 import openfl.geom.Point;
 import openfl.display._internal.DrawCommandReader;
 import openfl.display._internal.DrawCommandType;
 import openfl.display.Graphics;
-
-enum StyledLineType
-{
-    SOLID;
-	DOTTED;
-    DASHED;
-    DOUBLE;
-}
 
 /**
  * Static extention for openfl.display.Graphics
@@ -338,4 +331,13 @@ class GraphicsExt
         }
     }
 
+}
+#end
+
+enum StyledLineType
+{
+    SOLID;
+	DOTTED;
+    DASHED;
+    DOUBLE;
 }

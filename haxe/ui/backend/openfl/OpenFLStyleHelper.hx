@@ -161,6 +161,7 @@ class OpenFLStyleHelper {
 
         if (borderRadius == 0) {
             if (hasFullStyledBorder) {
+                #if !flash
                 if (borderStyle == "dotted") {
                     graphics.drawDottedRect(rc.left, rc.top, rc.width, rc.height);
                 } else if (borderStyle == "dashed") {
@@ -170,6 +171,7 @@ class OpenFLStyleHelper {
                 } else {
                     graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
                 }
+                #end
             } else {
                 graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
             }
