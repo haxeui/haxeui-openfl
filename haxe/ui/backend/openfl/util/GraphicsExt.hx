@@ -293,17 +293,21 @@ class GraphicsExt
         var lineData:LineStyleView = getLineStyle(gfx);
 
         gfx.moveTo(x, y);
-        _doubleLineTo(gfx, x + width, y);
-        _doubleLineTo(gfx, x + width, y + height);
-        _doubleLineTo(gfx, x, y + height);
-        _doubleLineTo(gfx, x, y);
+        if (lineData.thickness < 1.5) {
+            gfx.drawRect(x, y, width, height);
+        } else {
+            _doubleLineTo(gfx, x + width, y);
+            _doubleLineTo(gfx, x + width, y + height);
+            _doubleLineTo(gfx, x, y + height);
+            _doubleLineTo(gfx, x, y);
 
-        // in case of fills, we have to draw an invisible rect 1st bc of the nature of double lines and fills
-        gfx.lineStyle(0, 0, 0);
-        gfx.drawRect(x, y, width, height);
-        // reset lineStyle
-        // sadly, openfl issue is causing an erroneous dot to be drawn here (https://github.com/openfl/openfl/issues/2336)
-        gfx.lineStyle(lineData.thickness, lineData.color, lineData.alpha, lineData.pixelHinting, lineData.scaleMode, lineData.caps, lineData.joints, lineData.miterLimit);
+            // in case of fills, we have to draw an invisible rect 1st bc of the nature of double lines and fills
+            gfx.lineStyle(0, 0, 0);
+            gfx.drawRect(x, y, width, height);
+            // reset lineStyle
+            // sadly, openfl issue is causing an erroneous dot to be drawn here (https://github.com/openfl/openfl/issues/2336)
+            gfx.lineStyle(lineData.thickness, lineData.color, lineData.alpha, lineData.pixelHinting, lineData.scaleMode, lineData.caps, lineData.joints, lineData.miterLimit);
+        }
     }
 
     static private inline function _drawRegularPolygon(gfx:Graphics, x:Float, y:Float, sides:Int, radius:Float, lineType:StyledLineType):Void {
