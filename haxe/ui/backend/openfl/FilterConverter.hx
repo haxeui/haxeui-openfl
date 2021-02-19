@@ -15,7 +15,7 @@ class FilterConverter {
         
         #if haxe4
         
-        if (Std.is(input, haxe.ui.filters.DropShadow)) {
+        if ((input is haxe.ui.filters.DropShadow)) {
             var inputDropShadow:haxe.ui.filters.DropShadow = cast(input, haxe.ui.filters.DropShadow);
             output = new DropShadowFilter(inputDropShadow.distance + 1,
                                           inputDropShadow.angle,
@@ -28,10 +28,10 @@ class FilterConverter {
                                           inputDropShadow.inner);
                                             
             cast(output, DropShadowFilter).alpha = 1;
-        } else if (Std.is(input, haxe.ui.filters.Blur)) {
+        } else if ((input is haxe.ui.filters.Blur)) {
             var inputBlur:haxe.ui.filters.Blur = cast(input, haxe.ui.filters.Blur);
             output = new BlurFilter(inputBlur.amount, inputBlur.amount);
-        } else if (Std.is(input, haxe.ui.filters.Grayscale)) {
+        } else if ((input is haxe.ui.filters.Grayscale)) {
             var inputGrayscale:haxe.ui.filters.Grayscale = cast(input, haxe.ui.filters.Grayscale);
             output = new GrayscaleFilter(inputGrayscale.amount / 100).filter;
         }
