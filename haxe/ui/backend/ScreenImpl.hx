@@ -1,14 +1,13 @@
 package haxe.ui.backend;
 
-import flash.display.DisplayObjectContainer;
 import haxe.ui.backend.openfl.EventMapper;
 import haxe.ui.core.Component;
-import haxe.ui.core.Screen;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
 import lime.system.System;
 import openfl.Lib;
+import openfl.display.DisplayObjectContainer;
 import openfl.display.StageAlign;
 import openfl.display.StageQuality;
 import openfl.display.StageScaleMode;
@@ -83,7 +82,19 @@ class ScreenImpl extends ScreenBase {
     }
 
     private override function handleSetComponentIndex(child:Component, index:Int) {
-        container.setChildIndex(child, index);
+        _topLevelComponents.remove(child);
+        _topLevelComponents.insert(index, child);
+        
+        var offset = 0;
+        for (i in 0...container.numChildren) {
+            var c = container.getChildAt(i);
+            if ((c is Component)) {
+                offset = i;
+                break;
+            }
+        }
+        
+        container.setChildIndex(child, index + offset);
     }
 
     private function onContainerResize(event:openfl.events.Event) {
