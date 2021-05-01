@@ -171,6 +171,15 @@ class AssetsImpl extends AssetsBase {
     }
     #end
     
+    
+    public override function imageInfoFromImageData(imageData:ImageData):ImageInfo {
+        return {
+            data: imageData,
+            width: imageData.width,
+            height: imageData.height
+        }
+    }
+    
     //***********************************************************************************************************
     // Util functions
     //***********************************************************************************************************
