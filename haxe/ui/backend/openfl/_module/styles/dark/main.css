@@ -13,3 +13,30 @@
 .menu {
     filter: drop-shadow(1, 45, #000000, 0.15, 1, 1, 1, 3, false);
 }
+
+.sidebar {
+    filter: drop-shadow(0, 45, #222222, 0.1, 30, 30, 1, 15, false);
+}
+
+/************************************************************************
+** MOBILE VARIANTS
+*************************************************************************/
+.popup:mobile {
+    filter: none;
+}
+
+.dialog:mobile {
+    filter: none;
+}
+
+.menubar:mobile {
+    filter: none;
+}
+
+.menu:mobile {
+    filter: none;
+}
+
+.sidebar:mobile {
+    filter: drop-shadow(10, 45, #222222, 0.1, 5, 5, 1, 3, false);
+}
