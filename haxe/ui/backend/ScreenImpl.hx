@@ -3,9 +3,11 @@ package haxe.ui.backend;
 import haxe.ui.Toolkit;
 import haxe.ui.backend.openfl.EventMapper;
 import haxe.ui.core.Component;
+import haxe.ui.core.Screen;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
+import haxe.ui.validation.InvalidationFlags;
 import lime.system.System;
 import openfl.Lib;
 import openfl.display.DisplayObjectContainer;
@@ -100,12 +102,10 @@ class ScreenImpl extends ScreenBase {
 
     private function onContainerResize(event:openfl.events.Event) {
         for (c in _topLevelComponents) {
-            if (c.percentWidth > 0) {
-                c.width = ((this.width) * c.percentWidth) / 100;
-            }
-            if (c.percentHeight > 0) {
-                c.height = ((this.height) * c.percentHeight) / 100;
-            }
+            resizeComponent(c);
+        }
+        if (Toolkit.styleSheet.hasMediaQueries == true) {
+            cast(this, Screen).invalidateAll(InvalidationFlags.STYLE);
         }
         __onStageResize();
     }
