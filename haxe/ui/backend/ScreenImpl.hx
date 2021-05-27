@@ -3,11 +3,9 @@ package haxe.ui.backend;
 import haxe.ui.Toolkit;
 import haxe.ui.backend.openfl.EventMapper;
 import haxe.ui.core.Component;
-import haxe.ui.core.Screen;
 import haxe.ui.events.KeyboardEvent;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
-import haxe.ui.validation.InvalidationFlags;
 import lime.system.System;
 import openfl.Lib;
 import openfl.display.DisplayObjectContainer;
@@ -70,8 +68,8 @@ class ScreenImpl extends ScreenBase {
     public override function addComponent(component:Component):Component {
         component.scaleX = Toolkit.scaleX;
         component.scaleY = Toolkit.scaleY;
-        if (_topLevelComponents.indexOf(component) == -1) {
-            _topLevelComponents.push(component);
+        if (rootComponents.indexOf(component) == -1) {
+            rootComponents.push(component);
             container.addChild(component);
             onContainerResize(null);
         }
@@ -79,14 +77,14 @@ class ScreenImpl extends ScreenBase {
     }
 
     public override function removeComponent(component:Component):Component {
-        _topLevelComponents.remove(component);
+        rootComponents.remove(component);
         container.removeChild(component);
 		return component;
     }
 
     private override function handleSetComponentIndex(child:Component, index:Int) {
-        _topLevelComponents.remove(child);
-        _topLevelComponents.insert(index, child);
+        rootComponents.remove(child);
+        rootComponents.insert(index, child);
         
         var offset = 0;
         for (i in 0...container.numChildren) {
@@ -101,13 +99,13 @@ class ScreenImpl extends ScreenBase {
     }
 
     private function onContainerResize(event:openfl.events.Event) {
-        for (c in _topLevelComponents) {
-            resizeComponent(c);
+        resizeRootComponents();
+        
+        var fn = _mapping.get(UIEvent.RESIZE);
+        if (fn != null) {
+            var uiEvent = new UIEvent(UIEvent.RESIZE);
+            fn(uiEvent);
         }
-        if (Toolkit.styleSheet.hasMediaQueries == true) {
-            cast(this, Screen).invalidateAll(InvalidationFlags.STYLE);
-        }
-        __onStageResize();
     }
 
     private var _containerReady:Bool = false;
@@ -209,17 +207,6 @@ class ScreenImpl extends ScreenBase {
                 keyboardEvent.ctrlKey = event.ctrlKey;
                 keyboardEvent.shiftKey = event.shiftKey;
                 fn(keyboardEvent);
-            }
-        }
-    }
-    
-    private function __onStageResize() {
-        var type:String = UIEvent.RESIZE;
-        if (type != null) {
-            var fn = _mapping.get(type);
-            if (fn != null) {
-                var uiEvent = new UIEvent(type);
-                fn(uiEvent);
             }
         }
     }

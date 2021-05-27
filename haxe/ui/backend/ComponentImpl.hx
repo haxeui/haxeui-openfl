@@ -44,7 +44,6 @@ class ComponentImpl extends ComponentBase {
         var component:Component = cast(this, Component);
         if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) == -1) {
             Screen.instance.rootComponents.push(component);
-            Screen.instance._topLevelComponents.push(component); // TODO: look into removing and using rootComponents only, order / ready() is important
             FocusManager.instance.pushView(component);
             Screen.instance.onContainerResize(null);
         }
@@ -57,7 +56,6 @@ class ComponentImpl extends ComponentBase {
         var component:Component = cast(this, Component);
         if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) != -1) {
             Screen.instance.rootComponents.remove(component);
-            Screen.instance._topLevelComponents.remove(component); // TODO: look into removing and using rootComponents only, order / ready() is important
             FocusManager.instance.removeView(component);
         }
     }
