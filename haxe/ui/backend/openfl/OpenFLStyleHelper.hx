@@ -12,7 +12,9 @@ import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
 
+#if haxeui_extended_borders
 using haxe.ui.backend.openfl.util.GraphicsExt;
+#end
 
 class OpenFLStyleHelper {
     public function new() {
@@ -61,10 +63,13 @@ class OpenFLStyleHelper {
             && style.borderLeftColor == style.borderBottomColor
             && style.borderLeftColor == style.borderTopColor) { // full border
             
+            #if haxeui_extended_borders    
             // if the borderStyle is not solid and is among the supported StyledLineTypes...
             if (borderStyle != "solid" && Type.getEnumConstructs(StyledLineType).indexOf(borderStyle.toUpperCase()) > -1) {
                 hasFullStyledBorder = true;
             }
+            #end 
+            
             graphics.lineStyle(style.borderLeftSize, style.borderLeftColor);
             rc.left += style.borderLeftSize / 2;
             rc.top += style.borderLeftSize / 2;
@@ -161,7 +166,7 @@ class OpenFLStyleHelper {
 
         if (borderRadius == 0) {
             if (hasFullStyledBorder) {
-                #if !flash
+                #if (!flash && haxeui_extended_borders)
                 if (borderStyle == "dotted") {
                     graphics.drawDottedRect(rc.left, rc.top, rc.width, rc.height);
                 } else if (borderStyle == "dashed") {

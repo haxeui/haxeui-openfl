@@ -1,6 +1,9 @@
 package haxe.ui.backend.openfl.util;
 
+#if haxeui_extended_borders
+
 #if !flash
+
 import openfl.geom.Point;
 import openfl.display._internal.DrawCommandReader;
 import openfl.display._internal.DrawCommandType;
@@ -345,3 +348,6 @@ enum StyledLineType
     DASHED;
     DOUBLE;
 }
+
+#end
+
