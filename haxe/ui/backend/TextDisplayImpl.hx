@@ -89,10 +89,13 @@ class TextDisplayImpl extends TextBase {
         }
 
         textField.defaultTextFormat = format;
-        textField.setTextFormat(format);
+        //textField.setTextFormat(format);
         if (textField.wordWrap != _displayData.wordWrap) {
             textField.wordWrap = _displayData.wordWrap;
             measureTextRequired = true;
+        }
+        if (_htmlText != null) {
+            textField.htmlText = _htmlText;
         }
 
         if (textField.multiline != _displayData.multiline) {
