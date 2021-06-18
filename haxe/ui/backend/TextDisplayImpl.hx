@@ -112,13 +112,13 @@ class TextDisplayImpl extends TextBase {
         
         #if html5
         textField.x = _left;
-        textField.y = _top - 3;
+        textField.y = _top - 2;
         #elseif flash
-        textField.x = _left - 3;
-        textField.y = _top - 3;
+        textField.x = _left - 2;
+        textField.y = _top - 2;
         #else
         textField.x = _left - 1;
-        textField.y = _top - 3;
+        textField.y = _top - 2;
         #end
     }
 
