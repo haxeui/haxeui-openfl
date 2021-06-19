@@ -1,7 +1,5 @@
 package haxe.ui.backend.openfl.util;
 
-import js.Browser;
-
 // port of js lib "FontDetect"
 class FontDetect {
     private static var _initialized = false;
@@ -12,18 +10,20 @@ class FontDetect {
     }
     
     public static function init() {
+        #if js
+
         if (_initialized == true) {
             return;
         }
         
         _initialized = true;
         
-		var body = Browser.document.body;
-		var firstChild = Browser.document.body.firstChild;
+		var body = js.Browser.document.body;
+		var firstChild = js.Browser.document.body.firstChild;
         
-		var div = Browser.document.createElement('div');
+		var div = js.Browser.document.createElement('div');
 		div.id = 'fontdetectHelper';
-		span = Browser.document.createElement('span');
+		span = js.Browser.document.createElement('span');
 		span.innerText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		div.appendChild(span);
 
@@ -36,9 +36,13 @@ class FontDetect {
 		div.style.width      = '100000px';
 		div.style.height     = '200px';
 		div.style.fontSize   = '100px';
+
+        #end
     }
     
     public static function onFontLoaded(cssFontName:String, onLoad:String->Void, onFail:String->Void = null, options:Dynamic = null) {
+        #if js
+
         if (cssFontName == null) {
             return;
         }
@@ -76,9 +80,9 @@ class FontDetect {
         
         var utStart = Date.now().getTime();
         var idInterval = 0;
-        idInterval = Browser.window.setInterval(function() {
+        idInterval = js.Browser.window.setInterval(function() {
             if (isFontLoaded(cssFontName)) {
-                Browser.window.clearInterval(idInterval);
+                js.Browser.window.clearInterval(idInterval);
                 if (onLoad != null) {
                     onLoad(cssFontName);
                 }
@@ -86,16 +90,20 @@ class FontDetect {
             } else {
                 var utNow = Date.now().getTime();
                 if ((utNow - utStart) > msTimeout) {
-                    Browser.window.clearInterval(idInterval);
+                    js.Browser.window.clearInterval(idInterval);
                     if (onFail != null) {
                         onFail(cssFontName);
                     }
                 }
             }
         }, msInterval);
+
+        #end
     }
     
     public static function isFontLoaded(cssFontName:String):Bool {
+        #if js
+
         var wThisFont = 0;
         var wPrevFont = 0;
         
@@ -118,6 +126,9 @@ class FontDetect {
         // The widths were all the same, therefore the browser must have rendered the text in the same
         // font every time. So unless all the generic fonts are identical widths (highly unlikely), it 
         // couldn't have fallen back to a generic font. It's our font.
+
+        #end
+
         return true;
     }
 }
