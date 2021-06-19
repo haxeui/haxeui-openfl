@@ -132,7 +132,7 @@ class TextDisplayImpl extends TextBase {
             textField.height = _height;
             //textField.height = _height + 4;
             #else
-            textField.height = _height;
+            textField.height = _height + 1;
             #end
         }
     }
