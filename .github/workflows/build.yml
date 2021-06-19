@@ -46,26 +46,7 @@ jobs:
         haxelib install openfl --always --quiet
         echo "y" | haxelib run openfl setup
 
-    - name: html5 (${{ matrix.target }}, haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
-      if: ${{ matrix.target == 'html5' }}
-      run: |
-        cd .github/workflows/project
-        openfl build ${{ matrix.target }}
-
-    - name: linux (${{ matrix.target }}, haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
-      if: ${{ matrix.target == 'linux' && matrix.os == 'ubuntu-latest' }}
-      run: |
-        cd .github/workflows/project
-        openfl build ${{ matrix.target }}
-
-    - name: windows (${{ matrix.target }}, haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
-      if: ${{ matrix.target == 'windows' && matrix.os == 'windows-latest' }}
-      run: |
-        cd .github/workflows/project
-        openfl build ${{ matrix.target }}
-
-    - name: mac (${{ matrix.target }}, haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
-      if: ${{ matrix.target == 'mac' && matrix.os == 'macos-latest' }}
+    - name: Build app (${{ matrix.target }}, haxe ${{ matrix.haxe-version }}, ${{ matrix.os }})
       run: |
         cd .github/workflows/project
         openfl build ${{ matrix.target }}
