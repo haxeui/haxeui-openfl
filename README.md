@@ -47,10 +47,8 @@ Once the toolkit is initialised you can add components using the methods specifi
 As well as using the generic `Screen.instance.addComponent`, it is also possible to add components directly to any other `OpenFL` sprite (eg: `Lib.current.stage.addChild`)
 
 ## Addtional resources
-* <a href="http://haxeui.github.io/haxeui-api/">haxeui-api</a> - The HaxeUI api docs.
+* <a href="http://haxeui.org/explorer/">component-explorer</a> - Browse HaxeUI components
+* <a href="http://haxeui.org/builder/">playground</a> - Write and test HaxeUI layouts in your browser
+* <a href="https://github.com/haxeui/component-examples">component-examples</a> - Various componet examples
+* <a href="http://haxeui.org/api/haxe/ui/">haxeui-api</a> - The HaxeUI api docs.
 * <a href="https://github.com/haxeui/haxeui-guides">haxeui-guides</a> - Set of guides to working with HaxeUI and backends.
-* <a href="https://github.com/haxeui/haxeui-demo">haxeui-demo</a> - Demo application written using HaxeUI.
-* <a href="https://github.com/haxeui/haxeui-templates">haxeui-templates</a> - Set of templates for IDE's to allow quick project creation.
-* <a href="https://github.com/haxeui/haxeui-bdd">haxeui-bdd</a> - A behaviour driven development engine written specifically for HaxeUI (uses <a href="https://github.com/haxeui/haxe-bdd">haxe-bdd</a> which is a gherkin/cucumber inspired project).
-* <a href="https://www.youtube.com/watch?v=L8J8qrR2VSg&feature=youtu.be">WWX2016 presentation</a> - A presentation given at WWX2016 regarding HaxeUI.
-
