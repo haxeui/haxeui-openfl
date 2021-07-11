@@ -174,4 +174,19 @@ class TextDisplayImpl extends TextBase {
         text = StringTools.replace(text, "\\n", "\n");
         return text;
     }
+    
+    private var _tempField:TextField = null;
+    public override function measureTextWidth():Float {
+        if (_tempField == null) {
+            _tempField = new TextField();
+            _tempField.type = TextFieldType.DYNAMIC;
+            _tempField.selectable = false;
+            _tempField.mouseEnabled = false;
+            _tempField.autoSize = TextFieldAutoSize.LEFT;
+        }
+        
+        _tempField.defaultTextFormat = textField.defaultTextFormat;
+        _tempField.text = textField.text;
+        return _tempField.textWidth + PADDING_X;
+    }
 }
