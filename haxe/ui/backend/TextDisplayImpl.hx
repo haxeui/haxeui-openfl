@@ -39,7 +39,7 @@ class TextDisplayImpl extends TextBase {
                 textField.text = normalizeText(_text);
             }
         } else if (_htmlText != null) {
-            textField.htmlText = _htmlText;
+            textField.htmlText = normalizeText(_htmlText);
         }
     }
 
