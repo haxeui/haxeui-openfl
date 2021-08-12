@@ -25,6 +25,7 @@ class ComponentImpl extends ComponentBase {
     public function new() {
         super();
         tabChildren = false;
+        doubleClickEnabled = true;
         #if flash
         focusRect = false;
         #end
