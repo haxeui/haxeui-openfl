@@ -77,13 +77,13 @@ class TextInputImpl extends TextDisplayImpl {
         super.validateData();
         
         var changed = false;
-        var hscrollValue:Int = Std.int(_inputData.hscrollPos);
+        var hscrollValue:Int = Math.round(_inputData.hscrollPos);
         if (textField.scrollH != hscrollValue) {
             textField.scrollH = hscrollValue;
             changed = true;
         }
 
-        var vscrollValue:Int = Std.int(_inputData.vscrollPos);
+        var vscrollValue:Int = Math.round(_inputData.vscrollPos);
         if (textField.scrollV != vscrollValue) {
             textField.scrollV = vscrollValue;
             changed = true;
@@ -143,6 +143,7 @@ class TextInputImpl extends TextDisplayImpl {
     
     private function onChange(e) {
         _text = textField.text;
+        _htmlText = textField.htmlText;
         
         measureText();
         
@@ -152,8 +153,11 @@ class TextInputImpl extends TextDisplayImpl {
     }
     
     private function onScroll(e) {
+        if (_inputData.vscrollPos - textField.scrollV > 2) { // weird openfl bug - randomly throws out scroll event and scrollV = 1
+            return;
+        }
         _inputData.hscrollPos = textField.scrollH;
-        _inputData.vscrollPos = textField.scrollV - 1;
+        _inputData.vscrollPos = textField.scrollV;
         
         if (_inputData.onScrollCallback != null) {
             _inputData.onScrollCallback();
