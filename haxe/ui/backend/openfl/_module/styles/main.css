@@ -3,7 +3,7 @@
     __font-name: "_sans";
 }
 
-.checkbox, .optionbox {
+.checkbox, .optionbox, .link {
     background-color: white;
     background-opacity: 0;
 }
