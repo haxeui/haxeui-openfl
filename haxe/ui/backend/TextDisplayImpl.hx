@@ -118,7 +118,7 @@ class TextDisplayImpl extends TextBase {
         textField.y = _top - 2;
         #else
         textField.x = _left - 1;
-        textField.y = _top - 2;
+        textField.y = _top - 3;
         #end
     }
 
@@ -132,7 +132,7 @@ class TextDisplayImpl extends TextBase {
             textField.height = _height;
             //textField.height = _height + 4;
             #else
-            textField.height = _height + 1;
+            textField.height = _height + 0;
             #end
         }
     }
@@ -164,6 +164,9 @@ class TextDisplayImpl extends TextBase {
             _textWidth += 1;
         }
         _textHeight = Math.round(_textHeight);
+        if (_textHeight % 2 == 0) {
+            _textHeight -= 1;
+        }
     }
     
     private override function get_supportsHtml():Bool {
