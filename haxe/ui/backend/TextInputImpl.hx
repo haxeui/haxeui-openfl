@@ -31,13 +31,13 @@ class TextInputImpl extends TextDisplayImpl {
 
     public override function focus() {
         if (textField.stage != null) {
-			textField.stage.focus = textField;
+			//textField.stage.focus = textField;
 		}
     }
     
     public override function blur() {
         if (textField.stage != null) {
-			textField.stage.focus = null;
+			//textField.stage.focus = null;
 		}
     }
     
