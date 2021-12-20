@@ -130,12 +130,24 @@ class TextInputImpl extends TextDisplayImpl {
     
     private override function measureText() {
         super.measureText();
+
+        #if openfl_textfield_workarounds // not required for alot of apps, or later versions of openfl
+        if (StringTools.endsWith(_text, "\n")) {
+            _textHeight += textField.getLineMetrics(textField.numLines - 2).height;
+        }
+        #end
         
         _inputData.hscrollMax = textField.maxScrollH;
         // see below
         _inputData.hscrollPageSize = (_width * _inputData.hscrollMax) / _textWidth;
 
-        _inputData.vscrollMax = textField.maxScrollV;
+        var msv = textField.maxScrollV;
+        #if openfl_textfield_workarounds // not required for alot of apps, or later versions of openfl
+        if (msv > 1) {
+            msv--;
+        }
+        #end
+        _inputData.vscrollMax = msv;
         // cant have page size yet as there seems to be an openfl issue with bottomScrollV
         // https://github.com/openfl/openfl/issues/2220
         _inputData.vscrollPageSize = (_height * _inputData.vscrollMax) / _textHeight;
