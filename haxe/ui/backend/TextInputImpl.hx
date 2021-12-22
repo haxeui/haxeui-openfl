@@ -156,11 +156,6 @@ class TextInputImpl extends TextDisplayImpl {
     private function onChange(e) {
         _text = textField.text;
         _htmlText = textField.htmlText;
-        #if js // weird openfl js bug where htmlText doesnt always return the changed text (if its been explictly set before)
-        if (textField.text != null && textField.text != textField.htmlText) {
-            _htmlText = textField.text;
-        }
-        #end
 
         measureText();
         
