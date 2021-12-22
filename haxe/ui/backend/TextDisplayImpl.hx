@@ -95,7 +95,7 @@ class TextDisplayImpl extends TextBase {
             measureTextRequired = true;
         }
         if (_htmlText != null) {
-            textField.htmlText = _htmlText;
+            //textField.htmlText = _htmlText;
         }
 
         if (textField.multiline != _displayData.multiline) {
