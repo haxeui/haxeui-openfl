@@ -11,6 +11,8 @@ class TextInputImpl extends TextDisplayImpl {
     public function new() {
         super();
 
+        _resetHtmlText = false;
+        
         textField.addEventListener(Event.CHANGE, onChange);
         textField.addEventListener(Event.SCROLL, onScroll);
         _inputData.vscrollPageStep = 1;

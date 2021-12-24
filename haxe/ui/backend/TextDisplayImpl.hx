@@ -11,6 +11,8 @@ class TextDisplayImpl extends TextBase {
 
     public var textField:TextField;
 
+    private var _resetHtmlText:Bool = true;
+    
     public function new() {
         super();
 
@@ -94,8 +96,8 @@ class TextDisplayImpl extends TextBase {
             textField.wordWrap = _displayData.wordWrap;
             measureTextRequired = true;
         }
-        if (_htmlText != null) {
-            //textField.htmlText = _htmlText;
+        if (_resetHtmlText == true && _htmlText != null) {
+            textField.htmlText = _htmlText;
         }
 
         if (textField.multiline != _displayData.multiline) {
