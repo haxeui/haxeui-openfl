@@ -14,8 +14,6 @@
     ],
     "releasenote": "1.3 release",
     "dependencies": {
-        "haxeui-core": "",
-        "openfl": ""
     },
     "name": "haxeui-openfl",
     "description": "The OpenFL backend of the HaxeUI framework",
