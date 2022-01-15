@@ -40,24 +40,12 @@
 /************************************************************************
 ** FIX SOME OPENFL ODDITIES
 *************************************************************************/
-.numberstepper {
-    padding-bottom: 2px;
-}
-
-.numberstepper .stepper {
-    __margin-top: -1px;
-}
-
-.stepper-textfield, .stepper-textfield:active {
-    filter: none;
-}
-
-.stepper-textfield {
+.number-stepper.classic-stepper .stepper-deinc {
     margin-top: -1px;
 }
 
 .property-group-item-editor-container .numberstepper {
-    padding-top: 1px;
+    filter: none;
 }
 
 .property-grid {
