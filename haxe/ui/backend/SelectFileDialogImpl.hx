@@ -18,8 +18,8 @@ class SelectFileDialogImpl extends SelectFileDialogBase {
         _refToInfo = new Map<FileReference, SelectedFileInfo>();
         _infos = [];
         _fr = new FileReferenceList();
-        _fr.addEventListener(Event.SELECT, onSelect);
-        _fr.addEventListener(Event.CANCEL, onCancel);
+        _fr.addEventListener(Event.SELECT, onSelect, false, 0, true);
+        _fr.addEventListener(Event.CANCEL, onCancel, false, 0, true);
         _fr.browse();
     }
     
@@ -45,7 +45,7 @@ class SelectFileDialogImpl extends SelectFileDialogBase {
             }
         } else {
             for (fileRef in _refToInfo.keys()) {
-                fileRef.addEventListener(Event.COMPLETE, onFileComplete);
+                fileRef.addEventListener(Event.COMPLETE, onFileComplete, false, 0, true);
                 fileRef.load();
             }
         }

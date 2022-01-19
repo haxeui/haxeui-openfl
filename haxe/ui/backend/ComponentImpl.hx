@@ -35,8 +35,8 @@ class ComponentImpl extends ComponentBase {
         cast(this, Component).addClass(":mobile");
         #end
         
-        addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-        addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+        addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
+        addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage, false, 0, true);
     }
 
     @:access(haxe.ui.backend.ScreenImpl)
@@ -257,20 +257,20 @@ class ComponentImpl extends ComponentBase {
                 | MouseEvent.RIGHT_MOUSE_DOWN | MouseEvent.RIGHT_MOUSE_UP:
                 if (_eventMap.exists(type) == false) {
                     _eventMap.set(type, listener);
-                    addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent);
+                    addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent, false, 0, true);
                 }
 			
 			case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
 				if (_eventMap.exists(type) == false) {
 					_eventMap.set(type, listener);
-					addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyboardEvent);
+					addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyboardEvent, false, 0, true);
 				}
 				
             case UIEvent.CHANGE:
                 if (_eventMap.exists(UIEvent.CHANGE) == false) {
                     if (hasTextInput() == true) {
                         _eventMap.set(UIEvent.CHANGE, listener);
-                        getTextInput().textField.addEventListener(Event.CHANGE, __onTextInputChange);
+                        getTextInput().textField.addEventListener(Event.CHANGE, __onTextInputChange, false, 0, true);
                     }
                 }
         }

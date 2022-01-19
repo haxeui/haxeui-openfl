@@ -90,11 +90,11 @@ class AssetsImpl extends AssetsBase {
 
                 callback(imageInfo);
             }
-        });
+        }, false, 0, true);
         loader.contentLoaderInfo.addEventListener("ioError", function(e) {
             trace(e);
             callback(null);
-        });
+        }, false, 0, true);
         loader.loadBytes(ba);
     }
     

@@ -13,8 +13,8 @@ class TextInputImpl extends TextDisplayImpl {
 
         _resetHtmlText = false;
         
-        textField.addEventListener(Event.CHANGE, onChange);
-        textField.addEventListener(Event.SCROLL, onScroll);
+        textField.addEventListener(Event.CHANGE, onChange, false, 0, true);
+        textField.addEventListener(Event.SCROLL, onScroll, false, 0, true);
         _inputData.vscrollPageStep = 1;
         _inputData.vscrollNativeWheel = true;
     }
@@ -41,6 +41,14 @@ class TextInputImpl extends TextDisplayImpl {
         if (textField.stage != null) {
 			textField.stage.focus = null;
 		}
+    }
+    
+    public override function dispose() {
+        super.dispose();
+        if (textField != null) {
+            textField.removeEventListener(Event.CHANGE, onChange);
+            textField.removeEventListener(Event.SCROLL, onScroll);
+        }    
     }
     
     private override function set_dataSource(value:DataSource<String>):DataSource<String> {
@@ -91,7 +99,7 @@ class TextInputImpl extends TextDisplayImpl {
             changed = true;
         }
         
-        textField.addEventListener(Event.SCROLL, onScroll);
+        textField.addEventListener(Event.SCROLL, onScroll, false, 0, true);
         
         if (changed == true) {
             onScroll(null);

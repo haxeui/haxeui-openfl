@@ -122,7 +122,7 @@ class ScreenImpl extends ScreenBase {
             c.stage.quality = StageQuality.BEST;
             c.scaleMode = StageScaleMode.NO_SCALE;
             c.align = StageAlign.TOP_LEFT;
-            c.addEventListener(openfl.events.Event.RESIZE, onContainerResize);
+            c.addEventListener(openfl.events.Event.RESIZE, onContainerResize, false, 0, true);
             _containerReady = true;
         }
 
@@ -146,13 +146,13 @@ class ScreenImpl extends ScreenBase {
                 | MouseEvent.RIGHT_MOUSE_DOWN | MouseEvent.RIGHT_MOUSE_UP | MouseEvent.RIGHT_CLICK:
                 if (_mapping.exists(type) == false) {
                     _mapping.set(type, listener);
-                    Lib.current.stage.addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent);
+                    Lib.current.stage.addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent, false, 0, true);
                 }
 
             case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
                 if (_mapping.exists(type) == false) {
                     _mapping.set(type, listener);
-                    Lib.current.stage.addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyEvent);
+                    Lib.current.stage.addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyEvent, false, 0, true);
                 }
                 
             case UIEvent.RESIZE:
