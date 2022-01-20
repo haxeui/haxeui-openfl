@@ -37,6 +37,22 @@
     filter: drop-shadow(0, 45, #CCCCCC, 0.1, 30, 30, 1, 15, false);
 }
 
+.treeview {
+    background-color: white;
+}
+
+.treeview .itemrenderer {
+    background-color: white;
+}
+    
+.treeview .itemrenderer:hover {
+    background-color: #d9e5f2;
+}
+
+.treeview .itemrenderer:node-selected {
+    background-color: #a7c4e2;
+}
+
 /************************************************************************
 ** FIX SOME OPENFL ODDITIES
 *************************************************************************/

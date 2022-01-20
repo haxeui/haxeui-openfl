@@ -18,6 +18,26 @@
     filter: drop-shadow(0, 45, #222222, 0.1, 30, 30, 1, 15, false);
 }
 
+.treeview {
+    background-color: #252728;
+}
+
+.treeview .itemrenderer {
+    background-color: #252728;
+}
+
+.treeview .itemrenderer:hover {
+    background-color: #2f3746;
+}
+
+.treeview .itemrenderer:node-selected {
+    background-color: #415982;
+}
+
+.treeview .itemrenderer:node-selected .label {
+    color: white;
+}
+
 /************************************************************************
 ** MOBILE VARIANTS
 *************************************************************************/
