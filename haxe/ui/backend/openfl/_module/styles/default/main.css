@@ -8,10 +8,6 @@
     font-name: "_sans";
 }
 
-.scrollview, .listview {
-    padding: 1px;
-}
-
 /* https://github.com/openfl/openfl/issues/2215 */
 .textfield, .textarea {
     filter: none;
