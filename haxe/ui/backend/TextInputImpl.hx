@@ -44,11 +44,15 @@ class TextInputImpl extends TextDisplayImpl {
     }
     
     public override function dispose() {
-        super.dispose();
         if (textField != null) {
+            if (parentComponent != null) {
+                parentComponent.removeChild(textField);
+            }
             textField.removeEventListener(Event.CHANGE, onChange);
             textField.removeEventListener(Event.SCROLL, onScroll);
+            textField = null;
         }    
+        super.dispose();
     }
     
     private override function set_dataSource(value:DataSource<String>):DataSource<String> {

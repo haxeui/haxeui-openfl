@@ -295,7 +295,6 @@ class ComponentImpl extends ComponentBase {
                     getTextInput().textField.removeEventListener(Event.CHANGE, __onTextInputChange);
                 }
         }
-
     }
 
     //***********************************************************************************************************

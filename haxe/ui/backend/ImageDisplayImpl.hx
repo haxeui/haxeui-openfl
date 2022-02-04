@@ -21,6 +21,7 @@ class ImageDisplayImpl extends ImageBase {
             sprite.removeChild(_bmp);
             _bmp = null;
         }
+        super.dispose();
     }
 
     private inline function containsBitmapDataInfo():Bool {
