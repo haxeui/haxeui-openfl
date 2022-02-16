@@ -143,6 +143,11 @@ class TextInputImpl extends TextDisplayImpl {
     }
     
     private override function measureText() {
+        #if openfl_textfield_workarounds // not required for alot of apps, or later versions of openfl
+        if (_width <= 0) {
+            return;
+        }
+        #end
         super.measureText();
 
         #if openfl_textfield_workarounds // not required for alot of apps, or later versions of openfl
@@ -150,7 +155,7 @@ class TextInputImpl extends TextDisplayImpl {
             _textHeight += textField.getLineMetrics(textField.numLines - 2).height;
         }
         #end
-        
+
         _inputData.hscrollMax = textField.maxScrollH;
         // see below
         _inputData.hscrollPageSize = (_width * _inputData.hscrollMax) / _textWidth;

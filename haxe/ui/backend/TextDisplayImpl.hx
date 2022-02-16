@@ -140,7 +140,9 @@ class TextDisplayImpl extends TextBase {
     }
 
     private override function measureText() {
-        textField.width = _width;
+        if (_width > 0) {
+            textField.width = _width;
+        }
         
         #if !flash
         _textWidth = textField.textWidth + PADDING_X;
