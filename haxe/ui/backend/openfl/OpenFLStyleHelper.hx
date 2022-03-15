@@ -165,7 +165,9 @@ class OpenFLStyleHelper {
         }
 
         if (borderRadius == 0) {
-            if (hasFullStyledBorder) {
+            if (style.borderRadiusTopLeft != null || style.borderRadiusTopRight != null || style.borderRadiusBottomLeft != null || style.borderRadiusBottomRight != null) {
+                graphics.drawRoundRectComplex(rc.left, rc.top, rc.width, rc.height, style.borderRadiusTopLeft, style.borderRadiusTopRight, style.borderRadiusBottomLeft, style.borderRadiusBottomRight);
+            } else if (hasFullStyledBorder) {
                 #if (!flash && haxeui_extended_borders)
                 if (borderStyle == "dotted") {
                     graphics.drawDottedRect(rc.left, rc.top, rc.width, rc.height);
@@ -176,6 +178,8 @@ class OpenFLStyleHelper {
                 } else {
                     graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
                 }
+                #else
+                graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
                 #end
             } else {
                 graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
