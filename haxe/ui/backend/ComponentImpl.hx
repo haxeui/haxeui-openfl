@@ -99,7 +99,7 @@ class ComponentImpl extends ComponentBase {
         } else {
             this.scrollRect = new openfl.geom.Rectangle(Math.fround(value.left),
                                                         Math.fround(value.top),
-                                                        Math.fround(value.width) - 1,
+                                                        Math.fround(value.width),
                                                         Math.fround(value.height));
         }
     }
