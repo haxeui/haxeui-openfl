@@ -185,6 +185,9 @@ class OpenFLStyleHelper {
                 graphics.drawRect(rc.left, rc.top, rc.width, rc.height);
             }
         } else {
+            if (rc.width == rc.height && borderRadius > rc.width / 2) {
+                borderRadius = rc.width - 1;
+            }
             graphics.drawRoundRect(rc.left, rc.top, rc.width, rc.height, borderRadius + 1, borderRadius + 1);
         }
 

@@ -18,7 +18,6 @@ class FilterConverter {
         
         if ((input is haxe.ui.filters.DropShadow)) {
             var inputDropShadow:haxe.ui.filters.DropShadow = cast(input, haxe.ui.filters.DropShadow);
-            trace(inputDropShadow.alpha);
             output = new DropShadowFilter(inputDropShadow.distance + 1,
                                           inputDropShadow.angle,
                                           inputDropShadow.color,
