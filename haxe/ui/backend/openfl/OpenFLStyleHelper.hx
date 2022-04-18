@@ -289,6 +289,9 @@ class OpenFLStyleHelper {
             fillRect.top = Std.int(fillRect.top);
             fillRect.bottom = Std.int(fillRect.bottom);
             fillRect.right = Std.int(fillRect.right);
+            
+            fillRect.left += style.backgroundPositionX;
+            fillRect.top += style.backgroundPositionY;
 
             if (borderRadius == 0) {
                 graphics.drawRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height);
@@ -315,6 +318,8 @@ class OpenFLStyleHelper {
             for (i in 0...srcRects.length) {
                 var srcRect = srcRects[i];
                 var dstRect = dstRects[i];
+                dstRect.x += style.backgroundPositionX;
+                dstRect.y += style.backgroundPositionY;
                 paintBitmap(graphics, fillBmp, cacheId, srcRect, dstRect);
             }
         }
