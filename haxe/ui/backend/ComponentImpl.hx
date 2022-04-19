@@ -179,16 +179,7 @@ class ComponentImpl extends ComponentBase {
         if (style.cursor != null && style.cursor == "pointer") {
             useHandCursor = true;
         }
-
-        this.buttonMode = useHandCursor;
-        this.useHandCursor = useHandCursor;
-        for (n in 0...this.numChildren) {
-            var c = this.getChildAt(n);
-            if ((c is Sprite)) {
-                cast(c, Sprite).buttonMode = useHandCursor;
-                cast(c, Sprite).useHandCursor = useHandCursor;
-            }
-        }
+        applyUseHandCursor(useHandCursor);
 
         if (style.filter != null && style.filter.length > 0) {
             var array = [];
@@ -212,6 +203,22 @@ class ComponentImpl extends ComponentBase {
         }
     }
 
+    private function applyUseHandCursor(use:Bool) {
+        if (use == this.useHandCursor) {
+            return;
+        }
+        this.buttonMode = use;
+        this.useHandCursor = use;
+        if (hasImageDisplay()) {
+            getImageDisplay().sprite.buttonMode = use;
+            getImageDisplay().sprite.useHandCursor = use;
+        }
+        
+        for (c in childComponents) {
+            c.applyUseHandCursor(use);
+        }
+    }
+    
     #if flash @:setter(visible) #else override #end
     private function set_visible(value:Bool): #if flash Void #else Bool #end {
         #if flash
