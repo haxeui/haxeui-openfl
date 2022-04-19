@@ -213,6 +213,14 @@ class ComponentImpl extends ComponentBase {
             getImageDisplay().sprite.buttonMode = use;
             getImageDisplay().sprite.useHandCursor = use;
         }
+        for (n in 0...this.numChildren) {
+            var c = this.getChildAt(n);
+            if ((c is Sprite)) {
+                var s = cast(c, Sprite);
+                s.buttonMode = use;
+                s.useHandCursor = use;
+            }
+        }
         
         for (c in childComponents) {
             c.applyUseHandCursor(use);
