@@ -260,23 +260,27 @@ class OpenFLStyleHelper {
         }
 
         if (slice == null) {
+            var smooth = true;
+            if (style.imageRendering == "pixelated") {
+                smooth = false;
+            }
             if (style.backgroundImageRepeat == null) {
                 fillRect.width = fillBmp.width;
                 fillRect.height = fillBmp.height;
                 var matrix:Matrix = new Matrix();
-                graphics.beginBitmapFill(fillBmp, matrix, false, false);
+                matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
+                graphics.beginBitmapFill(fillBmp, matrix, false, smooth);
             } else if (style.backgroundImageRepeat == "repeat") {
-                graphics.beginBitmapFill(fillBmp, null, true, false);
+                var matrix:Matrix = new Matrix();
+                matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
+                graphics.beginBitmapFill(fillBmp, matrix, true, smooth);
             } else if (style.backgroundImageRepeat == "stretch") {
-                #if !flash
-                //fillRect.width += borderSize;
-                //fillRect.height += borderSize;
-                #end
                 var scaleX = fillRect.width / fillBmp.width;
                 var scaleY = fillRect.height / fillBmp.height;
                 var matrix:Matrix = new Matrix();
                 matrix.scale(scaleX, scaleY);
-                graphics.beginBitmapFill(fillBmp, matrix, false, false);
+                matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
+                graphics.beginBitmapFill(fillBmp, matrix, false, smooth);
             }
 
             var borderRadius:Float = 0;
@@ -293,19 +297,7 @@ class OpenFLStyleHelper {
             fillRect.left += style.backgroundPositionX;
             fillRect.top += style.backgroundPositionY;
 
-            if (borderRadius == 0) {
-                graphics.drawRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height);
-            } else {
-                graphics.drawRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height);
-                /*
-                if (style.backgroundImageRepeat == "stretch") {
-                    graphics.drawRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height);
-                } else {
-                    graphics.drawRoundRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height, borderRadius, borderRadius);
-                }
-                */
-            }
-
+            graphics.drawRect(fillRect.left, fillRect.top, fillRect.width, fillRect.height);
             graphics.endFill();
         } else {
             graphics.clear();
@@ -349,8 +341,6 @@ class OpenFLStyleHelper {
             srcBmp = new BitmapData(Std.int(srcRect.width), Std.int(srcRect.height), true, 0x00000000);
             srcBmp.copyPixels(bmp, srcRect, new Point(0, 0));
             BitmapCache.instance.set(cacheId, srcBmp);
-        } else {
-            //trace("section in cache!");
         }
 
         var mat:Matrix = new Matrix();
