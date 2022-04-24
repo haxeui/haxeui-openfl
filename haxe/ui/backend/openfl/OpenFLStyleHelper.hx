@@ -340,7 +340,7 @@ class OpenFLStyleHelper {
         if (srcBmp == null) {
             srcBmp = new BitmapData(Std.int(srcRect.width), Std.int(srcRect.height), true, 0x00000000);
             srcBmp.copyPixels(bmp, srcRect, new Point(0, 0));
-            BitmapCache.instance.set(cacheId, srcBmp);
+            //BitmapCache.instance.set(cacheId, srcBmp);
         }
 
         var mat:Matrix = new Matrix();
