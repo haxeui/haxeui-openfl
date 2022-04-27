@@ -82,6 +82,14 @@ class TextInputImpl extends TextDisplayImpl {
         parentComponent.syncComponentValidation();
     }
     
+    private override function get_caretIndex():Int {
+        return textField.caretIndex;
+    }
+    private override function set_caretIndex(value:Int):Int {
+        textField.setSelection(value, value);
+        return value;
+    }
+    
     //***********************************************************************************************************
     // Validation functions
     //***********************************************************************************************************
