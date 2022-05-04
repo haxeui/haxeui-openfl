@@ -44,6 +44,8 @@ class ComponentImpl extends ComponentBase {
         removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         var component:Component = cast(this, Component);
         if (component.parentComponent == null && Screen.instance.rootComponents.indexOf(component) == -1) {
+            this.scaleX = Toolkit.scaleX;
+            this.scaleY = Toolkit.scaleY;
             Screen.instance.rootComponents.push(component);
             FocusManager.instance.pushView(component);
             Screen.instance.onContainerResize(null);
