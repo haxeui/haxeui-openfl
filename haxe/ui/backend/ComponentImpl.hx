@@ -263,6 +263,17 @@ class ComponentImpl extends ComponentBase {
         return new Point(globalPoint.x, globalPoint.y);
     }
     
+    private override function handleFrameworkProperty(id:String, value:Any) {
+        switch (id) {
+            case "allowMouseInteraction":
+                if (value == true) {
+                    this.mouseEnabled = true;
+                } else {
+                    this.mouseEnabled = false;
+                }
+        }
+    }
+    
     //***********************************************************************************************************
     // Events
     //***********************************************************************************************************
