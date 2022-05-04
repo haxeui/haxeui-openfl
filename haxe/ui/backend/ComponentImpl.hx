@@ -220,10 +220,6 @@ class ComponentImpl extends ComponentBase {
                 s.useHandCursor = use;
             }
         }
-        
-        for (c in childComponents) {
-            c.applyUseHandCursor(use);
-        }
     }
     
     #if flash @:setter(visible) #else override #end
