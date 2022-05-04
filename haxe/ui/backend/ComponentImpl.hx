@@ -206,9 +206,6 @@ class ComponentImpl extends ComponentBase {
     }
 
     private function applyUseHandCursor(use:Bool) {
-        if (use == this.useHandCursor) {
-            return;
-        }
         this.buttonMode = use;
         this.useHandCursor = use;
         if (hasImageDisplay()) {
