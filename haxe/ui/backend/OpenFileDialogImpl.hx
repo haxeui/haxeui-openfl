@@ -1,26 +1,57 @@
 package haxe.ui.backend;
 
 import haxe.io.Bytes;
-import haxe.ui.backend.SelectFileDialogBase.SelectedFileInfo;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
+import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 import openfl.events.Event;
+import openfl.net.FileFilter;
 import openfl.net.FileReference;
 import openfl.net.FileReferenceList;
 
-class SelectFileDialogImpl extends SelectFileDialogBase {
+using StringTools;
+
+class OpenFileDialogImpl extends OpenFileDialogBase {
     private var _fr:FileReferenceList = null;
     private var _refToInfo:Map<FileReference, SelectedFileInfo>;
     private var _infos:Array<SelectedFileInfo>;
     
     public override function show() {
-        validateOptions();
-
         _refToInfo = new Map<FileReference, SelectedFileInfo>();
         _infos = [];
         _fr = new FileReferenceList();
         _fr.addEventListener(Event.SELECT, onSelect, false, 0, true);
         _fr.addEventListener(Event.CANCEL, onCancel, false, 0, true);
-        _fr.browse();
+        _fr.browse(buildFileFilters());
+    }
+    
+    private function buildFileFilters():Array<FileFilter> {
+        var f = null;
+        
+        /* DOESNT WORK AS OPENFL DOCS STATE
+        if (options.extensions != null && options.extensions.length > 0) {
+            f = [];
+            for (e in options.extensions) {
+                var ext = e.extension;
+                ext = ext.trim();
+                if (ext.length == 0) {
+                    continue;
+                }
+                var parts = ext.split(",");
+                var finalParts = [];
+                for (p in parts) {
+                    p = p.trim();
+                    if (p.length == 0) {
+                        continue;
+                    }
+                    finalParts.push("*." + p);
+                }
+                
+                f.push(new FileFilter(e.label, finalParts.join(";")));
+            }
+        }
+        */
+        
+        return f;
     }
     
     private function onSelect(e:Event) {
