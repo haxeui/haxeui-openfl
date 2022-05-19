@@ -1,16 +1,44 @@
 package haxe.ui.backend;
 
+import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
+#if !js
 import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
-import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 import openfl.events.Event;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
 import openfl.net.FileReferenceList;
+#end
 
 using StringTools;
 
 class OpenFileDialogImpl extends OpenFileDialogBase {
+    #if js
+    
+    private var _fileSelector:haxe.ui.util.html5.FileSelector = new haxe.ui.util.html5.FileSelector();
+    
+    public override function show() {
+        var readMode = haxe.ui.util.html5.FileSelector.ReadMode.None;
+        if (options.readContents == true) {
+            if (options.readAsBinary == false) {
+                readMode = haxe.ui.util.html5.FileSelector.ReadMode.Text;
+            } else {
+                readMode = haxe.ui.util.html5.FileSelector.ReadMode.Binary;
+            }
+        }
+        _fileSelector.selectFile(onFileSelected, readMode, options.multiple, options.extensions);
+    }
+    
+    private function onFileSelected(cancelled:Bool, files:Array<SelectedFileInfo>) {
+        if (cancelled == false) {
+            dialogConfirmed(files);
+        } else {
+            dialogCancelled();
+        }
+    }
+    
+    #else
+    
     private var _fr:FileReferenceList = null;
     private var _refToInfo:Map<FileReference, SelectedFileInfo>;
     private var _infos:Array<SelectedFileInfo>;
@@ -136,4 +164,6 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         _fr.removeEventListener(Event.CANCEL, onCancel);
         _fr = null;
     }
+    
+    #end
 }
