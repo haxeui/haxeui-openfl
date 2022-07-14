@@ -41,7 +41,7 @@ class TextDisplayImpl extends TextBase {
                 textField.text = normalizeText(_text);
             }
         } else if (_htmlText != null) {
-            textField.htmlText = normalizeText(_htmlText);
+            textField.htmlText = normalizeText(_text);
         }
     }
 
@@ -97,7 +97,7 @@ class TextDisplayImpl extends TextBase {
             measureTextRequired = true;
         }
         if (_resetHtmlText == true && _htmlText != null) {
-            textField.htmlText = _htmlText;
+            textField.htmlText = normalizeText(_htmlText);
         }
 
         if (textField.multiline != _displayData.multiline) {
@@ -179,6 +179,7 @@ class TextDisplayImpl extends TextBase {
     
     private function normalizeText(text:String):String {
         text = StringTools.replace(text, "\\n", "\n");
+        text = StringTools.replace(text, "<br>", "\n");
         return text;
     }
     
