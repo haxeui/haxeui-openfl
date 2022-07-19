@@ -6,7 +6,10 @@
         "aW4KeNiNG"
     ],
     "version": "1.4.0",
-    "dependencies": {},
+    "dependencies": {
+        "openfl": "",
+        "haxeui-core": ""
+    },
     "releasenote": "1.4.0 release",
     "tags": [
         "ui",
