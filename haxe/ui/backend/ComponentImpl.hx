@@ -261,8 +261,14 @@ class ComponentImpl extends ComponentBase {
             case "allowMouseInteraction":
                 if (value == true) {
                     this.mouseEnabled = true;
+                    if (this.hasImageDisplay()) {
+                        this.getImageDisplay().sprite.mouseEnabled = true;
+                    }
                 } else {
                     this.mouseEnabled = false;
+                    if (this.hasImageDisplay()) {
+                        this.getImageDisplay().sprite.mouseEnabled = false;
+                    }
                 }
         }
     }

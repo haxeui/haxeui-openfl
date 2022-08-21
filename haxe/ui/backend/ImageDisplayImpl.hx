@@ -13,6 +13,7 @@ class ImageDisplayImpl extends ImageBase {
     public function new() {
         super();
         sprite = new Sprite();
+        sprite.mouseEnabled = true;
     }
 
     public override function dispose():Void {
