@@ -61,7 +61,6 @@ class TextDisplayImpl extends TextBase {
             }
             if (format.size != fontSizeValue) {
                 format.size = fontSizeValue;
-
                 measureTextRequired = true;
             }
 
@@ -74,17 +73,17 @@ class TextDisplayImpl extends TextBase {
                 format.color = _textStyle.color;
             }
             
-            if (format.bold != _textStyle.fontBold) {
+            if (_textStyle.fontBold != null && format.bold != _textStyle.fontBold) {
                 format.bold = _textStyle.fontBold;
                 measureTextRequired = true;
             }
             
-            if (format.italic != _textStyle.fontItalic) {
+            if (_textStyle.fontItalic != null && format.italic != _textStyle.fontItalic) {
                 format.italic = _textStyle.fontItalic;
                 measureTextRequired = true;
             }
             
-            if (format.underline != _textStyle.fontUnderline) {
+            if (_textStyle.fontUnderline != null && format.underline != _textStyle.fontUnderline) {
                 format.underline = _textStyle.fontUnderline;
                 measureTextRequired = true;
             }
