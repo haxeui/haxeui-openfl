@@ -5,6 +5,15 @@ import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
+#if cache_text_metrics
+typedef TextMetricsCache = {
+    var text:String;
+    var width:Float;
+    var textWidth:Float;
+    var textHeight:Float;
+}
+#end
+
 class TextDisplayImpl extends TextBase {
     private var PADDING_X:Int = 4;
     private var PADDING_Y:Int = 0;
@@ -27,6 +36,14 @@ class TextDisplayImpl extends TextBase {
         tf.selectable = false;
         tf.mouseEnabled = false;
         tf.autoSize = TextFieldAutoSize.LEFT;
+        #if cache_text_metrics
+        var format:TextFormat = tf.getTextFormat();
+        format.font = "_sans";
+        format.size = 13;
+        tf.defaultTextFormat = format;
+        tf.wordWrap = true;
+        tf.multiline = true;
+        #end
         
         return tf;
     }
@@ -104,6 +121,12 @@ class TextDisplayImpl extends TextBase {
             measureTextRequired = true;
         }
 
+        #if cache_text_metrics
+        if (measureTextRequired) {
+            _cachedMetrics = null;
+        }
+        #end
+
         return measureTextRequired;
     }
 
@@ -138,7 +161,20 @@ class TextDisplayImpl extends TextBase {
         }
     }
 
+    #if cache_text_metrics
+    private var _cachedMetrics:TextMetricsCache = null;
+    #end
     private override function measureText() {
+        #if cache_text_metrics
+        if (_cachedMetrics != null) {
+            if (_cachedMetrics.width == _width && _cachedMetrics.text == _text) {
+                _textWidth = _cachedMetrics.textWidth;
+                _textHeight = _cachedMetrics.textHeight;
+                return;
+            }
+        }
+        #end
+
         if (_width > 0) {
             textField.width = _width;
         }
@@ -170,6 +206,15 @@ class TextDisplayImpl extends TextBase {
         if (_textHeight % 2 == 0) {
             _textHeight += 1;
         }
+
+        #if cache_text_metrics
+        _cachedMetrics = {
+            text: _text,
+            width: _width,
+            textWidth: _textWidth,
+            textHeight: _textHeight
+        }
+        #end
     }
     
     private override function get_supportsHtml():Bool {
