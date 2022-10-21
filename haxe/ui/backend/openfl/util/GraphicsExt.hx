@@ -314,9 +314,9 @@ class GraphicsExt
     }
 
     static private inline function _drawRegularPolygon(gfx:Graphics, x:Float, y:Float, sides:Int, radius:Float, lineType:StyledLineType):Void {
-		var step = Math.PI / sides * 2;
-		var rad = Math.PI * .5;
-		
+        var step = Math.PI / sides * 2;
+        var rad = Math.PI * .5;
+        
         gfx.moveTo(x + Math.cos(rad) * radius, y - Math.sin(rad) * radius);
         if (lineType == StyledLineType.DOUBLE) {
             var lineData:LineStyleView = getLineStyle(gfx);
@@ -344,7 +344,7 @@ class GraphicsExt
 enum StyledLineType
 {
     SOLID;
-	DOTTED;
+    DOTTED;
     DASHED;
     DOUBLE;
 }

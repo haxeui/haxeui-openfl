@@ -168,9 +168,9 @@ class AssetsImpl extends AssetsBase {
             #if debug
             trace("WARNING: problem loading font '" + resourceId + "' (" + error + ")");
             #end
-			// error occurred
+            // error occurred
             callback(resourceId, null);
-		});
+        });
     }
     #end
     

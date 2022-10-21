@@ -60,13 +60,13 @@ class ScreenImpl extends ScreenBase {
             container.addChild(component);
             onContainerResize(null);
         }
-		return component;
+        return component;
     }
 
     public override function removeComponent(component:Component, dispose:Bool = true):Component {
         rootComponents.remove(component);
         container.removeChild(component);
-		return component;
+        return component;
     }
 
     private override function handleSetComponentIndex(child:Component, index:Int) {
