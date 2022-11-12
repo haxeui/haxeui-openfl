@@ -264,23 +264,38 @@ class OpenFLStyleHelper {
             if (style.imageRendering == "pixelated") {
                 smooth = false;
             }
-            if (style.backgroundImageRepeat == null) {
-                fillRect.width = fillBmp.width;
-                fillRect.height = fillBmp.height;
-                var matrix:Matrix = new Matrix();
-                matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
-                graphics.beginBitmapFill(fillBmp, matrix, false, smooth);
-            } else if (style.backgroundImageRepeat == "repeat") {
-                var matrix:Matrix = new Matrix();
-                matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
-                graphics.beginBitmapFill(fillBmp, matrix, true, smooth);
+
+            var matrix:Matrix = new Matrix();
+            matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
+            var scaleX:Float = 1;
+            var scaleY:Float = 1;
+            var repeat = (style.backgroundImageRepeat == "repeat");
+            if (style.backgroundImageRepeat == null || style.backgroundImageRepeat == "no-repeat" || style.backgroundImageRepeat == "repeat") {
+                if (style.backgroundWidth != null) {
+                    scaleX = style.backgroundWidth / fillBmp.width;
+                } else if (style.backgroundWidthPercent != null) {
+                    scaleX = ((fillRect.width / fillBmp.width) * style.backgroundWidthPercent) / 100;
+                }
+                if (style.backgroundHeight != null) {
+                    scaleY = style.backgroundHeight / fillBmp.height;
+                } else if (style.backgroundHeightPercent != null) {
+                    scaleY = ((fillRect.height / fillBmp.height) * style.backgroundHeightPercent) / 100;
+                }
+                if (scaleX != 1 || scaleY != 1) {
+                    matrix.scale(scaleX, scaleY);
+                }
             } else if (style.backgroundImageRepeat == "stretch") {
-                var scaleX = fillRect.width / fillBmp.width;
-                var scaleY = fillRect.height / fillBmp.height;
-                var matrix:Matrix = new Matrix();
+                scaleX = fillRect.width / fillBmp.width;
+                scaleY = fillRect.height / fillBmp.height;
                 matrix.scale(scaleX, scaleY);
-                matrix.translate(style.backgroundPositionX, style.backgroundPositionY);
-                graphics.beginBitmapFill(fillBmp, matrix, false, smooth);
+            }
+
+            graphics.beginBitmapFill(fillBmp, matrix, repeat, smooth);
+            if (style.backgroundImageRepeat == null || style.backgroundImageRepeat == "no-repeat") {
+                if (scaleX == 1 && scaleY == 1) {
+                    fillRect.width = fillBmp.width;
+                    fillRect.height = fillBmp.height;
+                }
             }
 
             var borderRadius:Float = 0;
