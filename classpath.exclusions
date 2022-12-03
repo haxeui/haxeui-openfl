@@ -1,6 +1,8 @@
 ; exclude paths from classpath when searching for haxeui arifacts (module.xml, native.xml, etc)
 ; speeds up build
 \/lime\/_internal\/.*$
+\/lime\/src\/.*$
+\/lime\/.*\/src\/.*$
 \/lime\/app\/.*$
 \/lime\/graphics\/.*$
 \/lime\/math\/.*$
@@ -11,6 +13,8 @@
 \/lime\/tools\/.*$
 \/lime\/ui\/.*$
 \/lime\/utils\/.*$
+\/openfl\/src\/.*$
+\/openfl\/.*\/src\/.*$
 \/openfl\/desktop\/.*$
 \/openfl\/display\/.*$
 \/openfl\/display3D\/.*$
