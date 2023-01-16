@@ -1,8 +1,10 @@
 package haxe.ui.backend;
 
+import haxe.ui.events.UIEvent;
 import haxe.ui.data.DataSource;
 import haxe.ui.validation.InvalidationFlags;
 import openfl.events.Event;
+import openfl.events.KeyboardEvent;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
@@ -15,6 +17,7 @@ class TextInputImpl extends TextDisplayImpl {
         
         textField.addEventListener(Event.CHANGE, onChange, false, 0, true);
         textField.addEventListener(Event.SCROLL, onScroll, false, 0, true);
+        textField.addEventListener(KeyboardEvent.KEY_DOWN, onEnter, false, 0, true);
         _inputData.vscrollPageStep = 1;
         _inputData.vscrollNativeWheel = true;
     }
@@ -50,6 +53,7 @@ class TextInputImpl extends TextDisplayImpl {
             }
             textField.removeEventListener(Event.CHANGE, onChange);
             textField.removeEventListener(Event.SCROLL, onScroll);
+            textField.removeEventListener(KeyboardEvent.KEY_DOWN, onEnter);
             textField = null;
         }    
         super.dispose();
@@ -178,6 +182,15 @@ class TextInputImpl extends TextDisplayImpl {
         // cant have page size yet as there seems to be an openfl issue with bottomScrollV
         // https://github.com/openfl/openfl/issues/2220
         _inputData.vscrollPageSize = (_height * _inputData.vscrollMax) / _textHeight;
+    }
+    
+    private function onEnter(e) {
+        if(e.charCode == 13){
+            parentComponent.dispatch(new UIEvent(UIEvent.USER_SUBMIT));
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+        }
     }
     
     private function onChange(e) {
