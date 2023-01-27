@@ -12,6 +12,8 @@ import openfl.net.FileReferenceList;
 
 using StringTools;
 
+
+@:access(openfl.net.FileReference)
 class OpenFileDialogImpl extends OpenFileDialogBase {
     #if js
     
@@ -89,7 +91,8 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         for (fileRef in fileList) {
             var info:SelectedFileInfo = {
                 isBinary: false,
-                name: fileRef.name
+                name: fileRef.name,
+                fullPath : fileRef.__path
             }
             if (options.readContents == true) {
                 _refToInfo.set(fileRef, info);
