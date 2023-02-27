@@ -1,9 +1,9 @@
 package haxe.ui.backend.openfl;
 
 import haxe.ui.assets.ImageInfo;
-import haxe.ui.styles.Style;
 import haxe.ui.geom.Slice9;
-import haxe.ui.util.ImageLoader;
+import haxe.ui.loaders.image.ImageLoader;
+import haxe.ui.styles.Style;
 import openfl.display.BitmapData;
 import openfl.display.GradientType;
 import openfl.display.Graphics;
@@ -195,7 +195,7 @@ class OpenFLStyleHelper {
         graphics.endFill();
 
         if (style.backgroundImage != null) {
-            new ImageLoader(style.backgroundImage).load(function(imageInfo:ImageInfo) {
+            ImageLoader.instance.load(style.backgroundImage, function(imageInfo:ImageInfo) {
                 if (imageInfo != null && imageInfo.data != null) {
                     paintBitmapBackground(graphics, imageInfo.data, style, rc);
                 }

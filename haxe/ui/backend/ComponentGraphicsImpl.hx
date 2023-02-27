@@ -2,8 +2,8 @@ package haxe.ui.backend;
 
 import haxe.io.Bytes;
 import haxe.ui.core.Component;
+import haxe.ui.loaders.image.ImageLoader;
 import haxe.ui.util.Color;
-import haxe.ui.util.ImageLoader;
 import haxe.ui.util.Variant;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
@@ -113,7 +113,7 @@ class ComponentGraphicsImpl extends ComponentGraphicsBase {
         if (_hasSize == false) {
             return super.image(resource, x, y, width, height);
         }
-        new ImageLoader(resource).load(function(imageInfo) {
+        ImageLoader.instance.load(resource, function(imageInfo) {
             if (imageInfo != null) {
                 if (x == null) x = 0;
                 if (y == null) y = 0;
