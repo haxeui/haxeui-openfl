@@ -5,6 +5,15 @@ import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
+#if cache_text_metrics
+typedef TextMetricsCache = {
+    var text:String;
+    var width:Float;
+    var textWidth:Float;
+    var textHeight:Float;
+}
+#end
+
 class TextDisplayImpl extends TextBase {
     private var PADDING_X:Int = 4;
     private var PADDING_Y:Int = 0;
@@ -27,6 +36,14 @@ class TextDisplayImpl extends TextBase {
         tf.selectable = false;
         tf.mouseEnabled = false;
         tf.autoSize = TextFieldAutoSize.LEFT;
+        #if cache_text_metrics
+        var format:TextFormat = tf.getTextFormat();
+        format.font = "_sans";
+        format.size = 13;
+        tf.defaultTextFormat = format;
+        tf.wordWrap = true;
+        tf.multiline = true;
+        #end
         
         return tf;
     }
@@ -61,7 +78,6 @@ class TextDisplayImpl extends TextBase {
             }
             if (format.size != fontSizeValue) {
                 format.size = fontSizeValue;
-
                 measureTextRequired = true;
             }
 
@@ -74,17 +90,17 @@ class TextDisplayImpl extends TextBase {
                 format.color = _textStyle.color;
             }
             
-            if (format.bold != _textStyle.fontBold) {
+            if (_textStyle.fontBold != null && format.bold != _textStyle.fontBold) {
                 format.bold = _textStyle.fontBold;
                 measureTextRequired = true;
             }
             
-            if (format.italic != _textStyle.fontItalic) {
+            if (_textStyle.fontItalic != null && format.italic != _textStyle.fontItalic) {
                 format.italic = _textStyle.fontItalic;
                 measureTextRequired = true;
             }
             
-            if (format.underline != _textStyle.fontUnderline) {
+            if (_textStyle.fontUnderline != null && format.underline != _textStyle.fontUnderline) {
                 format.underline = _textStyle.fontUnderline;
                 measureTextRequired = true;
             }
@@ -104,6 +120,12 @@ class TextDisplayImpl extends TextBase {
             textField.multiline = _displayData.multiline;
             measureTextRequired = true;
         }
+
+        #if cache_text_metrics
+        if (measureTextRequired) {
+            _cachedMetrics = null;
+        }
+        #end
 
         return measureTextRequired;
     }
@@ -139,7 +161,20 @@ class TextDisplayImpl extends TextBase {
         }
     }
 
+    #if cache_text_metrics
+    private var _cachedMetrics:TextMetricsCache = null;
+    #end
     private override function measureText() {
+        #if cache_text_metrics
+        if (_cachedMetrics != null) {
+            if (_cachedMetrics.width == _width && _cachedMetrics.text == _text) {
+                _textWidth = _cachedMetrics.textWidth;
+                _textHeight = _cachedMetrics.textHeight;
+                return;
+            }
+        }
+        #end
+
         if (_width > 0) {
             textField.width = _width;
         }
@@ -171,6 +206,15 @@ class TextDisplayImpl extends TextBase {
         if (_textHeight % 2 == 0) {
             _textHeight += 1;
         }
+
+        #if cache_text_metrics
+        _cachedMetrics = {
+            text: _text,
+            width: _width,
+            textWidth: _textWidth,
+            textHeight: _textHeight
+        }
+        #end
     }
     
     private override function get_supportsHtml():Bool {

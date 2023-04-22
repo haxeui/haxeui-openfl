@@ -286,13 +286,13 @@ class ComponentImpl extends ComponentBase {
                     _eventMap.set(type, listener);
                     addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent, false, 0, true);
                 }
-			
-			case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
-				if (_eventMap.exists(type) == false) {
-					_eventMap.set(type, listener);
-					addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyboardEvent, false, 0, true);
-				}
-				
+            
+            case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
+                if (_eventMap.exists(type) == false) {
+                    _eventMap.set(type, listener);
+                    addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyboardEvent, false, 0, true);
+                }
+                
             case UIEvent.CHANGE:
                 if (_eventMap.exists(UIEvent.CHANGE) == false) {
                     if (hasTextInput() == true) {
@@ -312,10 +312,10 @@ class ComponentImpl extends ComponentBase {
                 _eventMap.remove(type);
                 removeEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onMouseEvent);
 
-			case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
-				_eventMap.remove(type);
+            case KeyboardEvent.KEY_DOWN | KeyboardEvent.KEY_UP:
+                _eventMap.remove(type);
                 removeEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyboardEvent);
-				
+                
             case UIEvent.CHANGE:
                 _eventMap.remove(type);
                 if (hasTextInput() == true) {
@@ -344,8 +344,8 @@ class ComponentImpl extends ComponentBase {
             }
         }
     }
-	
-	private function __onKeyboardEvent(event:openfl.events.KeyboardEvent) {
+    
+    private function __onKeyboardEvent(event:openfl.events.KeyboardEvent) {
         var type:String = EventMapper.OPENFL_TO_HAXEUI.get(event.type);
         if (type != null) {
             var fn = _eventMap.get(type);
@@ -353,9 +353,9 @@ class ComponentImpl extends ComponentBase {
                 var keyboardEvent = new KeyboardEvent(type);
                 keyboardEvent._originalEvent = event;
                 keyboardEvent.keyCode = event.keyCode;
-				keyboardEvent.altKey = event.altKey;
-				keyboardEvent.ctrlKey = event.ctrlKey;
-				keyboardEvent.shiftKey = event.shiftKey;
+                keyboardEvent.altKey = event.altKey;
+                keyboardEvent.ctrlKey = event.ctrlKey;
+                keyboardEvent.shiftKey = event.shiftKey;
                 fn(keyboardEvent);
             }
         }

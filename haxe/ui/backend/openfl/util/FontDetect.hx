@@ -18,24 +18,24 @@ class FontDetect {
         
         _initialized = true;
         
-		var body = js.Browser.document.body;
-		var firstChild = js.Browser.document.body.firstChild;
+        var body = js.Browser.document.body;
+        var firstChild = js.Browser.document.body.firstChild;
         
-		var div = js.Browser.document.createElement('div');
-		div.id = 'fontdetectHelper';
-		span = js.Browser.document.createElement('span');
-		span.innerText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		div.appendChild(span);
+        var div = js.Browser.document.createElement('div');
+        div.id = 'fontdetectHelper';
+        span = js.Browser.document.createElement('span');
+        span.innerText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        div.appendChild(span);
 
-		body.insertBefore(div, firstChild);
+        body.insertBefore(div, firstChild);
 
-		div.style.position   = 'absolute';
-		div.style.visibility = 'hidden';
-		div.style.top        = '-200px';
-		div.style.left       = '-100000px';
-		div.style.width      = '100000px';
-		div.style.height     = '200px';
-		div.style.fontSize   = '100px';
+        div.style.position   = 'absolute';
+        div.style.visibility = 'hidden';
+        div.style.top        = '-200px';
+        div.style.left       = '-100000px';
+        div.style.width      = '100000px';
+        div.style.height     = '200px';
+        div.style.fontSize   = '100px';
 
         #end
     }
