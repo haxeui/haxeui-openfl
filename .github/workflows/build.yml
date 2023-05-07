@@ -39,7 +39,6 @@ jobs:
         haxelib dev haxeui-core haxeui-core
         haxelib dev haxeui-openfl .
         haxelib install hxcpp --always --quiet
-        haxelib install hscript --always --quiet
         haxelib install actuate --always --quiet
         haxelib install openfl --always --quiet
         echo "y" | haxelib run openfl setup
