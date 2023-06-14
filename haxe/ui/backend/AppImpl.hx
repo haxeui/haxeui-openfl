@@ -8,7 +8,7 @@ class AppImpl extends AppBase {
 
     private override function init(onReady:Void->Void, onEnd:Void->Void = null) {
         openfl.Lib.current.stage.application.onExit.add(function(_) {
-            dispatch(new AppEvent(AppEvent.APP_CLOSED));
+            dispatch(new AppEvent(AppEvent.APP_EXITED));
         });
         onReady();
     }
