@@ -36,7 +36,7 @@ class FilterConverter {
             output = new GrayscaleFilter(inputGrayscale.amount / 100).filter;
         } else if ((input is haxe.ui.filters.Tint)) {
             var tint:haxe.ui.filters.Tint = cast(input, haxe.ui.filters.Tint);
-            output = new TintFilter(tint.color, tint.multiplier).filter;
+            output = new TintFilter(tint.color, tint.amount).filter;
         }
         
         #end
