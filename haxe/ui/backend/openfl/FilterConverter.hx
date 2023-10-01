@@ -6,6 +6,9 @@ import openfl.filters.BitmapFilter;
 import openfl.filters.BitmapFilterQuality;
 import openfl.filters.BlurFilter;
 import openfl.filters.DropShadowFilter;
+import haxe.ui.backend.openfl.filters.HueRotateFilter;
+import haxe.ui.backend.openfl.filters.ContrastFilter;
+import haxe.ui.backend.openfl.filters.SaturateFilter;
 import haxe.ui.backend.openfl.filters.TintFilter;
 
 class FilterConverter {
@@ -37,6 +40,15 @@ class FilterConverter {
         } else if ((input is haxe.ui.filters.Tint)) {
             var tint:haxe.ui.filters.Tint = cast(input, haxe.ui.filters.Tint);
             output = new TintFilter(tint.color, tint.amount).filter;
+        } else if ((input is haxe.ui.filters.HueRotate)) {
+            var inputHue:haxe.ui.filters.HueRotate = cast(input, haxe.ui.filters.HueRotate);
+            output = new HueRotateFilter(inputHue.angleDegree).filter;
+        } else if ((input is haxe.ui.filters.Contrast)) {
+            var contrast:haxe.ui.filters.Contrast = cast(input, haxe.ui.filters.Contrast);
+            output = new ContrastFilter(contrast.multiplier).filter;
+        } else if ((input is haxe.ui.filters.Saturate)) {
+            var saturate:haxe.ui.filters.Saturate = cast(input, haxe.ui.filters.Saturate);
+            output = new SaturateFilter(saturate.multiplier).filter;
         }
         
         #end
