@@ -1,8 +1,8 @@
 package haxe.ui.backend;
 
-import openfl.events.Event;
-import openfl.Lib;
 import haxe.Timer;
+import openfl.Lib;
+import openfl.events.Event;
 
 class TimerImpl {
     static private var __timers:Array<TimerImpl> = [];
@@ -42,7 +42,7 @@ class TimerImpl {
         _start = Timer.stamp() + (delay / 1000);
         __timers.push(this);
         if (__timers.length == 1) {
-            Lib.current.stage.addEventListener(Event.ENTER_FRAME, update, false, 10000, true);
+            Lib.current.stage.addEventListener(Event.ENTER_FRAME, update);
         }
     }
 
