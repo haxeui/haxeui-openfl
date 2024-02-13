@@ -183,7 +183,7 @@ class TextDisplayImpl extends TextBase {
         _textWidth = textField.textWidth + PADDING_X;
         //_textWidth = textField.textWidth + PADDING_X;
         #else
-        //_textWidth = textField.textWidth - 2;
+        _textWidth = textField.textWidth - 2;
         #end
         _textHeight = textField.textHeight;
         if (_textHeight == 0) {
@@ -195,7 +195,7 @@ class TextDisplayImpl extends TextBase {
         #if !flash
         //_textHeight += PADDING_Y;
         #else
-        //_textHeight -= 2;
+        _textHeight += 2;
         #end
         
         _textWidth = Math.round(_textWidth);
