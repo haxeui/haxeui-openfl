@@ -6,6 +6,7 @@ import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
+import openfl.text.TextFormat;
 
 class TextInputImpl extends TextDisplayImpl {
     public function new() {
@@ -27,6 +28,13 @@ class TextInputImpl extends TextDisplayImpl {
         tf.autoSize = TextFieldAutoSize.NONE;
         tf.multiline = true;
         tf.wordWrap = true;
+
+        #if flash
+        var format:TextFormat = tf.getTextFormat();
+        format.font = "_sans";
+        format.size = 13;
+        tf.defaultTextFormat = format;
+        #end
 
         return tf;
     }
@@ -157,6 +165,10 @@ class TextInputImpl extends TextDisplayImpl {
         }
         #end
         super.measureText();
+
+        #if flash
+        _textHeight += 2;
+        #end
 
         #if openfl_textfield_workarounds // not required for alot of apps, or later versions of openfl
         if (StringTools.endsWith(_text, "\n")) {

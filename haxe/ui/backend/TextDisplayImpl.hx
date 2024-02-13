@@ -36,6 +36,14 @@ class TextDisplayImpl extends TextBase {
         tf.selectable = false;
         tf.mouseEnabled = false;
         tf.autoSize = TextFieldAutoSize.LEFT;
+
+        #if flash
+        var format:TextFormat = tf.getTextFormat();
+        format.font = "_sans";
+        format.size = 13;
+        tf.defaultTextFormat = format;
+        #end
+
         #if cache_text_metrics
         var format:TextFormat = tf.getTextFormat();
         format.font = "_sans";
@@ -107,7 +115,9 @@ class TextDisplayImpl extends TextBase {
         }
 
         textField.defaultTextFormat = format;
-        //textField.setTextFormat(format);
+        #if flash
+        textField.setTextFormat(format);
+        #end
         if (textField.wordWrap != _displayData.wordWrap) {
             textField.wordWrap = _displayData.wordWrap;
             measureTextRequired = true;
@@ -185,6 +195,7 @@ class TextDisplayImpl extends TextBase {
         #else
         _textWidth = textField.textWidth - 2;
         #end
+
         _textHeight = textField.textHeight;
         if (_textHeight == 0) {
             var tmpText:String = textField.text;
@@ -192,10 +203,11 @@ class TextDisplayImpl extends TextBase {
             _textHeight = textField.textHeight;
             textField.text = tmpText;
         }
+
         #if !flash
         //_textHeight += PADDING_Y;
         #else
-        _textHeight += 2;
+        //_textHeight += 2;
         #end
         
         _textWidth = Math.round(_textWidth);
