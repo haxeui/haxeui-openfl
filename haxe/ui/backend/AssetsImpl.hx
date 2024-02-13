@@ -79,7 +79,8 @@ class AssetsImpl extends AssetsBase {
     public override function imageFromBytes(bytes:Bytes, callback:ImageInfo->Void):Void {
         var ba:ByteArray = ByteArray.fromBytes(bytes);
         var loader:Loader = new Loader();
-        loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e) {
+        var onCompleteEvent = null;
+        onCompleteEvent = function(e) {
             if (loader.content != null) {
                 var bmpData = cast(loader.content, Bitmap).bitmapData;
                 var imageInfo:ImageInfo = {
@@ -90,10 +91,13 @@ class AssetsImpl extends AssetsBase {
 
                 callback(imageInfo);
             }
-        }, false, 0, true);
+            loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onCompleteEvent);
+        };
+        loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteEvent, false, 0, false);
         loader.contentLoaderInfo.addEventListener("ioError", function(e) {
             trace(e);
             callback(null);
+            loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onCompleteEvent);
         }, false, 0, true);
         loader.loadBytes(ba);
     }
