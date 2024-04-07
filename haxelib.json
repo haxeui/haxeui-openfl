@@ -1,22 +1,22 @@
 {
+    "version": "1.7.0",
     "contributors": [
         "haxeui",
         "ianharrigan",
         "_ibilon",
         "aW4KeNiNG"
     ],
-    "version": "1.6.0",
-    "dependencies": {
-        "openfl": "",
-        "haxeui-core": ""
-    },
-    "releasenote": "1.6.0 release",
+    "license": "MIT",
     "tags": [
         "ui",
         "gui",
         "openfl"
     ],
-    "license": "MIT",
+    "releasenote": "1.7.0 release",
+    "dependencies": {
+        "haxeui-core": "",
+        "openfl": ""
+    },
     "name": "haxeui-openfl",
     "description": "The OpenFL backend of the HaxeUI framework",
     "url": "https://github.com/haxeui/haxeui-openfl"
