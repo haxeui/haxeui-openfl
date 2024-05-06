@@ -1,5 +1,6 @@
 package haxe.ui.backend;
 
+import openfl.display.GraphicsPathCommand;
 import haxe.io.Bytes;
 import haxe.ui.core.Component;
 import haxe.ui.loaders.image.ImageLoader;
@@ -7,6 +8,7 @@ import haxe.ui.util.Color;
 import haxe.ui.util.Variant;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+import openfl.display.GraphicsPath;
 import openfl.geom.Matrix;
 import openfl.geom.Rectangle;
 import openfl.utils.ByteArray;
@@ -14,7 +16,15 @@ import openfl.utils.ByteArray;
 class ComponentGraphicsImpl extends ComponentGraphicsBase {
     private var _currentFillColor:Null<Color> = null;
     private var _currentFillAlpha:Null<Float> = null;
+    private var _globalFillColor:Null<Color> = null;
+    private var _globalFillAlpha:Null<Float> = null;
     private var _hasSize:Bool = false;
+
+    private var _globalLineThickness :Null<Float> = null;
+    private var _globalLineColor:Null<Color> = null;
+    private var _globalLineAlpha:Null<Float> = null;
+
+    private var currentPath:GraphicsPath;
     
     public function new(component:Component) {
         super(component);
@@ -32,26 +42,45 @@ class ComponentGraphicsImpl extends ComponentGraphicsBase {
         if (_hasSize == false) {
             return super.moveTo(x, y);
         }
-        _component.graphics.moveTo(x, y);
+        if (currentPath != null) {
+            currentPath.moveTo(x,y);
+        } else {
+            _component.graphics.moveTo(x, y);
+        }
+        
     }
     
     public override function lineTo(x:Float, y:Float) {
         if (_hasSize == false) {
             return super.lineTo(x, y);
         }
-        _component.graphics.lineTo(x, y);
+        if (currentPath != null) {
+            currentPath.lineTo(x,y);
+        } else {
+            _component.graphics.lineTo(x, y);
+        }
     }
     
     public override function strokeStyle(color:Null<Color>, thickness:Null<Float> = 1, alpha:Null<Float> = 1) {
         if (_hasSize == false) {
             return super.strokeStyle(color, thickness, alpha);
         }
+        if (currentPath == null) { 
+            _globalLineThickness  = thickness;
+            _globalLineColor = color;
+            _globalLineAlpha = alpha;
+        }
+        
         _component.graphics.lineStyle(thickness, color, alpha);
     }    
 
     public override function fillStyle(color:Null<Color>, alpha:Null<Float> = 1) {
         if (_hasSize == false) {
             return super.fillStyle(color, alpha);
+        }
+        if (currentPath == null) {
+            _globalFillColor = color;
+            _globalFillAlpha = alpha;
         }
         _currentFillColor = color;
         _currentFillAlpha = alpha;
@@ -74,12 +103,11 @@ class ComponentGraphicsImpl extends ComponentGraphicsBase {
         if (_hasSize == false) {
             return super.curveTo(controlX, controlY, anchorX, anchorY);
         }
-        if (_currentFillColor != null) {
-            _component.graphics.beginFill(_currentFillColor, _currentFillAlpha);
-        }
-        _component.graphics.curveTo(controlX, controlY, anchorX, anchorY);
-        if (_currentFillColor != null) {
-            _component.graphics.endFill();
+        
+        if (currentPath != null) {
+            currentPath.curveTo(controlX, controlY, anchorX, anchorY);
+        } else {
+            _component.graphics.curveTo(controlX, controlY, anchorX, anchorY);
         }
     }
     
@@ -87,13 +115,45 @@ class ComponentGraphicsImpl extends ComponentGraphicsBase {
         if (_hasSize == false) {
             return super.cubicCurveTo(controlX1, controlY1, controlX2, controlY2, anchorX, anchorY);
         }
-        if (_currentFillColor != null) {
-            _component.graphics.beginFill(_currentFillColor, _currentFillAlpha);
+        if (currentPath != null) {
+            currentPath.cubicCurveTo(controlX1, controlY1, controlX2, controlY2, anchorX, anchorY);
+        } else {
+            _component.graphics.cubicCurveTo(controlX1, controlY1, controlX2, controlY2, anchorX, anchorY);
         }
-        _component.graphics.cubicCurveTo(controlX1, controlY1, controlX2, controlY2, anchorX, anchorY);
-        if (_currentFillColor != null) {
-            _component.graphics.endFill();
+        
+    }
+
+    public override function beginPath() {
+        if (_hasSize == false) {
+            return super.beginPath();
         }
+        currentPath = new GraphicsPath();
+    }
+
+    public override function closePath() {
+        if (_hasSize == false) {
+            return super.closePath();
+        }
+        if (currentPath!=null && currentPath.commands != null && currentPath.commands.length>0 ) {
+            if (_currentFillColor != null) {
+                _component.graphics.beginFill(_currentFillColor, _currentFillAlpha);
+            }
+            if (currentPath.commands[0] != GraphicsPathCommand.MOVE_TO) {
+                currentPath.commands.insertAt(0, GraphicsPathCommand.MOVE_TO);
+                @:privateAccess currentPath.data.insertAt(0, _component.graphics.__positionX);
+                @:privateAccess currentPath.data.insertAt(0, _component.graphics.__positionY);
+            }
+            _component.graphics.drawPath(currentPath.commands, currentPath.data);
+            if (_currentFillColor != null) {
+                _component.graphics.endFill();
+            }
+        }
+        currentPath = null; 
+        _currentFillColor = _globalFillColor;
+        _currentFillAlpha = _globalFillAlpha;
+
+        // it seems openfl forgets about lineStyle after drawing a shape;
+        _component.graphics.lineStyle(_globalLineThickness , _globalLineColor, _globalLineAlpha);
     }
 
     public override function rectangle(x:Float, y:Float, width:Float, height:Float) {
