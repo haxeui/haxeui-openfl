@@ -292,14 +292,6 @@ class ComponentImpl extends ComponentBase {
                     _eventMap.set(type, listener);
                     addEventListener(EventMapper.HAXEUI_TO_OPENFL.get(type), __onKeyboardEvent, false, 0, true);
                 }
-                
-            case UIEvent.CHANGE:
-                if (_eventMap.exists(UIEvent.CHANGE) == false) {
-                    if (hasTextInput() == true) {
-                        _eventMap.set(UIEvent.CHANGE, listener);
-                        getTextInput().textField.addEventListener(Event.CHANGE, __onTextInputChange, false, 0, true);
-                    }
-                }
         }
     }
 
