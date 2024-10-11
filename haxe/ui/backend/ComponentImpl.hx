@@ -183,6 +183,10 @@ class ComponentImpl extends ComponentBase {
         }
         applyUseHandCursor(useHandCursor);
 
+        if (_imageDisplay != null) {
+            _imageDisplay.applyStyle(style);
+        }
+
         if (style.filter != null && style.filter.length > 0) {
             var array = [];
             for (fa in style.filter) {

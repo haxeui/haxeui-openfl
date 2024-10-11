@@ -1,6 +1,7 @@
 package haxe.ui.backend;
 
 import haxe.ui.geom.Rectangle;
+import haxe.ui.styles.Style;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.display.Sprite;
@@ -60,7 +61,7 @@ class ImageDisplayImpl extends ImageBase {
                 }
                 _imageWidth = _bmp.width;
                 _imageHeight = _bmp.height;
-
+                _bmp.smoothing = true;
             }
             #if svg
             else if(containsSVGInfo()) {
@@ -120,4 +121,14 @@ class ImageDisplayImpl extends ImageBase {
             sprite.y = _imageClipRect.top;
         }
     }
+
+    public function applyStyle(style:Style) {
+        if (style != null && _bmp != null) {
+            if (style.imageRendering == "pixelated") {
+                _bmp.smoothing = false;
+            } else {
+                _bmp.smoothing = true;
+            }
+        }
+    }    
 }
