@@ -10,6 +10,8 @@ import haxe.ui.backend.openfl.filters.HueRotateFilter;
 import haxe.ui.backend.openfl.filters.ContrastFilter;
 import haxe.ui.backend.openfl.filters.SaturateFilter;
 import haxe.ui.backend.openfl.filters.TintFilter;
+import haxe.ui.backend.openfl.filters.InvertFilter;
+import haxe.ui.backend.openfl.filters.BrightnessFilter;
 
 class FilterConverter {
     public static function convertFilter(input:Filter):BitmapFilter {
@@ -49,6 +51,12 @@ class FilterConverter {
         } else if ((input is haxe.ui.filters.Saturate)) {
             var saturate:haxe.ui.filters.Saturate = cast(input, haxe.ui.filters.Saturate);
             output = new SaturateFilter(saturate.multiplier).filter;
+        } else if (input is haxe.ui.filters.Invert) {
+            var invert:haxe.ui.filters.Invert = cast(input, haxe.ui.filters.Invert);
+            output = new InvertFilter(invert.multiplier).filter;
+        } else if (input is haxe.ui.filters.Brightness) {
+            var brightness:haxe.ui.filters.Brightness = cast(input, haxe.ui.filters.Brightness);
+            output = new BrightnessFilter(brightness.multiplier).filter;
         }
         
         #end
