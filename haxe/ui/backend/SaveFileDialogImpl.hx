@@ -63,7 +63,7 @@ class SaveFileDialogImpl extends SaveFileDialogBase {
         if (data != null) {
             _file.save(data, defaultFilename);
         } else {
-            _file.browse(buildFileFilters(extensions));
+            _file.browseForSave(options.title);
         }
     }
     

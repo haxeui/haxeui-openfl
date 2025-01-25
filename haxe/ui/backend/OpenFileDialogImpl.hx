@@ -1,16 +1,19 @@
 package haxe.ui.backend;
 
-import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
+
 #if !js
 import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
+import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
+import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 import openfl.events.Event;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
 import openfl.net.FileReferenceList;
-#end
 
 using StringTools;
+#end
+
 
 
 @:access(openfl.net.FileReference)
@@ -46,42 +49,42 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     private var _infos:Array<SelectedFileInfo>;
     
     public override function show() {
+        var extensions = null;
+        if (options != null) {
+            extensions = options.extensions;
+        }
+
         _refToInfo = new Map<FileReference, SelectedFileInfo>();
         _infos = [];
         _fr = new FileReferenceList();
         _fr.addEventListener(Event.SELECT, onSelect, false, 0, true);
         _fr.addEventListener(Event.CANCEL, onCancel, false, 0, true);
-        _fr.browse(buildFileFilters());
+        _fr.browse(buildFileFilters(extensions));
     }
     
-    private function buildFileFilters():Array<FileFilter> {
-        var f = null;
-        
-        /* DOESNT WORK AS OPENFL DOCS STATE
-        if (options.extensions != null && options.extensions.length > 0) {
-            f = [];
-            for (e in options.extensions) {
-                var ext = e.extension;
-                ext = ext.trim();
-                if (ext.length == 0) {
+    private function buildFileFilters(extensions:Array<FileDialogExtensionInfo>):Array<FileFilter> {
+        if (extensions == null) {
+            return null;
+        }
+
+        var fileFilters:Array<FileFilter> = [];
+        for (extension in extensions) {
+            var extensionList = extension.extension.split(",");
+            var fileFilterExtensions = "";
+            for (extensionItem in extensionList) {
+                extensionItem = extensionItem.trim();
+                if (extensionItem.length == 0) {
                     continue;
                 }
-                var parts = ext.split(",");
-                var finalParts = [];
-                for (p in parts) {
-                    p = p.trim();
-                    if (p.length == 0) {
-                        continue;
-                    }
-                    finalParts.push("*." + p);
-                }
-                
-                f.push(new FileFilter(e.label, finalParts.join(";")));
+
+                fileFilterExtensions += "*." + extensionItem + ";";
             }
+            if (fileFilterExtensions.length != 0) {
+                fileFilters.push(new FileFilter(extension.label, fileFilterExtensions));
+            }
+
         }
-        */
-        
-        return f;
+        return fileFilters;
     }
     
     private function onSelect(e:Event) {
