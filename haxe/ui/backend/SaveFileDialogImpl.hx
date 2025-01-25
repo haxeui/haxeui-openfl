@@ -1,10 +1,15 @@
 package haxe.ui.backend;
 
 #if !js
+import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
+import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 import openfl.events.Event;
+import openfl.filesystem.File;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
+
+using StringTools;
 #end
 
 class SaveFileDialogImpl extends SaveFileDialogBase {
@@ -34,26 +39,66 @@ class SaveFileDialogImpl extends SaveFileDialogBase {
     
     #else
     
-    private var _fr:FileReference = null;
+    private var _file:File;
     
     public override function show() {
-        if (fileInfo == null || (fileInfo.text == null && fileInfo.bytes == null)) {
-            throw "Nothing to write";
+        var extensions = null;
+        if (options != null) {
+            extensions = options.extensions;
         }
-        
-        var data:Dynamic = fileInfo.text;
-        if (data == null) {
-            data = ByteArray.fromBytes(fileInfo.bytes);
+        var data:Dynamic = null;
+        var defaultFilename = null;
+        if (fileInfo != null)  {
+            defaultFilename = fileInfo.name;
+            if (fileInfo.text != null) {
+                data = fileInfo.text;   
+            } else if (fileInfo.bytes != null) {
+                data = ByteArray.fromBytes(fileInfo.bytes);
+            }
         }
-        _fr = new FileReference();
-        _fr.addEventListener(Event.SELECT, onSelect, false, 0, true);
-        _fr.addEventListener(Event.CANCEL, onCancel, false, 0, true);
-        _fr.save(data, fileInfo.name);
+
+        _file = new File();
+        _file.addEventListener(Event.SELECT, onSelect, false, 0, true);
+        _file.addEventListener(Event.CANCEL, onCancel, false, 0, true);
+        if (data != null) {
+            _file.save(data, defaultFilename);
+        } else {
+            _file.browse(buildFileFilters(extensions));
+        }
     }
     
+    private function buildFileFilters(extensions:Array<FileDialogExtensionInfo>):Array<FileFilter> {
+        if (extensions == null) {
+            return null;
+        }
+
+        var fileFilters:Array<FileFilter> = [];
+        for (extension in extensions) {
+            var extensionList = extension.extension.split(",");
+            var fileFilterExtensions = "";
+            for (extensionItem in extensionList) {
+                extensionItem = extensionItem.trim();
+                if (extensionItem.length == 0) {
+                    continue;
+                }
+
+                fileFilterExtensions += "*." + extensionItem + ";";
+            }
+            if (fileFilterExtensions.length != 0) {
+                fileFilters.push(new FileFilter(extension.label, fileFilterExtensions));
+            }
+
+        }
+        return fileFilters;
+    }
+
     private function onSelect(e:Event) {
+        var selectedFileInfo:SelectedFileInfo = {
+            name: _file.name,
+            fullPath: _file.nativePath
+        }
         destroyFileRef();
-        dialogConfirmed();
+        dialogConfirmed(selectedFileInfo);
     }
     
     private function onCancel(e:Event) {
@@ -62,13 +107,13 @@ class SaveFileDialogImpl extends SaveFileDialogBase {
     }
 
     private function destroyFileRef() {
-        if (_fr == null) {
+        if (_file == null) {
             return;
         }
         
-        _fr.removeEventListener(Event.SELECT, onSelect);
-        _fr.removeEventListener(Event.CANCEL, onCancel);
-        _fr = null;
+        _file.removeEventListener(Event.SELECT, onSelect);
+        _file.removeEventListener(Event.CANCEL, onCancel);
+        _file = null;
     }
     
     #end
