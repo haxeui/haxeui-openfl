@@ -5,7 +5,6 @@ package haxe.ui.backend;
 import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
 import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
-import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 import openfl.events.Event;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
@@ -14,7 +13,7 @@ import openfl.net.FileReferenceList;
 using StringTools;
 #end
 
-
+import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 
 @:access(openfl.net.FileReference)
 class OpenFileDialogImpl extends OpenFileDialogBase {
