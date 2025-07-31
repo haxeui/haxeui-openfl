@@ -9,11 +9,11 @@ import openfl.events.Event;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
 import openfl.net.FileReferenceList;
-
-using StringTools;
 #end
 
 import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
+
+using StringTools;
 
 @:access(openfl.net.FileReference)
 class OpenFileDialogImpl extends OpenFileDialogBase {
