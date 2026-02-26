@@ -1,16 +1,15 @@
 package haxe.ui.backend;
 
 
-#if !js
+#if (!js && !android)
 import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
 import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
 import openfl.events.Event;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
-#end
-
 import openfl.net.FileReferenceList;
+#end
 
 import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 
@@ -42,6 +41,12 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         }
     }
     
+    #elseif android
+
+    public override function show() {
+        dialogCancelled();
+    }
+
     #else
     
     private var _fr:FileReferenceList = null;
