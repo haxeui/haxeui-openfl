@@ -8,8 +8,9 @@ import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
 import openfl.events.Event;
 import openfl.net.FileFilter;
 import openfl.net.FileReference;
-import openfl.net.FileReferenceList;
 #end
+
+import openfl.net.FileReferenceList;
 
 import haxe.ui.containers.dialogs.Dialogs.SelectedFileInfo;
 
