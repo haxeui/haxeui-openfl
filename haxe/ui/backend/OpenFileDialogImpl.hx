@@ -1,7 +1,7 @@
 package haxe.ui.backend;
 
 
-#if (!js && !android)
+#if (!js && !mobile)
 import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
 import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
@@ -41,7 +41,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         }
     }
     
-    #elseif android
+    #elseif mobile
 
     public override function show() {
         dialogCancelled();
