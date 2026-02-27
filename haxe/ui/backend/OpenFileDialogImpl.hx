@@ -1,7 +1,7 @@
 package haxe.ui.backend;
 
 
-#if !js
+#if (!js && !mobile)
 import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
 import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
@@ -41,6 +41,12 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         }
     }
     
+    #elseif mobile
+
+    public override function show() {
+        dialogCancelled();
+    }
+
     #else
     
     private var _fr:FileReferenceList = null;
